@@ -23,7 +23,7 @@
       "launchUrl": "swagger",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development",
-            "Meetings_MeetingsConnectionString": "blah"
+            "Meetings_MeetingsConnectionString": "Host=localhost;Port=5432;Database=postgres;Username=sss_admin;Password=sss_admin_password;"
         },
       "applicationUrl": "http://localhost:5000"
     },

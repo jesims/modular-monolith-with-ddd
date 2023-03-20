@@ -2,15 +2,16 @@
 using System.Data;
 using System.Data.SqlClient;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
+using Npgsql;
 
 namespace CompanyName.MyMeetings.BuildingBlocks.Infrastructure
 {
-    public class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
+    public class PgSqlConnectionFactory : ISqlConnectionFactory, IDisposable
     {
         private readonly string _connectionString;
         private IDbConnection _connection;
 
-        public SqlConnectionFactory(string connectionString)
+        public PgSqlConnectionFactory(string connectionString)
         {
             this._connectionString = connectionString;
         }
@@ -19,7 +20,7 @@ namespace CompanyName.MyMeetings.BuildingBlocks.Infrastructure
         {
             if (this._connection == null || this._connection.State != ConnectionState.Open)
             {
-                this._connection = new SqlConnection(_connectionString);
+                this._connection = new NpgsqlConnection(_connectionString);
                 this._connection.Open();
             }
 

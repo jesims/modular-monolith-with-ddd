@@ -20,7 +20,7 @@ namespace CompanyName.MyMeetings.Modules.UserAccess.Infrastructure.Configuration
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<SqlConnectionFactory>()
+            builder.RegisterType<PgSqlConnectionFactory>()
                 .As<ISqlConnectionFactory>()
                 .WithParameter("connectionString", _databaseConnectionString)
                 .InstancePerLifetimeScope();
