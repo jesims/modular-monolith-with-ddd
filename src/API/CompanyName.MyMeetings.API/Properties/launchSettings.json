@@ -17,13 +17,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "DevWorkshops.Meetings.API": {
+    "Meetings.API": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development",
-            "Meetings_MeetingsConnectionString": "aaa"
+            "Meetings_MeetingsConnectionString": "blah"
         },
       "applicationUrl": "http://localhost:5000"
     },

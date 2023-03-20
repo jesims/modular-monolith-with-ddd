@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  sss-db:
+    image: postgis/postgis:15-3.3
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=sss_admin_password
+      - POSTGRES_USER=sss_admin
+      - POSTGRES_DB=postgres
+    networks:
+      - sss-network
+
+networks:
+  sss-network:
