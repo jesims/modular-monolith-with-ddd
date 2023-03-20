@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CompanyName.MyMeetings.Modules.UserAccess.Application.UserRegistrations.GetUserRegistration;
 using CompanyName.MyMeetings.Modules.UserAccess.Application.UserRegistrations.RegisterNewUser;
 using CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork;
+using Npgsql;
 using NUnit.Framework;
 
 namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.UserRegistrations
@@ -28,7 +29,7 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.UserRegist
             Assert.That(userRegistration.FirstName, Is.EqualTo(UserRegistrationSampleData.FirstName));
             Assert.That(userRegistration.LastName, Is.EqualTo(UserRegistrationSampleData.LastName));
 
-            var connection = new SqlConnection(ConnectionString);
+            var connection = new NpgsqlConnection(ConnectionString);
             var messagesList = await OutboxMessagesHelper.GetOutboxMessages(connection);
 
             Assert.That(messagesList.Count, Is.EqualTo(1));

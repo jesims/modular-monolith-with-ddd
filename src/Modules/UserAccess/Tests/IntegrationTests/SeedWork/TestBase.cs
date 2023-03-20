@@ -11,6 +11,7 @@ using CompanyName.MyMeetings.Modules.UserAccess.Infrastructure;
 using CompanyName.MyMeetings.Modules.UserAccess.Infrastructure.Configuration;
 using Dapper;
 using MediatR;
+using Npgsql;
 using NSubstitute;
 using NUnit.Framework;
 using Serilog;
@@ -39,7 +40,7 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
                     $"Define connection string to integration tests database using environment variable: {connectionStringEnvironmentVariable}");
             }
 
-            using (var sqlConnection = new SqlConnection(ConnectionString))
+            using (var sqlConnection = new NpgsqlConnection(ConnectionString))
             {
                 await ClearDatabase(sqlConnection);
             }
@@ -62,7 +63,7 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
         protected async Task<T> GetLastOutboxMessage<T>()
             where T : class, INotification
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new NpgsqlConnection(ConnectionString))
             {
                 var messages = await OutboxMessagesHelper.GetOutboxMessages(connection);
 

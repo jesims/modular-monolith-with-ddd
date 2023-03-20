@@ -1095,7 +1095,7 @@ public async Task BeforeEachTest()
             $"Define connection string to integration tests database using environment variable: {connectionStringEnvironmentVariable}");
     }
 
-    using (var sqlConnection = new SqlConnection(ConnectionString))
+    using (var sqlConnection = new NpgsqlConnection(ConnectionString))
     {
         await ClearDatabase(sqlConnection);
     }

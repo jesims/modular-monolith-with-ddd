@@ -17,6 +17,7 @@ using CompanyName.MyMeetings.Modules.Meetings.Domain.SharedKernel;
 using CompanyName.MyMeetings.Modules.Meetings.Infrastructure;
 using CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration;
 using Dapper;
+using Npgsql;
 using NSubstitute;
 using NUnit.Framework;
 using Serilog;
@@ -51,7 +52,7 @@ namespace CompanyName.MyMeetings.IntegrationTests.SeedWork
                     $"Define connection string to integration tests database using environment variable: {connectionStringEnvironmentVariable}");
             }
 
-            using (var sqlConnection = new SqlConnection(ConnectionString))
+            using (var sqlConnection = new NpgsqlConnection(ConnectionString))
             {
                 await ClearDatabase(sqlConnection);
             }

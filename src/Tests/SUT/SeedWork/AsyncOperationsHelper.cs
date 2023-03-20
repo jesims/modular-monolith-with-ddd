@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
+using Npgsql;
 
 namespace CompanyName.MyMeetings.SUT.SeedWork
 {
@@ -11,7 +12,7 @@ namespace CompanyName.MyMeetings.SUT.SeedWork
     {
         public static async Task WaitForProcessing(string connectionString, int timeoutInSeconds = 20)
         {
-            await using var sqlConnection = new SqlConnection(connectionString);
+            await using var sqlConnection = new NpgsqlConnection(connectionString);
 
             var start = Stopwatch.StartNew();
             while (start.Elapsed.Seconds < timeoutInSeconds)

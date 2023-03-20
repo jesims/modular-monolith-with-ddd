@@ -21,6 +21,7 @@ using CompanyName.MyMeetings.Modules.UserAccess.Infrastructure;
 using CompanyName.MyMeetings.Modules.UserAccess.Infrastructure.Configuration;
 using CompanyName.MyMeetings.SUT.SeedWork.Probing;
 using Dapper;
+using Npgsql;
 using NSubstitute;
 using NUnit.Framework;
 using Serilog;
@@ -147,7 +148,7 @@ namespace CompanyName.MyMeetings.SUT.SeedWork
         {
             var sql = await File.ReadAllTextAsync(scriptPath);
 
-            await using var sqlConnection = new SqlConnection(ConnectionString);
+            await using var sqlConnection = new NpgsqlConnection(ConnectionString);
             await sqlConnection.ExecuteScalarAsync(sql);
         }
 
@@ -187,7 +188,7 @@ namespace CompanyName.MyMeetings.SUT.SeedWork
 
         private async Task ClearDatabase()
         {
-            await using var sqlConnection = new SqlConnection(ConnectionString);
+            await using var sqlConnection = new NpgsqlConnection(ConnectionString);
             await DatabaseCleaner.ClearAllData(sqlConnection);
         }
     }

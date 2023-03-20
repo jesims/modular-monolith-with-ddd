@@ -29,7 +29,7 @@ namespace CompanyName.MyMeetings.BuildingBlocks.Infrastructure
 
         public IDbConnection CreateNewConnection()
         {
-            var connection = new SqlConnection(_connectionString);
+            var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
 
             return connection;

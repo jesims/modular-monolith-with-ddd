@@ -29,7 +29,7 @@ namespace CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configura
                 .Register(c =>
                 {
                     var dbContextOptionsBuilder = new DbContextOptionsBuilder<AdministrationContext>();
-                    dbContextOptionsBuilder.UseSqlServer(_databaseConnectionString);
+                    dbContextOptionsBuilder.UseNpgsql(_databaseConnectionString);
 
                     dbContextOptionsBuilder
                         .ReplaceService<IValueConverterSelector, StronglyTypedIdValueConverterSelector>();
