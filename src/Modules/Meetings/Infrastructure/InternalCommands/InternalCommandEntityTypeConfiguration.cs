@@ -1,4 +1,5 @@
-﻿using CompanyName.MyMeetings.BuildingBlocks.Infrastructure.InternalCommands;
+﻿using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
+using CompanyName.MyMeetings.BuildingBlocks.Infrastructure.InternalCommands;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,10 +9,16 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.InternalCommand
     {
         public void Configure(EntityTypeBuilder<InternalCommand> builder)
         {
-            builder.ToTable("InternalCommands", "meetings");
+            builder.ToTable("internal_commands", "sss_meetings");
 
             builder.HasKey(b => b.Id);
-            builder.Property(b => b.Id).ValueGeneratedNever();
+            builder.Property(b => b.Id).HasColumnName("id").ValueGeneratedNever();
+            builder.Property(b => b.Type).HasColumnName("type");
+            builder.Property(b => b.Data).HasColumnName("data");
+            builder.Property(b => b.ProcessedDate).HasColumnName("processed_date")
+                .HasConversion(
+                    src => DateTimeConverter.MaybeUtcDateTime(src),
+                    dest => DateTimeConverter.MaybeUtcDateTime(dest));
         }
     }
 }

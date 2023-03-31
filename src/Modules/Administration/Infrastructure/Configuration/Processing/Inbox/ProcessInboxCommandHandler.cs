@@ -24,13 +24,13 @@ namespace CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configura
         public async Task<Unit> Handle(ProcessInboxCommand command, CancellationToken cancellationToken)
         {
             var connection = this._sqlConnectionFactory.GetOpenConnection();
-            string sql = "SELECT " +
-                         $"inbox_message.id AS {nameof(InboxMessageDto.Id)}, " +
-                         $"inbox_message.type AS {nameof(InboxMessageDto.Type)}, " +
-                         $"inbox_message.data AS {nameof(InboxMessageDto.Data)} " +
-                         "FROM sss_administration.inbox_messages AS inbox_message " +
-                         "WHERE inbox_message.processed_date IS NULL " +
-                         "ORDER BY inbox_message.occurred_on";
+            string sql = "SELECT "
+                         + $"inbox_message.id AS {nameof(InboxMessageDto.Id)}, "
+                         + $"inbox_message.type AS {nameof(InboxMessageDto.Type)}, "
+                         + $"inbox_message.data AS {nameof(InboxMessageDto.Data)} "
+                         + "FROM sss_administration.inbox_messages AS inbox_message "
+                         + "WHERE inbox_message.processed_date IS NULL "
+                         + "ORDER BY inbox_message.occurred_on";
 
             var messages = await connection.QueryAsync<InboxMessageDto>(sql);
 

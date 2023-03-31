@@ -8,24 +8,25 @@ namespace CompanyName.MyMeetings.Modules.UserAccess.Infrastructure.Domain.Users
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("Users", "users");
+            builder.ToTable("users", "sss_users");
 
             builder.HasKey(x => x.Id);
 
-            builder.Property<string>("_login").HasColumnName("Login");
-            builder.Property<string>("_email").HasColumnName("Email");
-            builder.Property<string>("_password").HasColumnName("Password");
-            builder.Property<bool>("_isActive").HasColumnName("IsActive");
-            builder.Property<string>("_firstName").HasColumnName("FirstName");
-            builder.Property<string>("_lastName").HasColumnName("LastName");
-            builder.Property<string>("_name").HasColumnName("Name");
+            builder.Property(b => b.Id).HasColumnName("id");
+            builder.Property<string>("_login").HasColumnName("login");
+            builder.Property<string>("_email").HasColumnName("email");
+            builder.Property<string>("_password").HasColumnName("password");
+            builder.Property<bool>("_isActive").HasColumnName("is_active");
+            builder.Property<string>("_firstName").HasColumnName("first_name");
+            builder.Property<string>("_lastName").HasColumnName("last_name");
+            builder.Property<string>("_name").HasColumnName("name");
 
             builder.OwnsMany<UserRole>("_roles", b =>
             {
-                b.WithOwner().HasForeignKey("UserId");
-                b.ToTable("UserRoles", "users");
-                b.Property<UserId>("UserId");
-                b.Property<string>("Value").HasColumnName("RoleCode");
+                //b.WithOwner().HasForeignKey("user_id");
+                b.ToTable("user_roles", "sss_users");
+                b.Property<UserId>("UserId").HasColumnName("user_id");
+                b.Property<string>("Value").HasColumnName("role_code");
                 b.HasKey("UserId", "Value");
             });
         }

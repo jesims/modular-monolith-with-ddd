@@ -27,18 +27,18 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroupPropos
         {
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
-            string sql = "SELECT " +
-                         $"[MeetingGroupProposal].[Id] AS [{nameof(MeetingGroupProposalDto.Id)}], " +
-                         $"[MeetingGroupProposal].[Name] AS [{nameof(MeetingGroupProposalDto.Name)}], " +
-                         $"[MeetingGroupProposal].[ProposalUserId] AS [{nameof(MeetingGroupProposalDto.ProposalUserId)}], " +
-                         $"[MeetingGroupProposal].[LocationCity] AS [{nameof(MeetingGroupProposalDto.LocationCity)}], " +
-                         $"[MeetingGroupProposal].[LocationCountryCode] AS [{nameof(MeetingGroupProposalDto.LocationCountryCode)}], " +
-                         $"[MeetingGroupProposal].[Description] AS [{nameof(MeetingGroupProposalDto.Description)}], " +
-                         $"[MeetingGroupProposal].[ProposalDate] AS [{nameof(MeetingGroupProposalDto.ProposalDate)}], " +
-                         $"[MeetingGroupProposal].[StatusCode] AS [{nameof(MeetingGroupProposalDto.StatusCode)}] " +
-                         "FROM [meetings].[v_MeetingGroupProposals] AS [MeetingGroupProposal] " +
-                         "WHERE [MeetingGroupProposal].ProposalUserId = @MemberId " +
-                         "ORDER BY [MeetingGroupProposal].[Name]";
+            string sql = "SELECT "
+                         + $"meeting_group_proposal.id AS {nameof(MeetingGroupProposalDto.Id)}, "
+                         + $"meeting_group_proposal.name AS {nameof(MeetingGroupProposalDto.Name)}, "
+                         + $"meeting_group_proposal.proposal_user_id AS {nameof(MeetingGroupProposalDto.ProposalUserId)}, "
+                         + $"meeting_group_proposal.location_city AS {nameof(MeetingGroupProposalDto.LocationCity)}, "
+                         + $"meeting_group_proposal.location_country_code AS {nameof(MeetingGroupProposalDto.LocationCountryCode)}, "
+                         + $"meeting_group_proposal.description AS {nameof(MeetingGroupProposalDto.Description)}, "
+                         + $"meeting_group_proposal.proposal_date AS {nameof(MeetingGroupProposalDto.ProposalDate)}, "
+                         + $"meeting_group_proposal.status_code AS {nameof(MeetingGroupProposalDto.StatusCode)} "
+                         + "FROM sss_meetings.meeting_group_proposals AS meeting_group_proposal "
+                         + "WHERE meeting_group_proposal.proposal_user_id = @MemberId "
+                         + "ORDER BY meeting_group_proposal.name";
 
             var meetingGroupProposals = await connection.QueryAsync<MeetingGroupProposalDto>(
                 sql,

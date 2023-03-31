@@ -20,10 +20,12 @@ namespace CompanyName.MyMeetings.Modules.UserAccess.Application.Authorization.Ge
         {
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
-            const string sql = "SELECT " +
-                               "[UserPermission].[PermissionCode] AS [Code] " +
-                               "FROM [users].[v_UserPermissions] AS [UserPermission] " +
-                               "WHERE [UserPermission].UserId = @UserId";
+            const string sql = "SELECT "
+                               + $"user_permission.permission_code AS {nameof(UserPermissionDto.Code)} "
+                               + "FROM sss_users.user_roles AS user_roles"
+                               + "    INNER JOIN sss_users.roles_to_permissions AS user_permission "
+                               + "        ON user_roles.role_code = user_permission.role_code "
+                               + "WHERE user_roles.user_id = @UserId";
             var permissions = await connection.QueryAsync<UserPermissionDto>(sql, new { request.UserId });
 
             return permissions.AsList();

@@ -1,4 +1,5 @@
 ﻿using System;
+using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Comments;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingComments;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
@@ -12,18 +13,26 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.MeetingC
     {
         public void Configure(EntityTypeBuilder<MeetingComment> builder)
         {
-            builder.ToTable("MeetingComments", "meetings");
+            builder.ToTable("meeting_comments", "sss_meetings");
 
             builder.HasKey(c => c.Id);
 
-            builder.Property<string>("_comment").HasColumnName("Comment");
-            builder.Property<MeetingId>("_meetingId").HasColumnName("MeetingId");
-            builder.Property<MemberId>("_authorId").HasColumnName("AuthorId");
-            builder.Property<MeetingCommentId>("_inReplyToCommentId").HasColumnName("InReplyToCommentId");
-            builder.Property<bool>("_isRemoved").HasColumnName("IsRemoved");
-            builder.Property<string>("_removedByReason").HasColumnName("RemovedByReason");
-            builder.Property<DateTime>("_createDate").HasColumnName("CreateDate");
-            builder.Property<DateTime?>("_editDate").HasColumnName("EditDate");
+            builder.Property(x => x.Id).HasColumnName("id");
+            builder.Property<string>("_comment").HasColumnName("comment");
+            builder.Property<MeetingId>("_meetingId").HasColumnName("meeting_id");
+            builder.Property<MemberId>("_authorId").HasColumnName("author_id");
+            builder.Property<MeetingCommentId>("_inReplyToCommentId").HasColumnName("in_reply_to_comment_id");
+            builder.Property<bool>("_isRemoved").HasColumnName("is_removed");
+            builder.Property<string>("_removedByReason").HasColumnName("removed_by_reason");
+            builder.Property<DateTime>("_createDate").HasColumnName("create_date")
+                .HasConversion(
+                    src => DateTimeConverter.UtcDateTime(src),
+                    dest => DateTimeConverter.UtcDateTime(dest));
+
+            builder.Property<DateTime?>("_editDate").HasColumnName("edit_date")
+                .HasConversion(
+                    src => DateTimeConverter.MaybeUtcDateTime(src),
+                    dest => DateTimeConverter.MaybeUtcDateTime(dest));
         }
     }
 }
