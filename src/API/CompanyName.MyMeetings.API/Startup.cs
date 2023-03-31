@@ -192,12 +192,12 @@ namespace CompanyName.MyMeetings.API
                 null,
                 null);
 
-            PaymentsStartup.Initialize(
-                _configuration[MeetingsConnectionString],
-                executionContextAccessor,
-                _logger,
-                emailsConfiguration,
-                null);
+            //PaymentsStartup.Initialize(
+            //    _configuration[MeetingsConnectionString],
+            //    executionContextAccessor,
+            //    _logger,
+            //    emailsConfiguration,
+            //    null);
         }
     }
 }
