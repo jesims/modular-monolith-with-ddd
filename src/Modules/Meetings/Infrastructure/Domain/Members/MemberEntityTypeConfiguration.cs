@@ -20,10 +20,6 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.Members
             builder.Property<string>("_firstName").HasColumnName("first_name");
             builder.Property<string>("_lastName").HasColumnName("last_name");
             builder.Property<string>("_name").HasColumnName("name");
-            builder.Property<DateTime>("_createDate").HasColumnName("create_date")
-                .HasConversion(
-                    src => DateTimeConverter.UtcDateTime(src),
-                    dest => DateTimeConverter.UtcDateTime(dest));
         }
     }
 }
