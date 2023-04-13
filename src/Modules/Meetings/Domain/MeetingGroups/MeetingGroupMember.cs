@@ -4,65 +4,64 @@ using CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups.Events;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Members;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.SharedKernel;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups;
+
+public class MeetingGroupMember : Entity
 {
-    public class MeetingGroupMember : Entity
+    private readonly MeetingGroupMemberRole _role;
+
+    private bool _isActive;
+
+    private DateTime? _leaveDate;
+
+    private MeetingGroupMember()
     {
-        internal MeetingGroupId MeetingGroupId { get; private set; }
+        // Only for EF.
+    }
 
-        internal MemberId MemberId { get; private set; }
+    private MeetingGroupMember(
+        MeetingGroupId meetingGroupId,
+        MemberId memberId,
+        MeetingGroupMemberRole role)
+    {
+        MeetingGroupId = meetingGroupId;
+        MemberId = memberId;
+        _role = role;
+        JoinedDate = SystemClock.Now;
+        _isActive = true;
 
-        private MeetingGroupMemberRole _role;
+        AddDomainEvent(new NewMeetingGroupMemberJoinedDomainEvent(MeetingGroupId, MemberId, _role));
+    }
 
-        internal DateTime JoinedDate { get; private set; }
+    internal MeetingGroupId MeetingGroupId { get; }
 
-        private bool _isActive;
+    internal MemberId MemberId { get; }
 
-        private DateTime? _leaveDate;
+    internal DateTime JoinedDate { get; private set; }
 
-        private MeetingGroupMember()
-        {
-            // Only for EF.
-        }
+    internal static MeetingGroupMember CreateNew(
+        MeetingGroupId meetingGroupId,
+        MemberId memberId,
+        MeetingGroupMemberRole role)
+    {
+        return new MeetingGroupMember(meetingGroupId, memberId, role);
+    }
 
-        private MeetingGroupMember(
-            MeetingGroupId meetingGroupId,
-            MemberId memberId,
-            MeetingGroupMemberRole role)
-        {
-            this.MeetingGroupId = meetingGroupId;
-            this.MemberId = memberId;
-            this._role = role;
-            this.JoinedDate = SystemClock.Now;
-            this._isActive = true;
+    internal void Leave()
+    {
+        _isActive = false;
+        _leaveDate = SystemClock.Now;
 
-            this.AddDomainEvent(new NewMeetingGroupMemberJoinedDomainEvent(this.MeetingGroupId, this.MemberId, this._role));
-        }
+        AddDomainEvent(new MeetingGroupMemberLeftGroupDomainEvent(MeetingGroupId, MemberId));
+    }
 
-        internal static MeetingGroupMember CreateNew(
-            MeetingGroupId meetingGroupId,
-            MemberId memberId,
-            MeetingGroupMemberRole role)
-        {
-            return new MeetingGroupMember(meetingGroupId, memberId, role);
-        }
+    internal bool IsMember(MemberId memberId)
+    {
+        return _isActive && MemberId == memberId;
+    }
 
-        internal void Leave()
-        {
-            _isActive = false;
-            _leaveDate = SystemClock.Now;
-
-            this.AddDomainEvent(new MeetingGroupMemberLeftGroupDomainEvent(this.MeetingGroupId, this.MemberId));
-        }
-
-        internal bool IsMember(MemberId memberId)
-        {
-            return this._isActive && this.MemberId == memberId;
-        }
-
-        internal bool IsOrganizer(MemberId memberId)
-        {
-            return this.IsMember(memberId) && _role == MeetingGroupMemberRole.Organizer;
-        }
+    internal bool IsOrganizer(MemberId memberId)
+    {
+        return IsMember(memberId) && _role == MeetingGroupMemberRole.Organizer;
     }
 }

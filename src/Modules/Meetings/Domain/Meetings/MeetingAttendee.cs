@@ -6,146 +6,145 @@ using CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings.Rules;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Members;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.SharedKernel;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
+
+public class MeetingAttendee : Entity
 {
-    public class MeetingAttendee : Entity
+    private DateTime _decisionDate;
+
+    private MeetingAttendeeRole _role;
+
+    private readonly int _guestsNumber;
+
+    private bool _decisionChanged;
+
+    private DateTime? _decisionChangeDate;
+
+    private DateTime? _removedDate;
+
+    private MemberId _removingMemberId;
+
+    private string _removingReason;
+
+    private bool _isRemoved;
+
+    private readonly MoneyValue _fee;
+
+    private bool _isFeePaid;
+
+    private MeetingAttendee()
     {
-        internal MemberId AttendeeId { get; private set; }
+    }
 
-        internal MeetingId MeetingId { get; private set; }
+    private MeetingAttendee(
+        MeetingId meetingId,
+        MemberId attendeeId,
+        DateTime decisionDate,
+        MeetingAttendeeRole role,
+        int guestsNumber,
+        MoneyValue eventFee)
+    {
+        AttendeeId = attendeeId;
+        MeetingId = meetingId;
+        _decisionDate = decisionDate;
+        _role = role;
+        _guestsNumber = guestsNumber;
+        _decisionChanged = false;
+        _isFeePaid = false;
 
-        private DateTime _decisionDate;
-
-        private MeetingAttendeeRole _role;
-
-        private int _guestsNumber;
-
-        private bool _decisionChanged;
-
-        private DateTime? _decisionChangeDate;
-
-        private DateTime? _removedDate;
-
-        private MemberId _removingMemberId;
-
-        private string _removingReason;
-
-        private bool _isRemoved;
-
-        private MoneyValue _fee;
-
-        private bool _isFeePaid;
-
-        private MeetingAttendee()
+        if (eventFee != MoneyValue.Undefined)
         {
+            _fee = (1 + guestsNumber) * eventFee;
+        }
+        else
+        {
+            _fee = MoneyValue.Undefined;
         }
 
-        internal static MeetingAttendee CreateNew(
-            MeetingId meetingId,
-            MemberId attendeeId,
-            DateTime decisionDate,
-            MeetingAttendeeRole role,
-            int guestsNumber,
-            MoneyValue eventFee)
-        {
-            return new MeetingAttendee(meetingId, attendeeId, decisionDate, role, guestsNumber, eventFee);
-        }
+        AddDomainEvent(new MeetingAttendeeAddedDomainEvent(
+            MeetingId,
+            AttendeeId,
+            decisionDate,
+            role.Value,
+            guestsNumber,
+            _fee.Value,
+            _fee.Currency));
+    }
 
-        private MeetingAttendee(
-            MeetingId meetingId,
-            MemberId attendeeId,
-            DateTime decisionDate,
-            MeetingAttendeeRole role,
-            int guestsNumber,
-            MoneyValue eventFee)
-        {
-            this.AttendeeId = attendeeId;
-            this.MeetingId = meetingId;
-            this._decisionDate = decisionDate;
-            this._role = role;
-            _guestsNumber = guestsNumber;
-            _decisionChanged = false;
-            _isFeePaid = false;
+    internal MemberId AttendeeId { get; }
 
-            if (eventFee != MoneyValue.Undefined)
-            {
-                _fee = (1 + guestsNumber) * eventFee;
-            }
-            else
-            {
-                _fee = MoneyValue.Undefined;
-            }
+    internal MeetingId MeetingId { get; }
 
-            this.AddDomainEvent(new MeetingAttendeeAddedDomainEvent(
-                this.MeetingId,
-                AttendeeId,
-                decisionDate,
-                role.Value,
-                guestsNumber,
-                _fee.Value,
-                _fee.Currency));
-        }
+    internal static MeetingAttendee CreateNew(
+        MeetingId meetingId,
+        MemberId attendeeId,
+        DateTime decisionDate,
+        MeetingAttendeeRole role,
+        int guestsNumber,
+        MoneyValue eventFee)
+    {
+        return new MeetingAttendee(meetingId, attendeeId, decisionDate, role, guestsNumber, eventFee);
+    }
 
-        internal void ChangeDecision()
-        {
-            _decisionChanged = true;
-            _decisionChangeDate = SystemClock.Now;
+    internal void ChangeDecision()
+    {
+        _decisionChanged = true;
+        _decisionChangeDate = SystemClock.Now;
 
-            this.AddDomainEvent(new MeetingAttendeeChangedDecisionDomainEvent(this.AttendeeId, this.MeetingId));
-        }
+        AddDomainEvent(new MeetingAttendeeChangedDecisionDomainEvent(AttendeeId, MeetingId));
+    }
 
-        internal bool IsActiveAttendee(MemberId attendeeId)
-        {
-            return this.AttendeeId == attendeeId && !_decisionChanged;
-        }
+    internal bool IsActiveAttendee(MemberId attendeeId)
+    {
+        return AttendeeId == attendeeId && !_decisionChanged;
+    }
 
-        internal bool IsActive()
-        {
-            return !_decisionChangeDate.HasValue && !_isRemoved;
-        }
+    internal bool IsActive()
+    {
+        return !_decisionChangeDate.HasValue && !_isRemoved;
+    }
 
-        internal bool IsActiveHost()
-        {
-            return this.IsActive() && _role == MeetingAttendeeRole.Host;
-        }
+    internal bool IsActiveHost()
+    {
+        return IsActive() && _role == MeetingAttendeeRole.Host;
+    }
 
-        internal int GetAttendeeWithGuestsNumber()
-        {
-            return 1 + _guestsNumber;
-        }
+    internal int GetAttendeeWithGuestsNumber()
+    {
+        return 1 + _guestsNumber;
+    }
 
-        internal void SetAsHost()
-        {
-            _role = MeetingAttendeeRole.Host;
+    internal void SetAsHost()
+    {
+        _role = MeetingAttendeeRole.Host;
 
-            this.AddDomainEvent(new NewMeetingHostSetDomainEvent(this.MeetingId, this.AttendeeId));
-        }
+        AddDomainEvent(new NewMeetingHostSetDomainEvent(MeetingId, AttendeeId));
+    }
 
-        internal void SetAsAttendee()
-        {
-            this.CheckRule(new MemberCannotHaveSetAttendeeRoleMoreThanOnceRule(_role));
-            _role = MeetingAttendeeRole.Attendee;
+    internal void SetAsAttendee()
+    {
+        CheckRule(new MemberCannotHaveSetAttendeeRoleMoreThanOnceRule(_role));
+        _role = MeetingAttendeeRole.Attendee;
 
-            this.AddDomainEvent(new MemberSetAsAttendeeDomainEvent(this.MeetingId, this.AttendeeId));
-        }
+        AddDomainEvent(new MemberSetAsAttendeeDomainEvent(MeetingId, AttendeeId));
+    }
 
-        internal void Remove(MemberId removingMemberId, string reason)
-        {
-            this.CheckRule(new ReasonOfRemovingAttendeeFromMeetingMustBeProvidedRule(reason));
+    internal void Remove(MemberId removingMemberId, string reason)
+    {
+        CheckRule(new ReasonOfRemovingAttendeeFromMeetingMustBeProvidedRule(reason));
 
-            _isRemoved = true;
-            _removedDate = SystemClock.Now;
-            _removingReason = reason;
-            _removingMemberId = removingMemberId;
+        _isRemoved = true;
+        _removedDate = SystemClock.Now;
+        _removingReason = reason;
+        _removingMemberId = removingMemberId;
 
-            this.AddDomainEvent(new MeetingAttendeeRemovedDomainEvent(this.AttendeeId, this.MeetingId, reason));
-        }
+        AddDomainEvent(new MeetingAttendeeRemovedDomainEvent(AttendeeId, MeetingId, reason));
+    }
 
-        internal void MarkFeeAsPayed()
-        {
-            _isFeePaid = true;
+    internal void MarkFeeAsPayed()
+    {
+        _isFeePaid = true;
 
-            this.AddDomainEvent(new MeetingAttendeeFeePaidDomainEvent(this.MeetingId, this.AttendeeId));
-        }
+        AddDomainEvent(new MeetingAttendeeFeePaidDomainEvent(MeetingId, AttendeeId));
     }
 }

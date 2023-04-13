@@ -1,26 +1,22 @@
-namespace CompanyName.MyMeetings.Modules.Payments.Domain.SubscriptionRenewalPayments
+namespace CompanyName.MyMeetings.Modules.Payments.Domain.SubscriptionRenewalPayments;
+
+public class SubscriptionRenewalPaymentStatus
 {
-    public class SubscriptionRenewalPaymentStatus
+    private SubscriptionRenewalPaymentStatus(string code)
     {
-        public static SubscriptionRenewalPaymentStatus WaitingForPayment
-            => new SubscriptionRenewalPaymentStatus(nameof(WaitingForPayment));
+        Code = code;
+    }
 
-        public static SubscriptionRenewalPaymentStatus Paid
-            => new SubscriptionRenewalPaymentStatus(nameof(Paid));
+    public static SubscriptionRenewalPaymentStatus WaitingForPayment => new(nameof(WaitingForPayment));
 
-        public static SubscriptionRenewalPaymentStatus Expired
-            => new SubscriptionRenewalPaymentStatus(nameof(Expired));
+    public static SubscriptionRenewalPaymentStatus Paid => new(nameof(Paid));
 
-        public string Code { get; }
+    public static SubscriptionRenewalPaymentStatus Expired => new(nameof(Expired));
 
-        private SubscriptionRenewalPaymentStatus(string code)
-        {
-            Code = code;
-        }
+    public string Code { get; }
 
-        public static SubscriptionRenewalPaymentStatus Of(string code)
-        {
-            return new SubscriptionRenewalPaymentStatus(code);
-        }
+    public static SubscriptionRenewalPaymentStatus Of(string code)
+    {
+        return new SubscriptionRenewalPaymentStatus(code);
     }
 }

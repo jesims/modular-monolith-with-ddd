@@ -1,25 +1,24 @@
 ﻿using CompanyName.MyMeetings.BuildingBlocks.Domain;
 
-namespace CompanyName.MyMeetings.Modules.Payments.Domain.MeetingFeePayments
+namespace CompanyName.MyMeetings.Modules.Payments.Domain.MeetingFeePayments;
+
+public class MeetingFeePaymentStatus : ValueObject
 {
-    public class MeetingFeePaymentStatus : ValueObject
+    private MeetingFeePaymentStatus(string code)
     {
-        public static MeetingFeePaymentStatus WaitingForPayment => new MeetingFeePaymentStatus(nameof(WaitingForPayment));
+        Code = code;
+    }
 
-        public static MeetingFeePaymentStatus Paid => new MeetingFeePaymentStatus(nameof(Paid));
+    public static MeetingFeePaymentStatus WaitingForPayment => new(nameof(WaitingForPayment));
 
-        public static MeetingFeePaymentStatus Expired => new MeetingFeePaymentStatus(nameof(Expired));
+    public static MeetingFeePaymentStatus Paid => new(nameof(Paid));
 
-        public string Code { get; }
+    public static MeetingFeePaymentStatus Expired => new(nameof(Expired));
 
-        private MeetingFeePaymentStatus(string code)
-        {
-            Code = code;
-        }
+    public string Code { get; }
 
-        public static MeetingFeePaymentStatus Of(string code)
-        {
-            return new MeetingFeePaymentStatus(code);
-        }
+    public static MeetingFeePaymentStatus Of(string code)
+    {
+        return new MeetingFeePaymentStatus(code);
     }
 }

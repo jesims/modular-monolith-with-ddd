@@ -1,23 +1,22 @@
 ﻿using CompanyName.MyMeetings.BuildingBlocks.Domain;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups;
+
+public class MeetingGroupMemberRole : ValueObject
 {
-    public class MeetingGroupMemberRole : ValueObject
+    private MeetingGroupMemberRole(string value)
     {
-        public static MeetingGroupMemberRole Organizer => new MeetingGroupMemberRole("Organizer");
+        Value = value;
+    }
 
-        public static MeetingGroupMemberRole Member => new MeetingGroupMemberRole("Member");
+    public static MeetingGroupMemberRole Organizer => new("Organizer");
 
-        public string Value { get; }
+    public static MeetingGroupMemberRole Member => new("Member");
 
-        private MeetingGroupMemberRole(string value)
-        {
-            this.Value = value;
-        }
+    public string Value { get; }
 
-        public static MeetingGroupMemberRole Of(string roleCode)
-        {
-            return new MeetingGroupMemberRole(roleCode);
-        }
+    public static MeetingGroupMemberRole Of(string roleCode)
+    {
+        return new MeetingGroupMemberRole(roleCode);
     }
 }

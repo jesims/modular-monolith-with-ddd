@@ -1,15 +1,17 @@
 ﻿using System;
 using CompanyName.MyMeetings.Modules.Meetings.Application.Contracts;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingCommentingConfiguration.EnableMeetingCommentingConfiguration
-{
-    public class EnableMeetingCommentingConfigurationCommand : CommandBase
-    {
-        public Guid MeetingId { get; }
+namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingCommentingConfiguration.
+    EnableMeetingCommentingConfiguration;
 
-        public EnableMeetingCommentingConfigurationCommand(Guid meetingId)
-        {
-            MeetingId = meetingId;
-        }
+
+
+public class EnableMeetingCommentingConfigurationCommand : CommandBase
+{
+    public EnableMeetingCommentingConfigurationCommand(Guid meetingId)
+    {
+        MeetingId = meetingId;
     }
+
+    public Guid MeetingId { get; }
 }

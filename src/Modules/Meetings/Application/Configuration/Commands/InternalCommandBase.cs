@@ -1,30 +1,29 @@
 ﻿using System;
 using CompanyName.MyMeetings.Modules.Meetings.Application.Contracts;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Application.Configuration.Commands
+namespace CompanyName.MyMeetings.Modules.Meetings.Application.Configuration.Commands;
+
+public abstract class InternalCommandBase : ICommand
 {
-    public abstract class InternalCommandBase : ICommand
+    protected InternalCommandBase(Guid id)
     {
-        public Guid Id { get; }
-
-        protected InternalCommandBase(Guid id)
-        {
-            this.Id = id;
-        }
+        Id = id;
     }
 
-    public abstract class InternalCommandBase<TResult> : ICommand<TResult>
+    public Guid Id { get; }
+}
+
+public abstract class InternalCommandBase<TResult> : ICommand<TResult>
+{
+    protected InternalCommandBase()
     {
-        public Guid Id { get; }
-
-        protected InternalCommandBase()
-        {
-            this.Id = Guid.NewGuid();
-        }
-
-        protected InternalCommandBase(Guid id)
-        {
-            this.Id = id;
-        }
+        Id = Guid.NewGuid();
     }
+
+    protected InternalCommandBase(Guid id)
+    {
+        Id = id;
+    }
+
+    public Guid Id { get; }
 }

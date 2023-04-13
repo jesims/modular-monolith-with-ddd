@@ -1,17 +1,16 @@
 ﻿using System;
 
-namespace CompanyName.MyMeetings.BuildingBlocks.Domain
+namespace CompanyName.MyMeetings.BuildingBlocks.Domain;
+
+public class DomainEventBase : IDomainEvent
 {
-    public class DomainEventBase : IDomainEvent
+    public DomainEventBase()
     {
-        public Guid Id { get; }
-
-        public DateTime OccurredOn { get; }
-
-        public DomainEventBase()
-        {
-            this.Id = Guid.NewGuid();
-            this.OccurredOn = DateTime.UtcNow;
-        }
+        Id = Guid.NewGuid();
+        OccurredOn = DateTime.UtcNow;
     }
+
+    public Guid Id { get; }
+
+    public DateTime OccurredOn { get; }
 }

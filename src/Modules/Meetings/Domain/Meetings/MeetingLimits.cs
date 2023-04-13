@@ -1,29 +1,28 @@
 ﻿using CompanyName.MyMeetings.BuildingBlocks.Domain;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings.Rules;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
+
+public class MeetingLimits : ValueObject
 {
-    public class MeetingLimits : ValueObject
+    private MeetingLimits(int? attendeesLimit, int guestsLimit)
     {
-        public int? AttendeesLimit { get; }
+        AttendeesLimit = attendeesLimit;
+        GuestsLimit = guestsLimit;
+    }
 
-        public int GuestsLimit { get; }
+    public int? AttendeesLimit { get; }
 
-        private MeetingLimits(int? attendeesLimit, int guestsLimit)
-        {
-            AttendeesLimit = attendeesLimit;
-            GuestsLimit = guestsLimit;
-        }
+    public int GuestsLimit { get; }
 
-        public static MeetingLimits Create(int? attendeesLimit, int guestsLimit)
-        {
-            CheckRule(new MeetingAttendeesLimitCannotBeNegativeRule(attendeesLimit));
+    public static MeetingLimits Create(int? attendeesLimit, int guestsLimit)
+    {
+        CheckRule(new MeetingAttendeesLimitCannotBeNegativeRule(attendeesLimit));
 
-            CheckRule(new MeetingGuestsLimitCannotBeNegativeRule(guestsLimit));
+        CheckRule(new MeetingGuestsLimitCannotBeNegativeRule(guestsLimit));
 
-            CheckRule(new MeetingAttendeesLimitMustBeGreaterThanGuestsLimitRule(attendeesLimit, guestsLimit));
+        CheckRule(new MeetingAttendeesLimitMustBeGreaterThanGuestsLimitRule(attendeesLimit, guestsLimit));
 
-            return new MeetingLimits(attendeesLimit, guestsLimit);
-        }
+        return new MeetingLimits(attendeesLimit, guestsLimit);
     }
 }

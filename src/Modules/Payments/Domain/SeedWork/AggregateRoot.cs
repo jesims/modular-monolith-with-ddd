@@ -2,47 +2,49 @@
 using System.Collections.Generic;
 using CompanyName.MyMeetings.BuildingBlocks.Domain;
 
-namespace CompanyName.MyMeetings.Modules.Payments.Domain.SeedWork
+namespace CompanyName.MyMeetings.Modules.Payments.Domain.SeedWork;
+
+public abstract class AggregateRoot
 {
-    public abstract class AggregateRoot
+    private readonly List<IDomainEvent> _domainEvents;
+
+    protected AggregateRoot()
     {
-        private readonly List<IDomainEvent> _domainEvents;
+        _domainEvents = new List<IDomainEvent>();
 
-        public Guid Id { get; protected set; }
+        Version = -1;
+    }
 
-        public int Version { get; private set; }
+    public Guid Id { get; protected set; }
 
-        public IReadOnlyCollection<IDomainEvent> GetDomainEvents() => _domainEvents.AsReadOnly();
+    public int Version { get; private set; }
 
-        protected void AddDomainEvent(IDomainEvent @event)
+    public IReadOnlyCollection<IDomainEvent> GetDomainEvents()
+    {
+        return _domainEvents.AsReadOnly();
+    }
+
+    protected void AddDomainEvent(IDomainEvent @event)
+    {
+        _domainEvents.Add(@event);
+    }
+
+    public void Load(IEnumerable<IDomainEvent> history)
+    {
+        foreach (var e in history)
         {
-            _domainEvents.Add(@event);
+            Apply(e);
+            Version++;
         }
+    }
 
-        protected AggregateRoot()
+    protected abstract void Apply(IDomainEvent @event);
+
+    protected static void CheckRule(IBusinessRule rule)
+    {
+        if (rule.IsBroken())
         {
-            _domainEvents = new List<IDomainEvent>();
-
-            Version = -1;
-        }
-
-        public void Load(IEnumerable<IDomainEvent> history)
-        {
-            foreach (var e in history)
-            {
-                Apply(e);
-                Version++;
-            }
-        }
-
-        protected abstract void Apply(IDomainEvent @event);
-
-        protected static void CheckRule(IBusinessRule rule)
-        {
-            if (rule.IsBroken())
-            {
-                throw new BusinessRuleValidationException(rule);
-            }
+            throw new BusinessRuleValidationException(rule);
         }
     }
 }
