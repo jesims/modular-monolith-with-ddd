@@ -7,8 +7,6 @@ using Dapper;
 namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingCommentingConfiguration.
     GetMeetingCommentingConfiguration;
 
-
-
 internal class GetMeetingCommentingConfigurationQueryHandler : IQueryHandler<GetMeetingCommentingConfigurationQuery,
     MeetingCommentingConfigurationDto>
 {

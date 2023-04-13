@@ -6,8 +6,6 @@ using Newtonsoft.Json;
 namespace CompanyName.MyMeetings.Modules.Meetings.Application.MemberSubscriptions.
     ChangeSubscriptionExpirationDateForMember;
 
-
-
 public class ChangeSubscriptionExpirationDateForMemberCommand : InternalCommandBase
 {
     [JsonConstructor]

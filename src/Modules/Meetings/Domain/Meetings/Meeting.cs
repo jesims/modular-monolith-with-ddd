@@ -16,6 +16,12 @@ public class Meeting : Entity, IAggregateRoot
 {
     private readonly MeetingGroupId _meetingGroupId;
 
+    private readonly List<MeetingAttendee> _attendees;
+
+    private readonly List<MeetingNotAttendee> _notAttendees;
+
+    private readonly List<MeetingWaitlistMember> _waitlistMembers;
+
     private string _title;
 
     private MeetingTerm _term;
@@ -23,12 +29,6 @@ public class Meeting : Entity, IAggregateRoot
     private string _description;
 
     private MeetingLocation _location;
-
-    private readonly List<MeetingAttendee> _attendees;
-
-    private readonly List<MeetingNotAttendee> _notAttendees;
-
-    private readonly List<MeetingWaitlistMember> _waitlistMembers;
 
     private MeetingLimits _meetingLimits;
 

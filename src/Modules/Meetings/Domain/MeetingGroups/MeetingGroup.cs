@@ -13,15 +13,14 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups;
 
 public class MeetingGroup : Entity, IAggregateRoot
 {
+    private readonly MemberId _creatorId;
+
+    private readonly List<MeetingGroupMember> _members;
     private string _name;
 
     private string _description;
 
     private MeetingGroupLocation _location;
-
-    private readonly MemberId _creatorId;
-
-    private readonly List<MeetingGroupMember> _members;
 
     private DateTime _createDate;
 

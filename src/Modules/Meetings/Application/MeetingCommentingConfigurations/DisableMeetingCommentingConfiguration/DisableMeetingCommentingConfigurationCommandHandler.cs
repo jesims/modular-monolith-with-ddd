@@ -12,8 +12,6 @@ using MediatR;
 namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingCommentingConfiguration.
     DisbaleMeetingCommentingConfiguration;
 
-
-
 internal class
     DisableMeetingCommentingConfigurationCommandHandler : ICommandHandler<DisableMeetingCommentingConfigurationCommand>
 {

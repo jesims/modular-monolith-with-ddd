@@ -10,11 +10,12 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
 
 public class MeetingAttendee : Entity
 {
+    private readonly int _guestsNumber;
+
+    private readonly MoneyValue _fee;
     private DateTime _decisionDate;
 
     private MeetingAttendeeRole _role;
-
-    private readonly int _guestsNumber;
 
     private bool _decisionChanged;
 
@@ -27,8 +28,6 @@ public class MeetingAttendee : Entity
     private string _removingReason;
 
     private bool _isRemoved;
-
-    private readonly MoneyValue _fee;
 
     private bool _isFeePaid;
 

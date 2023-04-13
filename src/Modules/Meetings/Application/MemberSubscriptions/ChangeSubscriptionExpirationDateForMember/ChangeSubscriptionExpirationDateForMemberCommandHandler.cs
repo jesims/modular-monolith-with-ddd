@@ -7,8 +7,6 @@ using MediatR;
 namespace CompanyName.MyMeetings.Modules.Meetings.Application.MemberSubscriptions.
     ChangeSubscriptionExpirationDateForMember;
 
-
-
 internal class
     ChangeSubscriptionExpirationDateForMemberCommandHandler : ICommandHandler<
         ChangeSubscriptionExpirationDateForMemberCommand>

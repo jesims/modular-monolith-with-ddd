@@ -8,6 +8,7 @@ namespace CompanyName.MyMeetings.Modules.UserAccess.Domain.Users;
 
 public class User : Entity, IAggregateRoot
 {
+    private readonly List<UserRole> _roles;
     private string _login;
 
     private string _password;
@@ -21,8 +22,6 @@ public class User : Entity, IAggregateRoot
     private string _lastName;
 
     private string _name;
-
-    private readonly List<UserRole> _roles;
 
     private User()
     {

@@ -8,8 +8,6 @@ using CompanyName.MyMeetings.Modules.Administration.Domain.Users;
 namespace CompanyName.MyMeetings.Modules.Administration.Application.MeetingGroupProposals.
     RequestMeetingGroupProposalVerification;
 
-
-
 internal class RequestMeetingGroupProposalVerificationCommandHandler :
     ICommandHandler<RequestMeetingGroupProposalVerificationCommand, Guid>
 {

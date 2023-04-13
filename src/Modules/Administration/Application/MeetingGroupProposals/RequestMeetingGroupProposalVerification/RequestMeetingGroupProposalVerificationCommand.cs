@@ -5,8 +5,6 @@ using Newtonsoft.Json;
 namespace CompanyName.MyMeetings.Modules.Administration.Application.MeetingGroupProposals.
     RequestMeetingGroupProposalVerification;
 
-
-
 public class RequestMeetingGroupProposalVerificationCommand : InternalCommandBase<Guid>
 {
     [JsonConstructor]
