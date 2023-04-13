@@ -8,62 +8,61 @@ using Dapper;
 using MediatR;
 using Newtonsoft.Json;
 
-namespace CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configuration.Processing.Inbox
+namespace CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configuration.Processing.Inbox;
+
+internal class ProcessInboxCommandHandler : ICommandHandler<ProcessInboxCommand, Unit>
 {
-    internal class ProcessInboxCommandHandler : ICommandHandler<ProcessInboxCommand, Unit>
+    private readonly IMediator _mediator;
+    private readonly ISqlConnectionFactory _sqlConnectionFactory;
+
+    public ProcessInboxCommandHandler(IMediator mediator, ISqlConnectionFactory sqlConnectionFactory)
     {
-        private readonly IMediator _mediator;
-        private readonly ISqlConnectionFactory _sqlConnectionFactory;
+        _mediator = mediator;
+        _sqlConnectionFactory = sqlConnectionFactory;
+    }
 
-        public ProcessInboxCommandHandler(IMediator mediator, ISqlConnectionFactory sqlConnectionFactory)
+    public async Task<Unit> Handle(ProcessInboxCommand command, CancellationToken cancellationToken)
+    {
+        var connection = _sqlConnectionFactory.GetOpenConnection();
+        var sql = "SELECT "
+                  + $"inbox_message.id AS {nameof(InboxMessageDto.Id)}, "
+                  + $"inbox_message.type AS {nameof(InboxMessageDto.Type)}, "
+                  + $"inbox_message.data AS {nameof(InboxMessageDto.Data)} "
+                  + "FROM sss_administration.inbox_messages AS inbox_message "
+                  + "WHERE inbox_message.processed_date IS NULL "
+                  + "ORDER BY inbox_message.occurred_on";
+
+        var messages = await connection.QueryAsync<InboxMessageDto>(sql);
+
+        const string sqlUpdateProcessedDate = "UPDATE sss_administration.inbox_messages " +
+                                              "SET processed_date = @Date " +
+                                              "WHERE id = @Id";
+
+        foreach (var message in messages)
         {
-            _mediator = mediator;
-            _sqlConnectionFactory = sqlConnectionFactory;
-        }
+            var messageAssembly = AppDomain.CurrentDomain.GetAssemblies()
+                .SingleOrDefault(assembly => message.Type.Contains(assembly.GetName().Name));
 
-        public async Task<Unit> Handle(ProcessInboxCommand command, CancellationToken cancellationToken)
-        {
-            var connection = this._sqlConnectionFactory.GetOpenConnection();
-            string sql = "SELECT "
-                         + $"inbox_message.id AS {nameof(InboxMessageDto.Id)}, "
-                         + $"inbox_message.type AS {nameof(InboxMessageDto.Type)}, "
-                         + $"inbox_message.data AS {nameof(InboxMessageDto.Data)} "
-                         + "FROM sss_administration.inbox_messages AS inbox_message "
-                         + "WHERE inbox_message.processed_date IS NULL "
-                         + "ORDER BY inbox_message.occurred_on";
+            var type = messageAssembly.GetType(message.Type);
+            var request = JsonConvert.DeserializeObject(message.Data, type);
 
-            var messages = await connection.QueryAsync<InboxMessageDto>(sql);
-
-            const string sqlUpdateProcessedDate = "UPDATE sss_administration.inbox_messages " +
-                                                  "SET processed_date = @Date " +
-                                                  "WHERE id = @Id";
-
-            foreach (var message in messages)
+            try
             {
-                var messageAssembly = AppDomain.CurrentDomain.GetAssemblies()
-                    .SingleOrDefault(assembly => message.Type.Contains(assembly.GetName().Name));
-
-                Type type = messageAssembly.GetType(message.Type);
-                var request = JsonConvert.DeserializeObject(message.Data, type);
-
-                try
-                {
-                    await _mediator.Publish((INotification)request, cancellationToken);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-
-                await connection.ExecuteScalarAsync(sqlUpdateProcessedDate, new
-                {
-                    Date = DateTime.UtcNow,
-                    message.Id
-                });
+                await _mediator.Publish((INotification)request, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
 
-            return Unit.Value;
+            await connection.ExecuteScalarAsync(sqlUpdateProcessedDate, new
+            {
+                Date = DateTime.UtcNow,
+                message.Id
+            });
         }
+
+        return Unit.Value;
     }
 }

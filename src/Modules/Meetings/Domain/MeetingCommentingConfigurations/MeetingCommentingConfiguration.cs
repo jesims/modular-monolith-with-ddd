@@ -6,55 +6,59 @@ using CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Members;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingCommentingConfigurations
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingCommentingConfigurations;
+
+public class MeetingCommentingConfiguration : Entity, IAggregateRoot
 {
-    public class MeetingCommentingConfiguration : Entity, IAggregateRoot
+    private readonly MeetingId _meetingId;
+
+    private bool _isCommentingEnabled;
+
+    private MeetingCommentingConfiguration(MeetingId meetingId)
     {
-        public MeetingCommentingConfigurationId Id { get; }
+        Id = new MeetingCommentingConfigurationId(Guid.NewGuid());
+        _meetingId = meetingId;
+        _isCommentingEnabled = true;
 
-        private MeetingId _meetingId;
+        AddDomainEvent(new MeetingCommentingConfigurationCreatedDomainEvent(_meetingId, _isCommentingEnabled));
+    }
 
-        private bool _isCommentingEnabled;
+    private MeetingCommentingConfiguration()
+    {
+        // Only for EF.
+    }
 
-        private MeetingCommentingConfiguration(MeetingId meetingId)
+    public MeetingCommentingConfigurationId Id { get; }
+
+    public void EnableCommenting(MemberId enablingMemberId, MeetingGroup meetingGroup)
+    {
+        CheckRule(new MeetingCommentingCanBeEnabledOnlyByGroupOrganizerRule(enablingMemberId, meetingGroup));
+
+        if (!_isCommentingEnabled)
         {
-            this.Id = new MeetingCommentingConfigurationId(Guid.NewGuid());
-            this._meetingId = meetingId;
-            this._isCommentingEnabled = true;
-
-            this.AddDomainEvent(new MeetingCommentingConfigurationCreatedDomainEvent(this._meetingId, this._isCommentingEnabled));
+            _isCommentingEnabled = true;
+            AddDomainEvent(new MeetingCommentingEnabledDomainEvent(_meetingId));
         }
+    }
 
-        private MeetingCommentingConfiguration()
+    public void DisableCommenting(MemberId disablingMemberId, MeetingGroup meetingGroup)
+    {
+        CheckRule(new MeetingCommentingCanBeDisabledOnlyByGroupOrganizerRule(disablingMemberId, meetingGroup));
+
+        if (_isCommentingEnabled)
         {
-            // Only for EF.
+            _isCommentingEnabled = false;
+            AddDomainEvent(new MeetingCommentingDisabledDomainEvent(_meetingId));
         }
+    }
 
-        public void EnableCommenting(MemberId enablingMemberId, MeetingGroup meetingGroup)
-        {
-            CheckRule(new MeetingCommentingCanBeEnabledOnlyByGroupOrganizerRule(enablingMemberId, meetingGroup));
+    public bool GetIsCommentingEnabled()
+    {
+        return _isCommentingEnabled;
+    }
 
-            if (!this._isCommentingEnabled)
-            {
-                this._isCommentingEnabled = true;
-                AddDomainEvent(new MeetingCommentingEnabledDomainEvent(this._meetingId));
-            }
-        }
-
-        public void DisableCommenting(MemberId disablingMemberId, MeetingGroup meetingGroup)
-        {
-            CheckRule(new MeetingCommentingCanBeDisabledOnlyByGroupOrganizerRule(disablingMemberId, meetingGroup));
-
-            if (this._isCommentingEnabled)
-            {
-                this._isCommentingEnabled = false;
-                AddDomainEvent(new MeetingCommentingDisabledDomainEvent(this._meetingId));
-            }
-        }
-
-        public bool GetIsCommentingEnabled() => _isCommentingEnabled;
-
-        internal static MeetingCommentingConfiguration Create(MeetingId meetingId)
-            => new MeetingCommentingConfiguration(meetingId);
+    internal static MeetingCommentingConfiguration Create(MeetingId meetingId)
+    {
+        return new MeetingCommentingConfiguration(meetingId);
     }
 }

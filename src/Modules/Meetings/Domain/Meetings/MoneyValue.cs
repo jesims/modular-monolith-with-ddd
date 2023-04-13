@@ -1,29 +1,28 @@
 ﻿using CompanyName.MyMeetings.BuildingBlocks.Domain;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
+
+public class MoneyValue : ValueObject
 {
-    public class MoneyValue : ValueObject
+    private MoneyValue(decimal? value, string currency)
     {
-        public static MoneyValue Undefined => new MoneyValue(null, null);
+        Value = value;
+        Currency = currency;
+    }
 
-        public decimal? Value { get; }
+    public static MoneyValue Undefined => new(null, null);
 
-        public string Currency { get; }
+    public decimal? Value { get; }
 
-        public static MoneyValue Of(decimal value, string currency)
-        {
-            return new MoneyValue(value, currency);
-        }
+    public string Currency { get; }
 
-        private MoneyValue(decimal? value, string currency)
-        {
-            this.Value = value;
-            this.Currency = currency;
-        }
+    public static MoneyValue Of(decimal value, string currency)
+    {
+        return new MoneyValue(value, currency);
+    }
 
-        public static MoneyValue operator *(int left, MoneyValue right)
-        {
-            return new MoneyValue(right.Value * left, right.Currency);
-        }
+    public static MoneyValue operator *(int left, MoneyValue right)
+    {
+        return new MoneyValue(right.Value * left, right.Currency);
     }
 }

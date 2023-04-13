@@ -3,26 +3,28 @@ using CompanyName.MyMeetings.BuildingBlocks.Domain;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Members;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings.Rules
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings.Rules;
+
+public class MemberOnWaitlistMustBeAMemberOfGroupRule : IBusinessRule
 {
-    public class MemberOnWaitlistMustBeAMemberOfGroupRule : IBusinessRule
+    private readonly MeetingGroup _meetingGroup;
+
+    private readonly MemberId _memberId;
+
+    private readonly List<MeetingAttendee> _attendees;
+
+    internal MemberOnWaitlistMustBeAMemberOfGroupRule(MeetingGroup meetingGroup, MemberId memberId,
+        List<MeetingAttendee> attendees)
     {
-        private readonly MeetingGroup _meetingGroup;
+        _meetingGroup = meetingGroup;
+        _memberId = memberId;
+        _attendees = attendees;
+    }
 
-        private readonly MemberId _memberId;
+    public string Message => "Member on waitlist must be a member of group";
 
-        private readonly List<MeetingAttendee> _attendees;
-
-        internal MemberOnWaitlistMustBeAMemberOfGroupRule(MeetingGroup meetingGroup, MemberId memberId, List<MeetingAttendee> attendees)
-            : base()
-        {
-            _meetingGroup = meetingGroup;
-            _memberId = memberId;
-            _attendees = attendees;
-        }
-
-        public bool IsBroken() => !_meetingGroup.IsMemberOfGroup(_memberId);
-
-        public string Message => "Member on waitlist must be a member of group";
+    public bool IsBroken()
+    {
+        return !_meetingGroup.IsMemberOfGroup(_memberId);
     }
 }

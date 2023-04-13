@@ -5,49 +5,48 @@ using CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings.Events;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Members;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.SharedKernel;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
+
+public class MeetingNotAttendee : Entity
 {
-    public class MeetingNotAttendee : Entity
+    private DateTime _decisionDate;
+
+    private bool _decisionChanged;
+
+    private DateTime? _decisionChangeDate;
+
+    private MeetingNotAttendee()
     {
-        internal MemberId MemberId { get; private set; }
+    }
 
-        internal MeetingId MeetingId { get; private set; }
+    private MeetingNotAttendee(MeetingId meetingId, MemberId memberId)
+    {
+        MemberId = memberId;
+        MeetingId = meetingId;
+        _decisionDate = DateTime.UtcNow;
 
-        private DateTime _decisionDate;
+        AddDomainEvent(new MeetingNotAttendeeAddedDomainEvent(MeetingId, MemberId));
+    }
 
-        private bool _decisionChanged;
+    internal MemberId MemberId { get; }
 
-        private DateTime? _decisionChangeDate;
+    internal MeetingId MeetingId { get; }
 
-        private MeetingNotAttendee()
-        {
-        }
+    internal static MeetingNotAttendee CreateNew(MeetingId meetingId, MemberId memberId)
+    {
+        return new MeetingNotAttendee(meetingId, memberId);
+    }
 
-        private MeetingNotAttendee(MeetingId meetingId, MemberId memberId)
-        {
-            this.MemberId = memberId;
-            this.MeetingId = meetingId;
-            _decisionDate = DateTime.UtcNow;
+    internal bool IsActiveNotAttendee(MemberId memberId)
+    {
+        return !_decisionChanged && MemberId == memberId;
+    }
 
-            this.AddDomainEvent(new MeetingNotAttendeeAddedDomainEvent(this.MeetingId, this.MemberId));
-        }
+    internal void ChangeDecision()
+    {
+        _decisionChanged = true;
+        _decisionChangeDate = SystemClock.Now;
 
-        internal static MeetingNotAttendee CreateNew(MeetingId meetingId, MemberId memberId)
-        {
-            return new MeetingNotAttendee(meetingId, memberId);
-        }
-
-        internal bool IsActiveNotAttendee(MemberId memberId)
-        {
-            return !this._decisionChanged && this.MemberId == memberId;
-        }
-
-        internal void ChangeDecision()
-        {
-            _decisionChanged = true;
-            _decisionChangeDate = SystemClock.Now;
-
-            this.AddDomainEvent(new MeetingNotAttendeeChangedDecisionDomainEvent(this.MemberId, this.MeetingId));
-        }
+        AddDomainEvent(new MeetingNotAttendeeChangedDecisionDomainEvent(MemberId, MeetingId));
     }
 }

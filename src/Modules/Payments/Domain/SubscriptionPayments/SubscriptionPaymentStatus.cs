@@ -1,25 +1,24 @@
 ﻿using CompanyName.MyMeetings.BuildingBlocks.Domain;
 
-namespace CompanyName.MyMeetings.Modules.Payments.Domain.SubscriptionPayments
+namespace CompanyName.MyMeetings.Modules.Payments.Domain.SubscriptionPayments;
+
+public class SubscriptionPaymentStatus : ValueObject
 {
-    public class SubscriptionPaymentStatus : ValueObject
+    private SubscriptionPaymentStatus(string code)
     {
-        public static SubscriptionPaymentStatus WaitingForPayment => new SubscriptionPaymentStatus(nameof(WaitingForPayment));
+        Code = code;
+    }
 
-        public static SubscriptionPaymentStatus Paid => new SubscriptionPaymentStatus(nameof(Paid));
+    public static SubscriptionPaymentStatus WaitingForPayment => new(nameof(WaitingForPayment));
 
-        public static SubscriptionPaymentStatus Expired => new SubscriptionPaymentStatus(nameof(Expired));
+    public static SubscriptionPaymentStatus Paid => new(nameof(Paid));
 
-        public string Code { get; }
+    public static SubscriptionPaymentStatus Expired => new(nameof(Expired));
 
-        private SubscriptionPaymentStatus(string code)
-        {
-            Code = code;
-        }
+    public string Code { get; }
 
-        public static SubscriptionPaymentStatus Of(string code)
-        {
-            return new SubscriptionPaymentStatus(code);
-        }
+    public static SubscriptionPaymentStatus Of(string code)
+    {
+        return new SubscriptionPaymentStatus(code);
     }
 }

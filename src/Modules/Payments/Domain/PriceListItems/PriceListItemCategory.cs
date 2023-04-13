@@ -1,20 +1,22 @@
 ﻿using CompanyName.MyMeetings.BuildingBlocks.Domain;
 
-namespace CompanyName.MyMeetings.Modules.Payments.Domain.PriceListItems
+namespace CompanyName.MyMeetings.Modules.Payments.Domain.PriceListItems;
+
+public class PriceListItemCategory : ValueObject
 {
-    public class PriceListItemCategory : ValueObject
+    private PriceListItemCategory(string code)
     {
-        public static PriceListItemCategory New => new PriceListItemCategory(nameof(New));
+        Code = code;
+    }
 
-        public static PriceListItemCategory Renewal => new PriceListItemCategory(nameof(Renewal));
+    public static PriceListItemCategory New => new(nameof(New));
 
-        public string Code { get; }
+    public static PriceListItemCategory Renewal => new(nameof(Renewal));
 
-        private PriceListItemCategory(string code)
-        {
-            Code = code;
-        }
+    public string Code { get; }
 
-        public static PriceListItemCategory Of(string code) => new PriceListItemCategory(code);
+    public static PriceListItemCategory Of(string code)
+    {
+        return new PriceListItemCategory(code);
     }
 }

@@ -3,64 +3,63 @@ using CompanyName.MyMeetings.BuildingBlocks.Domain;
 using CompanyName.MyMeetings.Modules.Payments.Domain.Payers.Events;
 using CompanyName.MyMeetings.Modules.Payments.Domain.SeedWork;
 
-namespace CompanyName.MyMeetings.Modules.Payments.Domain.Payers
+namespace CompanyName.MyMeetings.Modules.Payments.Domain.Payers;
+
+public class Payer : AggregateRoot, IAggregateRoot
 {
-    public class Payer : AggregateRoot, IAggregateRoot
+    private string _login;
+
+    private string _email;
+
+    private string _firstName;
+
+    private string _lastName;
+
+    private string _name;
+
+    private DateTime _createDate;
+
+    private Payer()
     {
-        protected override void Apply(IDomainEvent @event)
-        {
-            this.When((dynamic)@event);
-        }
+    }
 
-        private string _login;
+    protected override void Apply(IDomainEvent @event)
+    {
+        this.When((dynamic)@event);
+    }
 
-        private string _email;
+    public static Payer Create(
+        Guid id,
+        string login,
+        string email,
+        string firstName,
+        string lastName,
+        string name)
+    {
+        var payer = new Payer();
 
-        private string _firstName;
+        var payerCreated = new PayerCreatedDomainEvent(
+            id,
+            login,
+            firstName,
+            lastName,
+            name,
+            email);
 
-        private string _lastName;
+        payer.Apply(payerCreated);
+        payer.AddDomainEvent(payerCreated);
 
-        private string _name;
+        return payer;
+    }
 
-        private DateTime _createDate;
-
-        public static Payer Create(
-            Guid id,
-            string login,
-            string email,
-            string firstName,
-            string lastName,
-            string name)
-        {
-            var payer = new Payer();
-
-            var payerCreated = new PayerCreatedDomainEvent(
-                id,
-                login,
-                firstName,
-                lastName,
-                name,
-                email);
-
-            payer.Apply(payerCreated);
-            payer.AddDomainEvent(payerCreated);
-
-            return payer;
-        }
-
-        private Payer()
-        {
-        }
-
-        private void When(PayerCreatedDomainEvent @event)
-        {
-            this.Id = @event.PayerId;
-            _login = @event.Login;
-            _createDate = @event.OccurredOn;
-            _email = @event.Email;
-            _firstName = @event.FirstName;
-            _lastName = @event.LastName;
-            _name = @event.Name;
-        }
+    private void When(PayerCreatedDomainEvent @event)
+    {
+        Id = @event.PayerId;
+        _login = @event.Login;
+        _createDate = @event.OccurredOn;
+        _email = @event.Email;
+        _firstName = @event.FirstName;
+        _lastName = @event.LastName;
+        _name = @event.Name;
     }
 }

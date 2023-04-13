@@ -4,111 +4,110 @@ using CompanyName.MyMeetings.Modules.UserAccess.Domain.UserRegistrations.Events;
 using CompanyName.MyMeetings.Modules.UserAccess.Domain.UserRegistrations.Rules;
 using CompanyName.MyMeetings.Modules.UserAccess.Domain.Users;
 
-namespace CompanyName.MyMeetings.Modules.UserAccess.Domain.UserRegistrations
+namespace CompanyName.MyMeetings.Modules.UserAccess.Domain.UserRegistrations;
+
+public class UserRegistration : Entity, IAggregateRoot
 {
-    public class UserRegistration : Entity, IAggregateRoot
+    private readonly string _login;
+
+    private readonly string _password;
+
+    private readonly string _email;
+
+    private readonly string _firstName;
+
+    private readonly string _lastName;
+
+    private readonly string _name;
+
+    private readonly DateTime _registerDate;
+
+    private UserRegistrationStatus _status;
+
+    private DateTime? _confirmedDate;
+
+    private UserRegistration()
     {
-        public UserRegistrationId Id { get; private set; }
+        // Only EF.
+    }
 
-        private string _login;
+    private UserRegistration(
+        string login,
+        string password,
+        string email,
+        string firstName,
+        string lastName,
+        IUsersCounter usersCounter,
+        string confirmLink)
+    {
+        CheckRule(new UserLoginMustBeUniqueRule(usersCounter, login));
 
-        private string _password;
+        Id = new UserRegistrationId(Guid.NewGuid());
+        _login = login;
+        _password = password;
+        _email = email;
+        _firstName = firstName;
+        _lastName = lastName;
+        _name = $"{firstName} {lastName}";
+        _registerDate = DateTime.UtcNow;
+        _status = UserRegistrationStatus.WaitingForConfirmation;
 
-        private string _email;
+        AddDomainEvent(new NewUserRegisteredDomainEvent(
+            Id,
+            _login,
+            _email,
+            _firstName,
+            _lastName,
+            _name,
+            _registerDate,
+            confirmLink));
+    }
 
-        private string _firstName;
+    public UserRegistrationId Id { get; }
 
-        private string _lastName;
+    public static UserRegistration RegisterNewUser(
+        string login,
+        string password,
+        string email,
+        string firstName,
+        string lastName,
+        IUsersCounter usersCounter,
+        string confirmLink)
+    {
+        return new UserRegistration(login, password, email, firstName, lastName, usersCounter, confirmLink);
+    }
 
-        private string _name;
+    public User CreateUser()
+    {
+        CheckRule(new UserCannotBeCreatedWhenRegistrationIsNotConfirmedRule(_status));
 
-        private DateTime _registerDate;
+        return User.CreateFromUserRegistration(
+            Id,
+            _login,
+            _password,
+            _email,
+            _firstName,
+            _lastName,
+            _name);
+    }
 
-        private UserRegistrationStatus _status;
+    public void Confirm()
+    {
+        CheckRule(new UserRegistrationCannotBeConfirmedMoreThanOnceRule(_status));
+        CheckRule(new UserRegistrationCannotBeConfirmedAfterExpirationRule(_status));
 
-        private DateTime? _confirmedDate;
+        _status = UserRegistrationStatus.Confirmed;
+        _confirmedDate = DateTime.UtcNow;
 
-        private UserRegistration()
-        {
-            // Only EF.
-        }
+        AddDomainEvent(new UserRegistrationConfirmedDomainEvent(Id));
+    }
 
-        public static UserRegistration RegisterNewUser(
-            string login,
-            string password,
-            string email,
-            string firstName,
-            string lastName,
-            IUsersCounter usersCounter,
-            string confirmLink)
-        {
-            return new UserRegistration(login, password, email, firstName, lastName, usersCounter, confirmLink);
-        }
+    public void Expire()
+    {
+        CheckRule(new UserRegistrationCannotBeExpiredMoreThanOnceRule(_status));
 
-        private UserRegistration(
-            string login,
-            string password,
-            string email,
-            string firstName,
-            string lastName,
-            IUsersCounter usersCounter,
-            string confirmLink)
-        {
-            this.CheckRule(new UserLoginMustBeUniqueRule(usersCounter, login));
+        _status = UserRegistrationStatus.Expired;
 
-            this.Id = new UserRegistrationId(Guid.NewGuid());
-            _login = login;
-            _password = password;
-            _email = email;
-            _firstName = firstName;
-            _lastName = lastName;
-            _name = $"{firstName} {lastName}";
-            _registerDate = DateTime.UtcNow;
-            _status = UserRegistrationStatus.WaitingForConfirmation;
-
-            this.AddDomainEvent(new NewUserRegisteredDomainEvent(
-                this.Id,
-                _login,
-                _email,
-                _firstName,
-                _lastName,
-                _name,
-                _registerDate,
-                confirmLink));
-        }
-
-        public User CreateUser()
-        {
-            this.CheckRule(new UserCannotBeCreatedWhenRegistrationIsNotConfirmedRule(_status));
-
-            return User.CreateFromUserRegistration(
-                this.Id,
-                this._login,
-                this._password,
-                this._email,
-                this._firstName,
-                this._lastName,
-                this._name);
-        }
-
-        public void Confirm()
-        {
-            this.CheckRule(new UserRegistrationCannotBeConfirmedMoreThanOnceRule(_status));
-            this.CheckRule(new UserRegistrationCannotBeConfirmedAfterExpirationRule(_status));
-
-            _status = UserRegistrationStatus.Confirmed;
-            _confirmedDate = DateTime.UtcNow;
-
-            this.AddDomainEvent(new UserRegistrationConfirmedDomainEvent(this.Id));
-        }
-
-        public void Expire()
-        {
-            this.CheckRule(new UserRegistrationCannotBeExpiredMoreThanOnceRule(_status));
-
-            _status = UserRegistrationStatus.Expired;
-
-            this.AddDomainEvent(new UserRegistrationExpiredDomainEvent(this.Id));
-        }
+        AddDomainEvent(new UserRegistrationExpiredDomainEvent(Id));
     }
 }

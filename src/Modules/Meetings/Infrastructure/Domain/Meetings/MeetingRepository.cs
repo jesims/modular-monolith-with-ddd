@@ -1,25 +1,24 @@
 ﻿using System.Threading.Tasks;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.Meetings
+namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.Meetings;
+
+internal class MeetingRepository : IMeetingRepository
 {
-    internal class MeetingRepository : IMeetingRepository
+    private readonly MeetingsContext _meetingsContext;
+
+    internal MeetingRepository(MeetingsContext meetingsContext)
     {
-        private readonly MeetingsContext _meetingsContext;
+        _meetingsContext = meetingsContext;
+    }
 
-        internal MeetingRepository(MeetingsContext meetingsContext)
-        {
-            _meetingsContext = meetingsContext;
-        }
+    public async Task AddAsync(Meeting meeting)
+    {
+        await _meetingsContext.Meetings.AddAsync(meeting);
+    }
 
-        public async Task AddAsync(Meeting meeting)
-        {
-            await _meetingsContext.Meetings.AddAsync(meeting);
-        }
-
-        public async Task<Meeting> GetByIdAsync(MeetingId id)
-        {
-            return await _meetingsContext.Meetings.FindAsync(id);
-        }
+    public async Task<Meeting> GetByIdAsync(MeetingId id)
+    {
+        return await _meetingsContext.Meetings.FindAsync(id);
     }
 }

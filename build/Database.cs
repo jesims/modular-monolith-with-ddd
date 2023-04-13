@@ -1,9 +1,7 @@
-﻿using Nuke.Common;
-using Nuke.Common.Tools.DotNet;
-using static Nuke.Common.Tools.DotNet.DotNetTasks;
-
-public partial class Build
+﻿public partial class Build
 {
+    [Parameter("Modular Monolith database connection string")] readonly string DatabaseConnectionString;
+
     Target CompileDbUpMigrator => _ => _
         .Executes(() =>
         {
@@ -14,8 +12,7 @@ public partial class Build
                 .SetOutputDirectory(OutputDbUbMigratorBuildDirectory)
             );
         });
-    
-    [Parameter("Modular Monolith database connection string")] readonly string DatabaseConnectionString;
+
     Target MigrateDatabase => _ => _
         .Requires(() => DatabaseConnectionString != null)
         .DependsOn(CompileDbUpMigrator)

@@ -1,18 +1,20 @@
 ﻿using CompanyName.MyMeetings.BuildingBlocks.Domain;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingComments.Rules
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingComments.Rules;
+
+public class CommentCannotBeLikedByTheSameMemberMoreThanOnceRule : IBusinessRule
 {
-    public class CommentCannotBeLikedByTheSameMemberMoreThanOnceRule : IBusinessRule
+    private readonly int _memberCommentLikesCount;
+
+    public CommentCannotBeLikedByTheSameMemberMoreThanOnceRule(int memberCommentLikesCount)
     {
-        private readonly int _memberCommentLikesCount;
+        _memberCommentLikesCount = memberCommentLikesCount;
+    }
 
-        public CommentCannotBeLikedByTheSameMemberMoreThanOnceRule(int memberCommentLikesCount)
-        {
-            _memberCommentLikesCount = memberCommentLikesCount;
-        }
+    public string Message => "Member cannot like one comment more than once.";
 
-        public bool IsBroken() => _memberCommentLikesCount > 0;
-
-        public string Message => "Member cannot like one comment more than once.";
+    public bool IsBroken()
+    {
+        return _memberCommentLikesCount > 0;
     }
 }

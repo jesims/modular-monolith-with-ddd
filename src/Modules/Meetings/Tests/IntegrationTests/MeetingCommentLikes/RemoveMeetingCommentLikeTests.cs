@@ -10,56 +10,58 @@ using CompanyName.MyMeetings.Modules.Meetings.IntegrationTests.Meetings;
 using CompanyName.MyMeetings.Modules.Meetings.IntegrationTests.SeedWork;
 using NUnit.Framework;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.IntegrationTests.MeetingCommentLikes
+namespace CompanyName.MyMeetings.Modules.Meetings.IntegrationTests.MeetingCommentLikes;
+
+[TestFixture]
+public class RemoveMeetingCommentLikeTests : TestBase
 {
-    [TestFixture]
-    public class RemoveMeetingCommentLikeTests : TestBase
+    [Test]
+    public async Task UnlikeMeetingComment_WhenDataIsValid_IsSuccessful()
     {
-        [Test]
-        public async Task UnlikeMeetingComment_WhenDataIsValid_IsSuccessful()
-        {
-            // Arrange
+        // Arrange
+        await MeetingsModule.ExecuteCommandAsync(
+            new CreateMemberCommand(
+                Guid.NewGuid(),
+                ExecutionContext.UserId,
+                "ivan_petrov",
+                "ivan@mail.com",
+                "Ivan",
+                "Petrov",
+                "Ivan Petrov"));
+
+        var meetingId = await MeetingHelper.CreateMeetingAsync(MeetingsModule, ExecutionContext);
+
+        var meetingCommentId =
             await MeetingsModule.ExecuteCommandAsync(
-                new CreateMemberCommand(
-                    Guid.NewGuid(),
-                    ExecutionContext.UserId,
-                    "ivan_petrov",
-                    "ivan@mail.com",
-                    "Ivan",
-                    "Petrov",
-                    "Ivan Petrov"));
+                new AddMeetingCommentCommand(meetingId, "The meeting was awesome."));
 
-            var meetingId = await MeetingHelper.CreateMeetingAsync(MeetingsModule, ExecutionContext);
+        await MeetingsModule.ExecuteCommandAsync(new AddMeetingCommentLikeCommand(meetingCommentId));
 
-            var meetingCommentId = await MeetingsModule.ExecuteCommandAsync(new AddMeetingCommentCommand(meetingId, "The meeting was awesome."));
+        await AssertEventually(
+            new GetMeetingCommentsProbe(MeetingsModule, meetingId, meetingCommentId, 1),
+            10000);
 
-            await MeetingsModule.ExecuteCommandAsync(new AddMeetingCommentLikeCommand(meetingCommentId));
+        // Act
+        await MeetingsModule.ExecuteCommandAsync(new RemoveMeetingCommentLikeCommand(meetingCommentId));
 
-            await AssertEventually(
-                new GetMeetingCommentsProbe(MeetingsModule, meetingId, meetingCommentId, expectedCommentLikesCount: 1),
-                10000);
+        // Assert
+        var meetingCommentLikers =
+            await MeetingsModule.ExecuteQueryAsync(new GetMeetingCommentLikersQuery(meetingCommentId));
+        Assert.That(meetingCommentLikers.Count, Is.EqualTo(0));
 
-            // Act
-            await MeetingsModule.ExecuteCommandAsync(new RemoveMeetingCommentLikeCommand(meetingCommentId));
+        await AssertEventually(
+            new GetMeetingCommentsProbe(MeetingsModule, meetingId, meetingCommentId, 0),
+            10000);
+    }
 
-            // Assert
-            var meetingCommentLikers = await MeetingsModule.ExecuteQueryAsync(new GetMeetingCommentLikersQuery(meetingCommentId));
-            Assert.That(meetingCommentLikers.Count, Is.EqualTo(0));
-
-            await AssertEventually(
-                new GetMeetingCommentsProbe(MeetingsModule, meetingId, meetingCommentId, expectedCommentLikesCount: 0),
-                10000);
-        }
-
-        [Test]
-        public void UnlikeMeetingComment_WhenCommentNotExists_ThrowsInvalidCommandException()
+    [Test]
+    public void UnlikeMeetingComment_WhenCommentNotExists_ThrowsInvalidCommandException()
+    {
+        // Assert
+        Assert.CatchAsync<InvalidCommandException>(async () =>
         {
-            // Assert
-            Assert.CatchAsync<InvalidCommandException>(async () =>
-            {
-                // Act
-                await MeetingsModule.ExecuteCommandAsync(new RemoveMeetingCommentLikeCommand(meetingCommentId: Guid.NewGuid()));
-            });
-        }
+            // Act
+            await MeetingsModule.ExecuteCommandAsync(new RemoveMeetingCommentLikeCommand(Guid.NewGuid()));
+        });
     }
 }

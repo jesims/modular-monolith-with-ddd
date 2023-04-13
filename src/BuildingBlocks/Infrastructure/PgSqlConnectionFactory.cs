@@ -1,51 +1,49 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
 using Npgsql;
 
-namespace CompanyName.MyMeetings.BuildingBlocks.Infrastructure
+namespace CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
+
+public class PgSqlConnectionFactory : ISqlConnectionFactory, IDisposable
 {
-    public class PgSqlConnectionFactory : ISqlConnectionFactory, IDisposable
+    private readonly string _connectionString;
+    private IDbConnection _connection;
+
+    public PgSqlConnectionFactory(string connectionString)
     {
-        private readonly string _connectionString;
-        private IDbConnection _connection;
+        _connectionString = connectionString;
+    }
 
-        public PgSqlConnectionFactory(string connectionString)
+    public IDbConnection GetOpenConnection()
+    {
+        if (_connection == null || _connection.State != ConnectionState.Open)
         {
-            this._connectionString = connectionString;
+            _connection = new NpgsqlConnection(_connectionString);
+            _connection.Open();
         }
 
-        public IDbConnection GetOpenConnection()
+        return _connection;
+    }
+
+    public IDbConnection CreateNewConnection()
+    {
+        var connection = new NpgsqlConnection(_connectionString);
+        connection.Open();
+
+        return connection;
+    }
+
+    public string GetConnectionString()
+    {
+        return _connectionString;
+    }
+
+    public void Dispose()
+    {
+        if (_connection != null && _connection.State == ConnectionState.Open)
         {
-            if (this._connection == null || this._connection.State != ConnectionState.Open)
-            {
-                this._connection = new NpgsqlConnection(_connectionString);
-                this._connection.Open();
-            }
-
-            return this._connection;
-        }
-
-        public IDbConnection CreateNewConnection()
-        {
-            var connection = new NpgsqlConnection(_connectionString);
-            connection.Open();
-
-            return connection;
-        }
-
-        public string GetConnectionString()
-        {
-            return _connectionString;
-        }
-
-        public void Dispose()
-        {
-            if (this._connection != null && this._connection.State == ConnectionState.Open)
-            {
-                this._connection.Dispose();
-            }
+            _connection.Dispose();
         }
     }
 }

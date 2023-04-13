@@ -1,14 +1,37 @@
 ﻿using System;
-using Nuke.Common;
-using Nuke.Common.IO;
-using Nuke.Common.Tools.Docker;
-using Nuke.Common.Tools.DotNet;
 using Utils;
-using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 public partial class Build
 {
+    const string CreateDatabaseScriptName = "CreateDatabase_Linux.sql";
+
+    const string InputFilesDirectoryName = "input-files";
+
+    const string SqlServerPassword = "123qwe!@#QWE";
+
+    const string SqlServerUser = "sa";
+
+    const string SqlServerPort = "1401";
+
+    const string MeetingsModuleIntegrationTestsAssemblyName =
+        "CompanyName.MyMeetings.Modules.Meetings.IntegrationTests";
+
+    const string MyMeetingsDatabaseEnvName = "ASPNETCORE_MyMeetings_IntegrationTests_ConnectionString";
+
+    const string AdministrationModuleIntegrationTestsAssemblyName =
+        "CompanyName.MyMeetings.Modules.Administration.IntegrationTests";
+
+    const string UserAccessModuleIntegrationTestsAssemblyName =
+        "CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests";
+
+    const string PaymentsModuleIntegrationTestsAssemblyName =
+        "CompanyName.MyMeetings.Modules.Payments.IntegrationTests";
+
+    const string SystemIntegrationTestsAssemblyName = "CompanyName.MyMeetings.IntegrationTests";
+
+    readonly string MyMeetingsDatabaseConnectionString =
+        $"Server=127.0.0.1,{SqlServerPort};Database=MyMeetings;User={SqlServerUser};Password={SqlServerPassword}";
+
     AbsolutePath WorkingDirectory => RootDirectory / ".nuke-working-directory";
 
     AbsolutePath OutputDirectory => WorkingDirectory / "output";
@@ -20,10 +43,6 @@ public partial class Build
     AbsolutePath DatabaseDirectory =>
         RootDirectory / "src" / "Database" / "CompanyName.MyMeetings.Database" / "Scripts";
 
-    const string CreateDatabaseScriptName = "CreateDatabase_Linux.sql";
-
-    const string InputFilesDirectoryName = "input-files";
-
     Target PrepareInputFiles => _ => _
         .DependsOn(Clean)
         .Executes(() =>
@@ -32,12 +51,6 @@ public partial class Build
             string createDatabaseFileTarget = InputFilesDirectory / CreateDatabaseScriptName;
             CopyFile(createDatabaseFile, createDatabaseFileTarget, FileExistsPolicy.Overwrite);
         });
-
-    const string SqlServerPassword = "123qwe!@#QWE";
-
-    const string SqlServerUser = "sa";
-
-    const string SqlServerPort = "1401";
 
     Target PrepareSqlServer => _ => _
         .DependsOn(PrepareInputFiles)
@@ -67,7 +80,8 @@ public partial class Build
                 .EnableInteractive()
                 .SetContainer("sql-server-db")
                 .SetCommand("/bin/sh")
-                .SetArgs("-c", $"./opt/mssql-tools/bin/sqlcmd -d master -i ./{InputFilesDirectoryName}/{CreateDatabaseScriptName} -U {SqlServerUser} -P {SqlServerPassword}"));
+                .SetArgs("-c",
+                    $"./opt/mssql-tools/bin/sqlcmd -d master -i ./{InputFilesDirectoryName}/{CreateDatabaseScriptName} -U {SqlServerUser} -P {SqlServerPassword}"));
         });
 
     Target CompileDbUpMigratorForIntegrationTests => _ => _
@@ -84,8 +98,6 @@ public partial class Build
 
     AbsolutePath DbUpMigratorPath => OutputDbUbMigratorBuildDirectory / "DatabaseMigrator.dll";
 
-    readonly string MyMeetingsDatabaseConnectionString = $"Server=127.0.0.1,{SqlServerPort};Database=MyMeetings;User={SqlServerUser};Password={SqlServerPassword}";
-
     Target RunDatabaseMigrations => _ => _
         .DependsOn(CompileDbUpMigratorForIntegrationTests)
         .Executes(() =>
@@ -94,8 +106,6 @@ public partial class Build
 
             DotNet($"{DbUpMigratorPath} {MyMeetingsDatabaseConnectionString} {migrationsPath}");
         });
-
-    const string MeetingsModuleIntegrationTestsAssemblyName = "CompanyName.MyMeetings.Modules.Meetings.IntegrationTests";
 
     Target BuildMeetingsModuleIntegrationTests => _ => _
         .DependsOn(RunDatabaseMigrations)
@@ -107,8 +117,6 @@ public partial class Build
                 .SetProjectFile(integrationTest)
                 .DisableNoRestore());
         });
-
-    const string MyMeetingsDatabaseEnvName = "ASPNETCORE_MyMeetings_IntegrationTests_ConnectionString";
 
     Target RunMeetingsModuleIntegrationTests => _ => _
         .DependsOn(BuildMeetingsModuleIntegrationTests)
@@ -123,8 +131,6 @@ public partial class Build
                 .EnableNoBuild()
                 .SetProjectFile(integrationTest));
         });
-
-    const string AdministrationModuleIntegrationTestsAssemblyName = "CompanyName.MyMeetings.Modules.Administration.IntegrationTests";
 
     Target BuildAdministrationModuleIntegrationTests => _ => _
         .DependsOn(RunDatabaseMigrations)
@@ -151,8 +157,6 @@ public partial class Build
                 .SetProjectFile(integrationTest));
         });
 
-    const string UserAccessModuleIntegrationTestsAssemblyName = "CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests";
-
     Target BuildUserAccessModuleIntegrationTests => _ => _
         .DependsOn(RunDatabaseMigrations)
         .Executes(() =>
@@ -178,8 +182,6 @@ public partial class Build
                 .SetProjectFile(integrationTest));
         });
 
-    const string PaymentsModuleIntegrationTestsAssemblyName = "CompanyName.MyMeetings.Modules.Payments.IntegrationTests";
-
     Target BuildPaymentsModuleIntegrationTests => _ => _
         .DependsOn(RunDatabaseMigrations)
         .Executes(() =>
@@ -204,8 +206,6 @@ public partial class Build
                 .EnableNoBuild()
                 .SetProjectFile(integrationTest));
         });
-
-    const string SystemIntegrationTestsAssemblyName = "CompanyName.MyMeetings.IntegrationTests";
 
     Target BuildSystemIntegrationTests => _ => _
         .DependsOn(RunDatabaseMigrations)
@@ -241,6 +241,5 @@ public partial class Build
             RunSystemIntegrationTests)
         .Executes(() =>
         {
-
         });
 }

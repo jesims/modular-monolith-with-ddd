@@ -2,28 +2,27 @@
 using CompanyName.MyMeetings.BuildingBlocks.Domain;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.SharedKernel;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
+
+public class MeetingTerm : ValueObject
 {
-    public class MeetingTerm : ValueObject
+    private MeetingTerm(DateTime startDate, DateTime endDate)
     {
-        public DateTime StartDate { get; }
+        StartDate = startDate;
+        EndDate = endDate;
+    }
 
-        public DateTime EndDate { get; }
+    public DateTime StartDate { get; }
 
-        public static MeetingTerm CreateNewBetweenDates(DateTime startDate, DateTime endDate)
-        {
-            return new MeetingTerm(startDate, endDate);
-        }
+    public DateTime EndDate { get; }
 
-        private MeetingTerm(DateTime startDate, DateTime endDate)
-        {
-            this.StartDate = startDate;
-            this.EndDate = endDate;
-        }
+    public static MeetingTerm CreateNewBetweenDates(DateTime startDate, DateTime endDate)
+    {
+        return new MeetingTerm(startDate, endDate);
+    }
 
-        internal bool IsAfterStart()
-        {
-            return SystemClock.Now > this.StartDate;
-        }
+    internal bool IsAfterStart()
+    {
+        return SystemClock.Now > StartDate;
     }
 }

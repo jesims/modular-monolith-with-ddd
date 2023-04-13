@@ -10,125 +10,134 @@ using CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Members;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.SharedKernel;
 
-namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingComments
+namespace CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingComments;
+
+public class MeetingComment : Entity, IAggregateRoot
 {
-    public class MeetingComment : Entity, IAggregateRoot
+    private readonly MeetingId _meetingId;
+
+    private readonly MemberId _authorId;
+
+    private MeetingCommentId? _inReplyToCommentId;
+
+    private string _comment;
+
+    private DateTime _createDate;
+
+    private DateTime? _editDate;
+
+    private bool _isRemoved;
+
+    private string _removedByReason;
+
+    private MeetingComment(
+        MeetingId meetingId,
+        MemberId authorId,
+        string comment,
+        MeetingCommentId? inReplyToCommentId,
+        MeetingCommentingConfiguration meetingCommentingConfiguration,
+        MeetingGroup meetingGroup)
     {
-        public MeetingCommentId Id { get; }
+        CheckRule(new CommentTextMustBeProvidedRule(comment));
+        CheckRule(new CommentCanBeCreatedOnlyIfCommentingForMeetingEnabledRule(meetingCommentingConfiguration));
+        CheckRule(new CommentCanBeAddedOnlyByMeetingGroupMemberRule(authorId, meetingGroup));
 
-        private MeetingId _meetingId;
+        Id = new MeetingCommentId(Guid.NewGuid());
+        _meetingId = meetingId;
+        _authorId = authorId;
+        _comment = comment;
 
-        private MemberId _authorId;
+        _inReplyToCommentId = inReplyToCommentId;
 
-        private MeetingCommentId? _inReplyToCommentId;
+        _createDate = SystemClock.Now;
+        _editDate = null;
 
-        private string _comment;
+        _isRemoved = false;
+        _removedByReason = null;
 
-        private DateTime _createDate;
-
-        private DateTime? _editDate;
-
-        private bool _isRemoved;
-
-        private string _removedByReason;
-
-        private MeetingComment(
-            MeetingId meetingId,
-            MemberId authorId,
-            string comment,
-            MeetingCommentId? inReplyToCommentId,
-            MeetingCommentingConfiguration meetingCommentingConfiguration,
-            MeetingGroup meetingGroup)
+        if (inReplyToCommentId == null)
         {
-            this.CheckRule(new CommentTextMustBeProvidedRule(comment));
-            this.CheckRule(new CommentCanBeCreatedOnlyIfCommentingForMeetingEnabledRule(meetingCommentingConfiguration));
-            this.CheckRule(new CommentCanBeAddedOnlyByMeetingGroupMemberRule(authorId, meetingGroup));
-
-            this.Id = new MeetingCommentId(Guid.NewGuid());
-            _meetingId = meetingId;
-            _authorId = authorId;
-            _comment = comment;
-
-            _inReplyToCommentId = inReplyToCommentId;
-
-            _createDate = SystemClock.Now;
-            _editDate = null;
-
-            _isRemoved = false;
-            _removedByReason = null;
-
-            if (inReplyToCommentId == null)
-            {
-                this.AddDomainEvent(new MeetingCommentAddedDomainEvent(this.Id, _meetingId, comment));
-            }
-            else
-            {
-                this.AddDomainEvent(new ReplyToMeetingCommentAddedDomainEvent(this.Id, inReplyToCommentId, comment));
-            }
+            AddDomainEvent(new MeetingCommentAddedDomainEvent(Id, _meetingId, comment));
         }
-
-        private MeetingComment()
+        else
         {
-            // Only for EF.
+            AddDomainEvent(new ReplyToMeetingCommentAddedDomainEvent(Id, inReplyToCommentId, comment));
         }
+    }
 
-        public void Edit(MemberId editorId, string editedComment, MeetingCommentingConfiguration meetingCommentingConfiguration)
-        {
-            this.CheckRule(new CommentTextMustBeProvidedRule(editedComment));
-            this.CheckRule(new MeetingCommentCanBeEditedOnlyByAuthorRule(this._authorId, editorId));
-            this.CheckRule(new CommentCanBeEditedOnlyIfCommentingForMeetingEnabledRule(meetingCommentingConfiguration));
+    private MeetingComment()
+    {
+        // Only for EF.
+    }
 
-            _comment = editedComment;
-            _editDate = SystemClock.Now;
+    public MeetingCommentId Id { get; }
 
-            this.AddDomainEvent(new MeetingCommentEditedDomainEvent(this.Id, editedComment));
-        }
+    public void Edit(MemberId editorId, string editedComment,
+        MeetingCommentingConfiguration meetingCommentingConfiguration)
+    {
+        CheckRule(new CommentTextMustBeProvidedRule(editedComment));
+        CheckRule(new MeetingCommentCanBeEditedOnlyByAuthorRule(_authorId, editorId));
+        CheckRule(new CommentCanBeEditedOnlyIfCommentingForMeetingEnabledRule(meetingCommentingConfiguration));
 
-        public void Remove(MemberId removingMemberId, MeetingGroup meetingGroup, string reason = null)
-        {
-            this.CheckRule(new MeetingCommentCanBeRemovedOnlyByAuthorOrGroupOrganizerRule(meetingGroup, this._authorId, removingMemberId));
-            this.CheckRule(new RemovingReasonCanBeProvidedOnlyByGroupOrganizerRule(meetingGroup, removingMemberId, reason));
+        _comment = editedComment;
+        _editDate = SystemClock.Now;
 
-            _isRemoved = true;
-            _removedByReason = reason ?? string.Empty;
+        AddDomainEvent(new MeetingCommentEditedDomainEvent(Id, editedComment));
+    }
 
-            this.AddDomainEvent(new MeetingCommentRemovedDomainEvent(this.Id));
-        }
+    public void Remove(MemberId removingMemberId, MeetingGroup meetingGroup, string reason = null)
+    {
+        CheckRule(new MeetingCommentCanBeRemovedOnlyByAuthorOrGroupOrganizerRule(meetingGroup, _authorId,
+            removingMemberId));
+        CheckRule(new RemovingReasonCanBeProvidedOnlyByGroupOrganizerRule(meetingGroup, removingMemberId, reason));
 
-        public MeetingComment Reply(MemberId replierId, string reply, MeetingGroup meetingGroup, MeetingCommentingConfiguration meetingCommentingConfiguration)
-            => new MeetingComment(
-                _meetingId,
-                replierId,
-                reply,
-                this.Id,
-                meetingCommentingConfiguration,
-                meetingGroup);
+        _isRemoved = true;
+        _removedByReason = reason ?? string.Empty;
 
-        public MeetingMemberCommentLike Like(
-            MemberId likerId,
-            MeetingGroupMemberData likerMeetingGroupMember,
-            int meetingMemberCommentLikesCount)
-        {
-            this.CheckRule(new CommentCanBeLikedOnlyByMeetingGroupMemberRule(likerMeetingGroupMember));
-            this.CheckRule(new CommentCannotBeLikedByTheSameMemberMoreThanOnceRule(meetingMemberCommentLikesCount));
+        AddDomainEvent(new MeetingCommentRemovedDomainEvent(Id));
+    }
 
-            return MeetingMemberCommentLike.Create(this.Id, likerId);
-        }
+    public MeetingComment Reply(MemberId replierId, string reply, MeetingGroup meetingGroup,
+        MeetingCommentingConfiguration meetingCommentingConfiguration)
+    {
+        return new MeetingComment(
+            _meetingId,
+            replierId,
+            reply,
+            Id,
+            meetingCommentingConfiguration,
+            meetingGroup);
+    }
 
-        public MeetingId GetMeetingId() => this._meetingId;
+    public MeetingMemberCommentLike Like(
+        MemberId likerId,
+        MeetingGroupMemberData likerMeetingGroupMember,
+        int meetingMemberCommentLikesCount)
+    {
+        CheckRule(new CommentCanBeLikedOnlyByMeetingGroupMemberRule(likerMeetingGroupMember));
+        CheckRule(new CommentCannotBeLikedByTheSameMemberMoreThanOnceRule(meetingMemberCommentLikesCount));
 
-        internal static MeetingComment Create(
-            MeetingId meetingId,
-            MemberId authorId,
-            string comment,
-            MeetingGroup meetingGroup,
-            MeetingCommentingConfiguration meetingCommentingConfiguration)
-            => new MeetingComment(
-                meetingId,
-                authorId,
-                comment,
-                inReplyToCommentId: null,
-                meetingCommentingConfiguration,
-                meetingGroup);
+        return MeetingMemberCommentLike.Create(Id, likerId);
+    }
+
+    public MeetingId GetMeetingId()
+    {
+        return _meetingId;
+    }
+
+    internal static MeetingComment Create(
+        MeetingId meetingId,
+        MemberId authorId,
+        string comment,
+        MeetingGroup meetingGroup,
+        MeetingCommentingConfiguration meetingCommentingConfiguration)
+    {
+        return new MeetingComment(
+            meetingId,
+            authorId,
+            comment,
+            null,
+            meetingCommentingConfiguration,
+            meetingGroup);
     }
 }
