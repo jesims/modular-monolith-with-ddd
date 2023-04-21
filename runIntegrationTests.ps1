@@ -2,7 +2,7 @@
 # Run Integration Tests
 #
 
-$containername="sherpa-integration-db"
+$containername="mymeetings-integration-db"
 $testuser="sss_admin"
 $testpassword="sss_admin_password"
 $dbname="postgres"
