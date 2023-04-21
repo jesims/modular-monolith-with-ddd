@@ -20,56 +20,56 @@ namespace CompanyName.MyMeetings.SUT.SeedWork
                 var internalCommandsCountUsers = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [users].[InternalCommands] AS [InternalCommand] " +
-                    "WHERE [InternalCommand].[ProcessedDate] IS NULL");
+                    "FROM sss_users.internal_commands AS command " +
+                    "WHERE command.processed_date IS NULL");
 
                 var inboxCountUsers = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [users].[InboxMessages] AS [InboxMessage] " +
-                    "WHERE [InboxMessage].[ProcessedDate] IS NULL");
+                    "FROM sss_users.inbox_messages AS inbox " +
+                    "WHERE inbox.processed_date IS NULL");
 
                 var outboxCountUsers = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [users].[OutboxMessages] AS [OutboxMessage] " +
-                    "WHERE [OutboxMessage].[ProcessedDate] IS NULL");
+                    "FROM sss_users.outbox_messages AS outbox " +
+                    "WHERE outbox.processed_date IS NULL");
                 
                 var internalCommandsCountMeetings = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [meetings].[InternalCommands] AS [InternalCommand] " +
-                    "WHERE [InternalCommand].[ProcessedDate] IS NULL");
+                    "FROM sss_meetings.internal_commands AS command " +
+                    "WHERE command.processed_date IS NULL");
 
                 var inboxCountMeetings = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [meetings].[InboxMessages] AS [InboxMessage] " +
-                    "WHERE [InboxMessage].[ProcessedDate] IS NULL");
+                    "FROM sss_meetings.inbox_messages AS inbox " +
+                    "WHERE inbox.processed_date IS NULL");
 
                 var outboxCountMeetings = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [meetings].[OutboxMessages] AS [OutboxMessage] " +
-                    "WHERE [OutboxMessage].[ProcessedDate] IS NULL");
-                
+                    "FROM sss_meetings.outbox_messages AS outbox " +
+                    "WHERE outbox.processed_date IS NULL");
+
                 var internalCommandsCountAdministration = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [administration].[InternalCommands] AS [InternalCommand] " +
-                    "WHERE [InternalCommand].[ProcessedDate] IS NULL");
+                    "FROM sss_administration.internal_commands AS command " +
+                    "WHERE command.processed_date IS NULL");
 
                 var inboxCountMeetingsAdministration = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [administration].[InboxMessages] AS [InboxMessage] " +
-                    "WHERE [InboxMessage].[ProcessedDate] IS NULL");
+                    "FROM sss_administration.inbox_messages AS inbox " +
+                    "WHERE inbox.processed_date IS NULL");
 
                 var outboxCountMeetingsAdministration = await sqlConnection.ExecuteScalarAsync<int>(
                     "SELECT " +
                     "COUNT(*) " +
-                    "FROM [administration].[OutboxMessages] AS [OutboxMessage] " +
-                    "WHERE [OutboxMessage].[ProcessedDate] IS NULL");
+                    "FROM sss_administration.outbox_messages AS outbox " +
+                    "WHERE outbox.processed_date IS NULL");
 
                 if (internalCommandsCountUsers == 0 && 
                     inboxCountUsers == 0 && 

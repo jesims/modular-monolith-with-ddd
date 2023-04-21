@@ -16,11 +16,11 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
         public static async Task<List<OutboxMessageDto>> GetOutboxMessages(IDbConnection connection)
         {
             const string sql = "SELECT " +
-                               "[OutboxMessage].[Id], " +
-                               "[OutboxMessage].[Type], " +
-                               "[OutboxMessage].[Data] " +
-                               "FROM [users].[OutboxMessages] AS [OutboxMessage] " +
-                               "ORDER BY [OutboxMessage].[OccurredOn]";
+                               $"outbox_message.id AS {nameof(OutboxMessageDto.Id)}, " +
+                               $"outbox_message.type AS {nameof(OutboxMessageDto.Type)}, " +
+                               $"outbox_message.data AS {nameof(OutboxMessageDto.Data)} " +
+                               "FROM sss_users.outbox_messages AS outbox_message " +
+                               "ORDER BY outbox_message.occurred_on";
 
             var messages = await connection.QueryAsync<OutboxMessageDto>(sql);
             return messages.AsList();

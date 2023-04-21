@@ -14,22 +14,22 @@ namespace CompanyName.MyMeetings.SUT.SeedWork
 
             await ClearMeetings(connection);
 
-            await ClearPayments(connection);
+            //await ClearPayments(connection);
 
             await ClearUsers(connection);
         }
 
         private static async Task ClearUsers(IDbConnection connection)
         {
-            var clearUsersSql =
-                "DELETE FROM [users].[InboxMessages] " +
-                "DELETE FROM [users].[InternalCommands] " +
-                "DELETE FROM [users].[OutboxMessages] " +
-                "DELETE FROM [users].[Permissions] " +
-                "DELETE FROM [users].[RolesToPermissions] " +
-                "DELETE FROM [users].[UserRegistrations] " +
-                "DELETE FROM [users].[UserRoles] " +
-                "DELETE FROM [users].[Users] ";
+            var clearUsersSql = 
+                "DELETE FROM sss_users.inbox_messages; " +
+                "DELETE FROM sss_users.internal_commands; " +
+                "DELETE FROM sss_users.outbox_messages; " +
+                "DELETE FROM sss_users.user_registrations; " +
+                "DELETE FROM sss_users.users; " +
+                "DELETE FROM sss_users.roles_to_permissions; " +
+                "DELETE FROM sss_users.user_roles; " +
+                "DELETE FROM sss_users.permissions; ";
 
             await connection.ExecuteScalarAsync(clearUsersSql);
         }
@@ -55,22 +55,21 @@ namespace CompanyName.MyMeetings.SUT.SeedWork
         private static async Task ClearMeetings(IDbConnection connection)
         {
             var clearMeetingsSql =
-                "DELETE FROM [meetings].[Countries] " +
-                "DELETE FROM [meetings].[InboxMessages] " +
-                "DELETE FROM [meetings].[InternalCommands] " +
-                "DELETE FROM [meetings].[MeetingAttendees] " +
-                "DELETE FROM [meetings].[MeetingCommentingConfigurations] " +
-                "DELETE FROM [meetings].[MeetingComments] " +
-                "DELETE FROM [meetings].[MeetingGroupMembers] " +
-                "DELETE FROM [meetings].[MeetingGroupProposals] " +
-                "DELETE FROM [meetings].[MeetingGroups] " +
-                "DELETE FROM [meetings].[MeetingMemberCommentLikes] " +
-                "DELETE FROM [meetings].[MeetingNotAttendees] " +
-                "DELETE FROM [meetings].[Meetings] " +
-                "DELETE FROM [meetings].[MeetingWaitlistMembers] " +
-                "DELETE FROM [meetings].[Members] " +
-                "DELETE FROM [meetings].[MemberSubscriptions] " +
-                "DELETE FROM [meetings].[OutboxMessages]";
+                "DELETE FROM sss_meetings.inbox_messages; " +
+                "DELETE FROM sss_meetings.internal_commands; " +
+                "DELETE FROM sss_meetings.outbox_messages; " +
+                "DELETE FROM sss_meetings.meeting_attendees; " +
+                "DELETE FROM sss_meetings.meeting_group_members; " +
+                "DELETE FROM sss_meetings.meeting_group_proposals; " +
+                "DELETE FROM sss_meetings.meeting_groups; " +
+                "DELETE FROM sss_meetings.meeting_not_attendees; " +
+                "DELETE FROM sss_meetings.meeting_commenting_configurations; " +
+                "DELETE FROM sss_meetings.meetings; " +
+                "DELETE FROM sss_meetings.meeting_waitlist_members; " +
+                "DELETE FROM sss_meetings.meeting_member_comment_likes; " +
+                "DELETE FROM sss_meetings.meeting_comments; " +
+                "DELETE FROM sss_meetings.countries; " +
+                "DELETE FROM sss_meetings.members; ";
 
             await connection.ExecuteScalarAsync(clearMeetingsSql);
         }
@@ -85,11 +84,11 @@ namespace CompanyName.MyMeetings.SUT.SeedWork
         private static async Task ClearAdministration(IDbConnection connection)
         {
             var clearAdministrationSql =
-                "DELETE FROM [administration].[InboxMessages] " +
-                "DELETE FROM [administration].[InternalCommands] " +
-                "DELETE FROM [administration].[MeetingGroupProposals] " +
-                "DELETE FROM [administration].[Members] " +
-                "DELETE FROM [administration].[OutboxMessages] ";
+                "DELETE FROM sss_administration.inbox_messages; " +
+                "DELETE FROM sss_administration.internal_commands; " +
+                "DELETE FROM sss_administration.outbox_messages; " +
+                "DELETE FROM sss_administration.meeting_group_proposals; " +
+                "DELETE FROM sss_administration.members; ";
 
             await connection.ExecuteScalarAsync(clearAdministrationSql);
         }
