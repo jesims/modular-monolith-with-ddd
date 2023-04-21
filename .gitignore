@@ -274,3 +274,8 @@ UploadedFiles
 
 #Nuke working directory
 .nuke-working-directory
+
+# Reports Generated during migrations (Flyway)
+report.html.html
+report.html.json
+
