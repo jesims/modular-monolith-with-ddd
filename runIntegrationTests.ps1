@@ -22,7 +22,7 @@ Write-Output "⏱️ Pausing for $timerseconds seconds to allow container to be 
 Start-Sleep -s $timerseconds
 
 Write-Output "▶️ Run Database Migrations"
-flyway -user=sss_admin -password=sss_admin_password -url=jdbc:postgresql://localhost:1439/postgres -locations=src/Database/sql migrate
+evolve migrate postgresql -c "Host=localhost;Port=1439;Database=$dbname;Username=$testuser;Password=$testpassword;" -l "src/Database/sql"
 Write-Output "✅ Migration Done"
 
 Write-Output "▶️ Run Tests"
