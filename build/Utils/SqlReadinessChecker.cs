@@ -2,7 +2,7 @@
 using System.Threading;
 using Nuke.Common;
 using Dapper;
-using System.Data.SqlClient;
+using Npgsql;
 
 namespace Utils
 {
@@ -10,7 +10,7 @@ namespace Utils
     {
         public static void WaitForSqlSever(string connectionString)
         {
-            using var connection = new SqlConnection(connectionString);
+            using var connection = new NpgsqlConnection(connectionString);
 
             const int maxTryCounts = 30;
             var tryCounts = 0;
