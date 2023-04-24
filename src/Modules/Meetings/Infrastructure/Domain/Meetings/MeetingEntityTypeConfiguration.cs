@@ -48,8 +48,8 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.Meetings
 
             builder.OwnsOne<Term>("_rsvpTerm", b =>
             {
-                b.Property(p => p.StartDate).HasColumnName("rsvp_term_start_date");
-                b.Property(p => p.EndDate).HasColumnName("rsvp_term_end_date");
+                b.Property(p => p.StartDate).HasColumnName("rsvpterm_start_date");
+                b.Property(p => p.EndDate).HasColumnName("rsvpterm_end_date");
             });
 
             builder.OwnsOne<MoneyValue>("_eventFee", b =>

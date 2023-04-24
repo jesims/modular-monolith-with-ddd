@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
 using CompanyName.MyMeetings.Modules.Meetings.Application.Configuration.Queries;
+using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroups.GetMeetingGroupDetails;
 using Dapper;
 
 namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroups.GetAllMeetingGroups
@@ -21,12 +22,13 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroups.GetA
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
             const string sql = "SELECT " +
-                               "[MeetingGroup].[Id], " +
-                               "[MeetingGroup].[Name], " +
-                               "[MeetingGroup].[Description], " +
-                               "[MeetingGroup].[LocationCountryCode], " +
-                               "[MeetingGroup].[LocationCity]" +
-                               "FROM [meetings].[v_MeetingGroups] AS [MeetingGroup]";
+                                $"meeting_group.id AS {nameof(MeetingGroupDetailsDto.Id)}, " +
+                                $"meeting_group.name AS {nameof(MeetingGroupDetailsDto.Name)}, " +
+                                $"meeting_group.description AS {nameof(MeetingGroupDetailsDto.Description)}, " +
+                                $"meeting_group.location_city AS {nameof(MeetingGroupDetailsDto.LocationCity)}, " +
+                                $"meeting_group.location_country_code AS {nameof(MeetingGroupDetailsDto.LocationCountryCode)} " +
+                                "FROM sss_meetings.meeting_groups AS meeting_group";
+                
             var meetingGroups = await connection.QueryAsync<MeetingGroupDto>(sql);
 
             return meetingGroups.AsList();

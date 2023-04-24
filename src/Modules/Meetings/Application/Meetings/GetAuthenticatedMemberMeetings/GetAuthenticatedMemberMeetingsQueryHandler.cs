@@ -28,16 +28,18 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.Meetings.GetAuthen
 
             return (await connection.QueryAsync<MemberMeetingDto>(
                 "SELECT " +
-                $"[Meeting].[Id] AS [{nameof(MemberMeetingDto.MeetingId)}], " +
-                $"[Meeting].[RoleCode] AS [{nameof(MemberMeetingDto.RoleCode)}], " +
-                $"[Meeting].[LocationCity] AS [{nameof(MemberMeetingDto.LocationCity)}], " +
-                $"[Meeting].[LocationAddress] AS [{nameof(MemberMeetingDto.LocationAddress)}], " +
-                $"[Meeting].[LocationPostalCode] AS [{nameof(MemberMeetingDto.LocationPostalCode)}], " +
-                $"[Meeting].[TermStartDate] AS [{nameof(MemberMeetingDto.TermStartDate)}], " +
-                $"[Meeting].[TermEndDate] AS [{nameof(MemberMeetingDto.TermEndDate)}], " +
-                $"[Meeting].[Title] AS [{nameof(MemberMeetingDto.Title)}] " +
-                "FROM [meetings].[v_MemberMeetings] AS [Meeting] " +
-                "WHERE [Meeting].[AttendeeId] = @AttendeeId AND [Meeting].[IsRemoved] = 0",
+                $"meeting.id AS {nameof(MemberMeetingDto.MeetingId)}, " +
+                $"meeting.location_city AS {nameof(MemberMeetingDto.LocationCity)}, " +
+                $"meeting.location_address AS {nameof(MemberMeetingDto.LocationAddress)}, " +
+                $"meeting.location_postal_code AS {nameof(MemberMeetingDto.LocationPostalCode)}, " +
+                $"meeting.term_start_date AS {nameof(MemberMeetingDto.TermStartDate)}, " +
+                $"meeting.term_end_date AS {nameof(MemberMeetingDto.TermEndDate)}, " +
+                $"meeting.title AS {nameof(MemberMeetingDto.Title)}, " +
+                $"meeting_attendee.role_code AS {nameof(MemberMeetingDto.RoleCode)} " +
+                "FROM sss_meetings.meetings AS meeting " +
+                "   INNER JOIN sss_meetings.meeting_attendees AS meeting_attendee " +
+                "       ON meeting.id = meeting_attendee.meeting_id " +
+                "WHERE meeting_attendee.attendee_id = @AttendeeId AND meeting_attendee.is_removed = false",
                 new
                 {
                     AttendeeId = _executionContextAccessor.UserId

@@ -12,6 +12,10 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.MeetingC
             builder.ToTable("meeting_commenting_configurations", "sss_meetings");
 
             builder.HasKey(c => c.Id);
+            builder.HasOne<Meeting>()
+                .WithOne()
+                .HasForeignKey(nameof(MeetingCommentingConfiguration), "_meetingId")
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(x => x.Id).HasColumnName("id");
             builder.Property<MeetingId>("_meetingId").HasColumnName("meeting_id");

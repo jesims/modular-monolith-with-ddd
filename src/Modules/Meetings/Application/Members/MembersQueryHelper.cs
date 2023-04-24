@@ -14,12 +14,12 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.Members
         {
             return await connection.QuerySingleAsync<MemberDto>(
                 "SELECT " +
-                "[Member].Id, " +
-                "[Member].[Name], " +
-                "[Member].[Login], " +
-                "[Member].[Email] " +
-                "FROM [meetings].[v_Members] AS [Member] " +
-                "WHERE [Member].[Id] = @Id", new
+                "member.id, " +
+                "member.name, " +
+                "member.login, " +
+                "member.email " +
+                "FROM sss_meetings.members AS member " +
+                "WHERE member.id = @Id", new
                 {
                     Id = memberId.Value
                 });
@@ -29,11 +29,11 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.Members
         {
             var result = await connection.QuerySingleAsync<MeetingGroupMemberResponse>(
                 "SELECT " +
-                $"[MeetingGroupMember].{nameof(MeetingGroupMemberResponse.MeetingGroupId)}, " +
-                $"[MeetingGroupMember].{nameof(MeetingGroupMemberResponse.MemberId)} " +
-                "FROM [meetings].[v_MeetingGroupMembers] AS [MeetingGroupMember] " +
-                "INNER JOIN [meetings].[Meetings] AS [Meeting] ON [Meeting].[MeetingGroupId] = [MeetingGroupMember].[MeetingGroupId] " +
-                "WHERE [MeetingGroupMember].[MemberId] = @MemberId AND [Meeting].[Id] = @MeetingId",
+                $"meeting_group_member.meeting_group_id AS {nameof(MeetingGroupMemberResponse.MeetingGroupId)}, " +
+                $"meeting_group_member.member_id AS {nameof(MeetingGroupMemberResponse.MemberId)} " +
+                "FROM sss_meetings.meeting_group_members AS meeting_group_member " +
+                "INNER JOIN sss_meetings.meetings AS meeting ON meeting.meeting_group_id = meeting_group_member.meeting_group_id " +
+                "WHERE meeting_group_member.member_id = @MemberId AND meeting.id = @MeetingId",
                 new
                 {
                     MemberId = memberId.Value,

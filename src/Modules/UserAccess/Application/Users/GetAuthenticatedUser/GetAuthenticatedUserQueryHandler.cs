@@ -28,6 +28,7 @@ namespace CompanyName.MyMeetings.Modules.UserAccess.Application.Users.GetAuthent
 
             const string sql = "SELECT "
                                + $"u.id AS {nameof(UserDto.Id)}, "
+                               + $"u.is_active AS {nameof(UserDto.IsActive)}, "
                                + $"u.login AS {nameof(UserDto.Login)}, "
                                + $"u.email AS {nameof(UserDto.Email)}, "
                                + $"u.name AS {nameof(UserDto.Name)} "

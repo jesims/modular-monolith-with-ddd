@@ -29,10 +29,10 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MemberSubscription
         public async Task Handle(MemberSubscriptionExpirationDateChangedNotification notification, CancellationToken cancellationToken)
         {
             var sql = "SELECT " +
-                      $"[MeetingGroupMember].MeetingGroupId AS [{nameof(MeetingGroupMemberResponse.MeetingGroupId)}], " +
-                      $"[MeetingGroupMember].RoleCode AS [{nameof(MeetingGroupMemberResponse.RoleCode)}] " +
-                      "FROM [meetings].[v_MeetingGroupMembers] AS [MeetingGroupMember] " +
-                      "WHERE [MeetingGroupMember].MemberId = @MemberId";
+                      $"meeting_group_member.meeting_group_id AS [{nameof(MeetingGroupMemberResponse.MeetingGroupId)}], " +
+                      $"meeting_group_member.role_code AS [{nameof(MeetingGroupMemberResponse.RoleCode)}] " +
+                      "FROM sss_meetings.meeting_group_members AS meeting_group_member " +
+                      "WHERE meeting_group_member.member_id = @MemberId";
 
             var connection = _sqlConnectionFactory.GetOpenConnection();
 

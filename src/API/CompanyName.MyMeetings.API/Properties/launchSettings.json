@@ -21,10 +21,10 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development",
-            "Meetings_MeetingsConnectionString": "Host=localhost;Port=5432;Database=postgres;Username=sss_admin;Password=sss_admin_password;"
-        },
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Meetings_MeetingsConnectionString": "Host=localhost;Port=5432;Database=postgres;Username=sss_admin;Password=sss_admin_password;Include Error Detail=True"
+      },
       "applicationUrl": "http://localhost:5000"
     },
     "Docker": {

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
 using CompanyName.MyMeetings.Modules.Meetings.Application.Configuration.Queries;
+using CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups;
 using Dapper;
 
 namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroups.GetMeetingGroupDetails
@@ -23,13 +24,13 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroups.GetM
 
             var meetingGroup = await connection.QuerySingleAsync<MeetingGroupDetailsDto>(
                 "SELECT " +
-                $"[MeetingGroup].[Id] AS [{nameof(MeetingGroupDetailsDto.Id)}], " +
-                $"[MeetingGroup].[Name] AS [{nameof(MeetingGroupDetailsDto.Name)}], " +
-                $"[MeetingGroup].[Description] AS [{nameof(MeetingGroupDetailsDto.Description)}], " +
-                $"[MeetingGroup].[LocationCity] AS [{nameof(MeetingGroupDetailsDto.LocationCity)}], " +
-                $"[MeetingGroup].[LocationCountryCode] AS [{nameof(MeetingGroupDetailsDto.LocationCountryCode)}] " +
-                "FROM [meetings].[v_MeetingGroups] AS [MeetingGroup] " +
-                "WHERE [MeetingGroup].[Id] = @MeetingGroupId",
+                $"meeting_group.id AS {nameof(MeetingGroupDetailsDto.Id)}, " +
+                $"meeting_group.name AS {nameof(MeetingGroupDetailsDto.Name)}, " +
+                $"meeting_group.description AS {nameof(MeetingGroupDetailsDto.Description)}, " +
+                $"meeting_group.location_city AS {nameof(MeetingGroupDetailsDto.LocationCity)}, " +
+                $"meeting_group.location_country_code AS {nameof(MeetingGroupDetailsDto.LocationCountryCode)} " +
+                "FROM sss_meetings.meeting_groups AS meeting_group " +
+                "WHERE meeting_group.id = @MeetingGroupId",
                 new
                 {
                     query.MeetingGroupId
@@ -44,10 +45,12 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroups.GetM
         {
             return await connection.ExecuteScalarAsync<int>(
                 "SELECT " +
-                "COUNT(*) " +
-                "FROM [meetings].[v_MemberMeetingGroups] AS [MemberMeetingGroup] " +
-                "WHERE [MemberMeetingGroup].[Id] = @MeetingGroupId AND " +
-                "[MemberMeetingGroup].[IsActive] = 1",
+                "   COUNT(*) " +
+                "FROM sss_meetings.meeting_groups AS meeting_group " +
+                "   INNER JOIN sss_meetings.meeting_group_members AS meeting_group_member " +
+                "       ON meeting_group.id = meeting_group_member.meeting_group_id " +
+                "WHERE meeting_group.id = @MeetingGroupId AND " +
+                "   meeting_group_member.is_active = true",
                 new
                 {
                     meetingGroupId

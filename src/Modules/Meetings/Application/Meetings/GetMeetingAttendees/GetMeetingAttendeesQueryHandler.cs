@@ -22,14 +22,16 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.Meetings.GetMeetin
 
             return (await connection.QueryAsync<MeetingAttendeeDto>(
                 "SELECT " +
-                $"[MeetingAttendee].[FirstName] AS [{nameof(MeetingAttendeeDto.FirstName)}], " +
-                $"[MeetingAttendee].[LastName] AS [{nameof(MeetingAttendeeDto.LastName)}], " +
-                $"[MeetingAttendee].[RoleCode] AS [{nameof(MeetingAttendeeDto.RoleCode)}], " +
-                $"[MeetingAttendee].[DecisionDate] AS [{nameof(MeetingAttendeeDto.DecisionDate)}], " +
-                $"[MeetingAttendee].[GuestsNumber] AS [{nameof(MeetingAttendeeDto.GuestsNumber)}], " +
-                $"[MeetingAttendee].[AttendeeId] AS [{nameof(MeetingAttendeeDto.AttendeeId)}] " +
-                "FROM [meetings].[v_MeetingAttendees] AS [MeetingAttendee] " +
-                "WHERE [MeetingAttendee].[MeetingId] = @MeetingId",
+                $"member.first_name AS {nameof(MeetingAttendeeDto.FirstName)}, " +
+                $"member.last_name AS {nameof(MeetingAttendeeDto.LastName)}, " +
+                $"meeting_attendee.role_code AS {nameof(MeetingAttendeeDto.RoleCode)}, " +
+                $"meeting_attendee.decision_date AS {nameof(MeetingAttendeeDto.DecisionDate)}, " +
+                $"meeting_attendee.guests_number AS {nameof(MeetingAttendeeDto.GuestsNumber)}, " +
+                $"meeting_attendee.attendee_id AS {nameof(MeetingAttendeeDto.AttendeeId)} " +
+                "FROM sss_meetings.meeting_attendees AS meeting_attendee " +
+                "   INNER JOIN sss_meetings.members AS member " +
+                "       ON member.id = meeting_attendee.attendee_id " +
+                "WHERE meeting_attendee.meeting_id = @MeetingId",
                 new
                 {
                     query.MeetingId

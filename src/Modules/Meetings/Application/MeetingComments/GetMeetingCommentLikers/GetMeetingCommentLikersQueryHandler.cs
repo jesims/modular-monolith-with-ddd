@@ -20,13 +20,14 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.Ge
         {
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
-            var sql = "SELECT " +
-                      $"[Liker].[{nameof(MeetingCommentLikerDto.Id)}]," +
-                      $"[Liker].[{nameof(MeetingCommentLikerDto.Name)}] " +
-                      "FROM [meetings].[Members] AS [Liker]" +
-                      "INNER JOIN [meetings].[MeetingMemberCommentLikes] AS [Like]" +
-                      "ON [Liker].[Id] = [Like].[MemberId]" +
-                      "WHERE [Like].[MeetingCommentId] = @MeetingCommentId";
+            var sql =
+                "SELECT " +
+                $"  liker.id AS {nameof(MeetingCommentLikerDto.Id)}," +
+                $"  liker.name AS {nameof(MeetingCommentLikerDto.Name)} " +
+                "FROM sss_meetings.members AS liker " +
+                "   INNER JOIN sss_meetings.meeting_member_comment_likes AS comment_likes " +
+                "       ON liker.id = comment_likes.member_id " +
+                "WHERE comment_likes.meeting_comment_id = @MeetingCommentId";
 
             var meetingCommentLikers = await connection.QueryAsync<MeetingCommentLikerDto>(sql, new { query.MeetingCommentId });
 
