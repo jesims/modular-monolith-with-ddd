@@ -15,6 +15,7 @@ using Npgsql;
 using NSubstitute;
 using NUnit.Framework;
 using Serilog;
+using System.Diagnostics;
 
 namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
 {
@@ -31,6 +32,8 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
         [SetUp]
         public async Task BeforeEachTest()
         {
+            //Trace.Listeners.Add(new ConsoleTraceListener());
+
             const string connectionStringEnvironmentVariable =
                 "ASPNETCORE_MyMeetings_IntegrationTests_ConnectionString";
             ConnectionString = EnvironmentVariablesProvider.GetVariable(connectionStringEnvironmentVariable);

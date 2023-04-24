@@ -1,10 +1,12 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.Modules.UserAccess.Application.UserRegistrations.GetUserRegistration;
 using CompanyName.MyMeetings.Modules.UserAccess.Application.UserRegistrations.RegisterNewUser;
 using CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork;
 using Npgsql;
 using NUnit.Framework;
+using System.Diagnostics;
 
 namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.UserRegistrations
 {
