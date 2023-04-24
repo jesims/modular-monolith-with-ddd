@@ -73,14 +73,14 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
 
         private static async Task ClearDatabase(IDbConnection connection)
         {
-            const string sql = "DELETE FROM [users].[InboxMessages] " +
-                               "DELETE FROM [users].[InternalCommands] " +
-                               "DELETE FROM [users].[OutboxMessages] " +
-                               "DELETE FROM [users].[UserRegistrations] " +
-                               "DELETE FROM [users].[Users] " +
-                               "DELETE FROM [users].[RolesToPermissions] " +
-                               "DELETE FROM [users].[UserRoles] " +
-                               "DELETE FROM [users].[Permissions] ";
+            const string sql = "DELETE FROM sss_users.inbox_messages; " +
+                               "DELETE FROM sss_users.internal_commands; " +
+                               "DELETE FROM sss_users.outbox_messages; " +
+                               "DELETE FROM sss_users.user_registrations; " +
+                               "DELETE FROM sss_users.users; " +
+                               "DELETE FROM sss_users.roles_to_permissions; " +
+                               "DELETE FROM sss_users.user_roles; " +
+                               "DELETE FROM sss_users.permissions; ";
 
             await connection.ExecuteScalarAsync(sql);
         }
