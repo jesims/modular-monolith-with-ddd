@@ -22,19 +22,19 @@ namespace CompanyName.MyMeetings.Modules.Administration.Application.MeetingGroup
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
             string sql = "SELECT " +
-                         $"[MeetingGroupProposal].[Id] AS [{nameof(MeetingGroupProposalDto.Id)}], " +
-                         $"[MeetingGroupProposal].[Name] AS [{nameof(MeetingGroupProposalDto.Name)}], " +
-                         $"[MeetingGroupProposal].[ProposalUserId] AS [{nameof(MeetingGroupProposalDto.ProposalUserId)}], " +
-                         $"[MeetingGroupProposal].[LocationCity] AS [{nameof(MeetingGroupProposalDto.LocationCity)}], " +
-                         $"[MeetingGroupProposal].[LocationCountryCode] AS [{nameof(MeetingGroupProposalDto.LocationCountryCode)}], " +
-                         $"[MeetingGroupProposal].[Description] AS [{nameof(MeetingGroupProposalDto.Description)}], " +
-                         $"[MeetingGroupProposal].[ProposalDate] AS [{nameof(MeetingGroupProposalDto.ProposalDate)}], " +
-                         $"[MeetingGroupProposal].[StatusCode] AS [{nameof(MeetingGroupProposalDto.StatusCode)}], " +
-                         $"[MeetingGroupProposal].[DecisionDate] AS [{nameof(MeetingGroupProposalDto.DecisionDate)}], " +
-                         $"[MeetingGroupProposal].[DecisionUserId] AS [{nameof(MeetingGroupProposalDto.DecisionUserId)}], " +
-                         $"[MeetingGroupProposal].[DecisionCode] AS [{nameof(MeetingGroupProposalDto.DecisionCode)}], " +
-                         $"[MeetingGroupProposal].[DecisionRejectReason] AS [{nameof(MeetingGroupProposalDto.DecisionRejectReason)}] " +
-                         "FROM [administration].[v_MeetingGroupProposals] AS [MeetingGroupProposal] ";
+                         $"meeting_group_proposal.id AS {nameof(MeetingGroupProposalDto.Id)}, " +
+                         $"meeting_group_proposal.name AS {nameof(MeetingGroupProposalDto.Name)}, " +
+                         $"meeting_group_proposal.proposal_user_id AS {nameof(MeetingGroupProposalDto.ProposalUserId)}, " +
+                         $"meeting_group_proposal.location_city AS {nameof(MeetingGroupProposalDto.LocationCity)}, " +
+                         $"meeting_group_proposal.location_country_code AS {nameof(MeetingGroupProposalDto.LocationCountryCode)}, " +
+                         $"meeting_group_proposal.description AS {nameof(MeetingGroupProposalDto.Description)}, " +
+                         $"meeting_group_proposal.proposal_date AS {nameof(MeetingGroupProposalDto.ProposalDate)}, " +
+                         $"meeting_group_proposal.status_code AS {nameof(MeetingGroupProposalDto.StatusCode)}, " +
+                         $"meeting_group_proposal.decision_date AS {nameof(MeetingGroupProposalDto.DecisionDate)}, " +
+                         $"meeting_group_proposal.decision_user_id AS {nameof(MeetingGroupProposalDto.DecisionUserId)}, " +
+                         $"meeting_group_proposal.decision_code AS {nameof(MeetingGroupProposalDto.DecisionCode)}, " +
+                         $"meeting_group_proposal.decision_reject_reason AS {nameof(MeetingGroupProposalDto.DecisionRejectReason)} " +
+                         "FROM sss_administration.meeting_group_proposals AS meeting_group_proposal ";
 
             return (await connection.QueryAsync<MeetingGroupProposalDto>(sql)).AsList();
         }

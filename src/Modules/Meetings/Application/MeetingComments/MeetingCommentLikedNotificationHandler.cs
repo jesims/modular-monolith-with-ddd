@@ -19,10 +19,10 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments
         {
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
-            const string sql = "UPDATE [meetings].[MeetingComments] " +
-                               "SET [LikesCount] = " +
-                               "(SELECT count(*) FROM [meetings].[MeetingMemberCommentLikes] WHERE [MeetingCommentId] = @MeetingCommentId) " +
-                               "WHERE [Id] = @MeetingCommentId;";
+            const string sql = "UPDATE sss_meetings.meeting_comments " +
+                               "SET likes_count = " +
+                               "(SELECT count(*) FROM sss_meetings.meeting_member_comment_likes WHERE meeting_comment_id = @MeetingCommentId) " +
+                               "WHERE id = @MeetingCommentId;";
 
             await connection.ExecuteAsync(
                 sql,

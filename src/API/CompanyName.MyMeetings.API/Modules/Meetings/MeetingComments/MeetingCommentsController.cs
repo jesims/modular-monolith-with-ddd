@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.API.Configuration.Authorization;
 using CompanyName.MyMeetings.Modules.Meetings.Application.Contracts;
@@ -6,8 +7,10 @@ using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.AddCom
 using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.AddMeetingComment;
 using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.AddMeetingCommentLike;
 using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.EditMeetingComment;
+using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.GetMeetingComments;
 using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.RemoveMeetingComment;
 using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.RemoveMeetingCommentLike;
+using CompanyName.MyMeetings.Modules.Meetings.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +25,15 @@ namespace CompanyName.MyMeetings.API.Modules.Meetings.MeetingComments
         public MeetingCommentsController(IMeetingsModule meetingModule)
         {
             _meetingModule = meetingModule;
+        }
+
+        [HttpGet("{meetingId}")]
+        [HasPermission(MeetingsPermissions.GetMeetingDetails)]
+        [ProducesResponseType(typeof(List<MeetingCommentDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetComments(Guid meetingId)
+        {
+            var comments = await _meetingModule.ExecuteQueryAsync(new GetMeetingCommentsQuery(meetingId));
+            return Ok(comments);
         }
 
         [HttpPost]

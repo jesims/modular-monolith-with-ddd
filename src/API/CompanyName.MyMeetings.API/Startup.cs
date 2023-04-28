@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using CompanyName.MyMeetings.API.Configuration.Authorization;
@@ -16,8 +17,8 @@ using CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configuration
 using CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration;
 using CompanyName.MyMeetings.Modules.Payments.Infrastructure.Configuration;
 using CompanyName.MyMeetings.Modules.UserAccess.Application.IdentityServer;
-using CompanyName.MyMeetings.Modules.UserAccess.Application.UserRegistrations;
 using CompanyName.MyMeetings.Modules.UserAccess.Infrastructure.Configuration;
+using EvolveDb;
 using Hellang.Middleware.ProblemDetails;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Validation;
@@ -28,6 +29,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
 using Serilog;
 using Serilog.Formatting.Compact;
 
@@ -52,6 +54,11 @@ namespace CompanyName.MyMeetings.API
                 .Build();
 
             _loggerForApi.Information("Connection string:" + _configuration[MeetingsConnectionString]);
+
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
+            {
+                MigrateDatabase();
+            }
 
             AuthorizationChecker.CheckAllEndpoints();
         }
@@ -193,12 +200,33 @@ namespace CompanyName.MyMeetings.API
                 null,
                 null);
 
-            PaymentsStartup.Initialize(
-                _configuration[MeetingsConnectionString],
-                executionContextAccessor,
-                _logger,
-                emailsConfiguration,
-                null);
+            //PaymentsStartup.Initialize(
+            //    _configuration[MeetingsConnectionString],
+            //    executionContextAccessor,
+            //    _logger,
+            //    emailsConfiguration,
+            //    null);
+        }
+
+        private void MigrateDatabase()
+        {
+            string location = "../../Database/sql";
+
+            try
+            {
+                var cnx = new NpgsqlConnection(_configuration[MeetingsConnectionString]);
+                var evolve = new Evolve(cnx, Log.Information)
+                {
+                    Locations = new[] { location }
+                };
+
+                evolve.Migrate();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Database migration failed.", ex);
+                throw;
+            }
         }
     }
 }

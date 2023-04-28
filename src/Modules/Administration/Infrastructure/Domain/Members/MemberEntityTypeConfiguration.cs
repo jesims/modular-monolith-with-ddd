@@ -8,15 +8,16 @@ namespace CompanyName.MyMeetings.Modules.Administration.Infrastructure.Domain.Me
     {
         public void Configure(EntityTypeBuilder<Member> builder)
         {
-            builder.ToTable("Members", "administration");
+            builder.ToTable("members", "sss_administration");
 
             builder.HasKey(x => x.Id);
 
-            builder.Property<string>("_login").HasColumnName("Login");
-            builder.Property<string>("_email").HasColumnName("Email");
-            builder.Property<string>("_firstName").HasColumnName("FirstName");
-            builder.Property<string>("_lastName").HasColumnName("LastName");
-            builder.Property<string>("_name").HasColumnName("Name");
+            builder.Property(b => b.Id).HasColumnName("id");
+            builder.Property<string>("_login").HasColumnName("login");
+            builder.Property<string>("_email").HasColumnName("email");
+            builder.Property<string>("_firstName").HasColumnName("first_name");
+            builder.Property<string>("_lastName").HasColumnName("last_name");
+            builder.Property<string>("_name").HasColumnName("name");
         }
     }
 }

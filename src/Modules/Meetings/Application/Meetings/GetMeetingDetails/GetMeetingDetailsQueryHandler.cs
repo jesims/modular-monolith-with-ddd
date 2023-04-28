@@ -21,24 +21,24 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.Meetings.GetMeetin
 
             return await connection.QuerySingleAsync<MeetingDetailsDto>(
                 "SELECT " +
-                $"[MeetingDetails].[Id] AS [{nameof(MeetingDetailsDto.Id)}], " +
-                $"[MeetingDetails].[MeetingGroupId] AS [{nameof(MeetingDetailsDto.MeetingGroupId)}], " +
-                $"[MeetingDetails].[Title] AS [{nameof(MeetingDetailsDto.Title)}], " +
-                $"[MeetingDetails].[TermStartDate] AS [{nameof(MeetingDetailsDto.TermStartDate)}], " +
-                $"[MeetingDetails].[TermEndDate] AS [{nameof(MeetingDetailsDto.TermEndDate)}], " +
-                $"[MeetingDetails].[Description] AS [{nameof(MeetingDetailsDto.Description)}], " +
-                $"[MeetingDetails].[LocationName] AS [{nameof(MeetingDetailsDto.LocationName)}], " +
-                $"[MeetingDetails].[LocationAddress] AS [{nameof(MeetingDetailsDto.LocationAddress)}], " +
-                $"[MeetingDetails].[LocationPostalCode] AS [{nameof(MeetingDetailsDto.LocationPostalCode)}], " +
-                $"[MeetingDetails].[LocationCity] AS [{nameof(MeetingDetailsDto.LocationCity)}], " +
-                $"[MeetingDetails].[AttendeesLimit] AS [{nameof(MeetingDetailsDto.AttendeesLimit)}], " +
-                $"[MeetingDetails].[GuestsLimit] AS [{nameof(MeetingDetailsDto.GuestsLimit)}], " +
-                $"[MeetingDetails].[RSVPTermStartDate] AS [{nameof(MeetingDetailsDto.RSVPTermStartDate)}], " +
-                $"[MeetingDetails].[RSVPTermEndDate] AS [{nameof(MeetingDetailsDto.RSVPTermEndDate)}], " +
-                $"[MeetingDetails].[EventFeeValue] AS [{nameof(MeetingDetailsDto.EventFeeValue)}], " +
-                $"[MeetingDetails].[EventFeeCurrency] AS [{nameof(MeetingDetailsDto.EventFeeCurrency)}] " +
-                "FROM [meetings].[v_MeetingDetails] AS [MeetingDetails] " +
-                "WHERE [MeetingDetails].[Id] = @MeetingId",
+                $"meeting.id AS {nameof(MeetingDetailsDto.Id)}, " +
+                $"meeting.meeting_group_id AS {nameof(MeetingDetailsDto.MeetingGroupId)}, " +
+                $"meeting.title AS {nameof(MeetingDetailsDto.Title)}, " +
+                $"meeting.term_start_date AS {nameof(MeetingDetailsDto.TermStartDate)}, " +
+                $"meeting.term_end_date AS {nameof(MeetingDetailsDto.TermEndDate)}, " +
+                $"meeting.description AS {nameof(MeetingDetailsDto.Description)}, " +
+                $"meeting.location_name AS {nameof(MeetingDetailsDto.LocationName)}, " +
+                $"meeting.location_address AS {nameof(MeetingDetailsDto.LocationAddress)}, " +
+                $"meeting.location_postal_code AS {nameof(MeetingDetailsDto.LocationPostalCode)}, " +
+                $"meeting.location_city AS {nameof(MeetingDetailsDto.LocationCity)}, " +
+                $"meeting.attendees_limit AS {nameof(MeetingDetailsDto.AttendeesLimit)}, " +
+                $"meeting.guests_limit AS {nameof(MeetingDetailsDto.GuestsLimit)}, " +
+                $"meeting.rsvpterm_start_date AS {nameof(MeetingDetailsDto.RSVPTermStartDate)}, " +
+                $"meeting.rsvpterm_end_date AS {nameof(MeetingDetailsDto.RSVPTermEndDate)}, " +
+                $"meeting.event_fee_value AS {nameof(MeetingDetailsDto.EventFeeValue)}, " +
+                $"meeting.event_fee_currency AS {nameof(MeetingDetailsDto.EventFeeCurrency)} " +
+                "FROM sss_meetings.meetings AS meeting " +
+                "WHERE meeting.id = @MeetingId",
                 new
                 {
                     query.MeetingId

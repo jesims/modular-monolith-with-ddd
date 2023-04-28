@@ -29,7 +29,7 @@ namespace CompanyName.MyMeetings.BuildingBlocks.Infrastructure.Emails
             var sqlConnection = _sqlConnectionFactory.GetOpenConnection();
 
             sqlConnection.ExecuteScalar(
-                "INSERT INTO [app].[Emails] ([Id], [From], [To], [Subject], [Content], [Date]) " +
+                @"INSERT INTO sss_app.emails (id, ""from"", ""to"", subject, content, date) " +
                 "VALUES (@Id, @From, @To, @Subject, @Content, @Date) ",
                 new
                 {

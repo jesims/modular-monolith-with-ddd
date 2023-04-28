@@ -9,7 +9,7 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.MeetingC
     {
         public void Configure(EntityTypeBuilder<Modules.Meetings.Domain.MeetingCommentingConfigurations.MeetingCommentingConfiguration> builder)
         {
-            builder.ToTable("MeetingCommentingConfigurations", "meetings");
+            builder.ToTable("meeting_commenting_configurations", "sss_meetings");
 
             builder.HasKey(c => c.Id);
             builder.HasOne<Meeting>()
@@ -17,8 +17,9 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.MeetingC
                 .HasForeignKey(nameof(MeetingCommentingConfiguration), "_meetingId")
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Property<MeetingId>("_meetingId").HasColumnName("MeetingId");
-            builder.Property<bool>("_isCommentingEnabled").HasColumnName("IsCommentingEnabled");
+            builder.Property(x => x.Id).HasColumnName("id");
+            builder.Property<MeetingId>("_meetingId").HasColumnName("meeting_id");
+            builder.Property<bool>("_isCommentingEnabled").HasColumnName("is_commenting_enabled");
         }
     }
 }

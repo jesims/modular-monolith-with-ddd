@@ -28,16 +28,16 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroupPropos
             parameters.Add(nameof(PagedQueryHelper.Next), pageData.Next);
 
             string sql = "SELECT " +
-                         $"[MeetingGroupProposal].[Id] AS [{nameof(MeetingGroupProposalDto.Id)}], " +
-                         $"[MeetingGroupProposal].[Name] AS [{nameof(MeetingGroupProposalDto.Name)}], " +
-                         $"[MeetingGroupProposal].[ProposalUserId] AS [{nameof(MeetingGroupProposalDto.ProposalUserId)}], " +
-                         $"[MeetingGroupProposal].[LocationCity] AS [{nameof(MeetingGroupProposalDto.LocationCity)}], " +
-                         $"[MeetingGroupProposal].[LocationCountryCode] AS [{nameof(MeetingGroupProposalDto.LocationCountryCode)}], " +
-                         $"[MeetingGroupProposal].[Description] AS [{nameof(MeetingGroupProposalDto.Description)}], " +
-                         $"[MeetingGroupProposal].[ProposalDate] AS [{nameof(MeetingGroupProposalDto.ProposalDate)}], " +
-                         $"[MeetingGroupProposal].[StatusCode] AS [{nameof(MeetingGroupProposalDto.StatusCode)}] " +
-                         "FROM [meetings].[v_MeetingGroupProposals] AS [MeetingGroupProposal] " +
-                         "ORDER BY [MeetingGroupProposal].[Name]";
+                         $"proposal.id AS {nameof(MeetingGroupProposalDto.Id)}, " +
+                         $"proposal.name AS {nameof(MeetingGroupProposalDto.Name)}, " +
+                         $"proposal.proposal_user_id AS {nameof(MeetingGroupProposalDto.ProposalUserId)}, " +
+                         $"proposal.location_city AS {nameof(MeetingGroupProposalDto.LocationCity)}, " +
+                         $"proposal.location_country_code AS {nameof(MeetingGroupProposalDto.LocationCountryCode)}, " +
+                         $"proposal.description AS {nameof(MeetingGroupProposalDto.Description)}, " +
+                         $"proposal.proposal_date AS {nameof(MeetingGroupProposalDto.ProposalDate)}, " +
+                         $"proposal.status_code AS {nameof(MeetingGroupProposalDto.StatusCode)} " +
+                         "FROM sss_meetings.meeting_group_proposals AS proposal " +
+                         "ORDER BY proposal.name";
 
             sql = PagedQueryHelper.AppendPageStatement(sql);
 

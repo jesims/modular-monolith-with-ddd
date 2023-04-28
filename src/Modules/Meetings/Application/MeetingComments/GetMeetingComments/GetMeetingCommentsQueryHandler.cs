@@ -21,15 +21,16 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingComments.Ge
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
             string sql = "SELECT " +
-                         $"[MeetingComment].[Id] AS [{nameof(MeetingCommentDto.Id)}], " +
-                         $"[MeetingComment].[InReplyToCommentId] AS [{nameof(MeetingCommentDto.InReplyToCommentId)}], " +
-                         $"[MeetingComment].[AuthorId] AS [{nameof(MeetingCommentDto.AuthorId)}], " +
-                         $"[MeetingComment].[Comment] AS [{nameof(MeetingCommentDto.Comment)}], " +
-                         $"[MeetingComment].[CreateDate] AS [{nameof(MeetingCommentDto.CreateDate)}], " +
-                         $"[MeetingComment].[EditDate] AS [{nameof(MeetingCommentDto.EditDate)}], " +
-                         $"[MeetingComment].[LikesCount] AS [{nameof(MeetingCommentDto.LikesCount)}]" +
-                         "FROM [meetings].[v_MeetingComments] AS [MeetingComment] " +
-                         "WHERE [MeetingComment].[MeetingId] = @MeetingId";
+                         $"comment.id AS {nameof(MeetingCommentDto.Id)}, " +
+                         $"comment.in_reply_to_comment_id AS {nameof(MeetingCommentDto.InReplyToCommentId)}, " +
+                         $"comment.author_id AS {nameof(MeetingCommentDto.AuthorId)}, " +
+                         $"comment.comment AS {nameof(MeetingCommentDto.Comment)}, " +
+                         $"comment.create_date AS {nameof(MeetingCommentDto.CreateDate)}, " +
+                         $"comment.edit_date AS {nameof(MeetingCommentDto.EditDate)}, " +
+                         $"comment.likes_count AS {nameof(MeetingCommentDto.LikesCount)} " +
+                         "FROM sss_meetings.meeting_comments AS comment " +
+                         "WHERE comment.meeting_id = @MeetingId " +
+                         "AND comment.is_removed = false";
             var meetingComments = await connection.QueryAsync<MeetingCommentDto>(sql, new { query.MeetingId });
 
             return meetingComments.AsList();

@@ -11,6 +11,7 @@ using CompanyName.MyMeetings.Modules.Administration.Infrastructure;
 using CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configuration;
 using Dapper;
 using MediatR;
+using Npgsql;
 using NSubstitute;
 using NUnit.Framework;
 using Serilog;
@@ -41,7 +42,7 @@ namespace CompanyName.MyMeetings.Modules.Administration.IntegrationTests.SeedWor
                     $"Define connection string to integration tests database using environment variable: {connectionStringEnvironmentVariable}");
             }
 
-            using (var sqlConnection = new SqlConnection(ConnectionString))
+            using (var sqlConnection = new NpgsqlConnection(ConnectionString))
             {
                 await ClearDatabase(sqlConnection);
             }
@@ -62,7 +63,7 @@ namespace CompanyName.MyMeetings.Modules.Administration.IntegrationTests.SeedWor
         protected async Task<T> GetLastOutboxMessage<T>()
             where T : class, INotification
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new NpgsqlConnection(ConnectionString))
             {
                 var messages = await OutboxMessagesHelper.GetOutboxMessages(connection);
 
@@ -83,11 +84,11 @@ namespace CompanyName.MyMeetings.Modules.Administration.IntegrationTests.SeedWor
 
         private static async Task ClearDatabase(IDbConnection connection)
         {
-            const string sql = "DELETE FROM [administration].[InboxMessages] " +
-                               "DELETE FROM [administration].[InternalCommands] " +
-                               "DELETE FROM [administration].[OutboxMessages] " +
-                               "DELETE FROM [administration].[MeetingGroupProposals] " +
-                               "DELETE FROM [administration].[Members] ";
+            const string sql = "DELETE FROM sss_administration.inbox_messages; " +
+                               "DELETE FROM sss_administration.internal_commands; " +
+                               "DELETE FROM sss_administration.outbox_messages; " +
+                               "DELETE FROM sss_administration.meeting_group_proposals; " +
+                               "DELETE FROM sss_administration.members; ";
 
             await connection.ExecuteScalarAsync(sql);
         }

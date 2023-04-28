@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
-using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
 using CompanyName.MyMeetings.Modules.UserAccess.Application.Configuration.Commands;
 using CompanyName.MyMeetings.Modules.UserAccess.Application.Contracts;
 using Dapper;
@@ -23,15 +22,15 @@ namespace CompanyName.MyMeetings.Modules.UserAccess.Application.Authentication.A
         {
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
-            const string sql = "SELECT " +
-                               "[User].[Id], " +
-                               "[User].[Login], " +
-                               "[User].[Name], " +
-                               "[User].[Email], " +
-                               "[User].[IsActive], " +
-                               "[User].[Password] " +
-                               "FROM [users].[v_Users] AS [User] " +
-                               "WHERE [User].[Login] = @Login";
+            const string sql = "SELECT "
+                               + $"u.id AS {nameof(UserDto.Id)}, "
+                               + $"u.login AS {nameof(UserDto.Login)}, "
+                               + $"u.name AS {nameof(UserDto.Name)}, "
+                               + $"u.email AS {nameof(UserDto.Email)}, "
+                               + $"u.is_active AS {nameof(UserDto.IsActive)}, "
+                               + $"u.password AS {nameof(UserDto.Password)} "
+                               + "FROM sss_users.users AS u "
+                               + "WHERE u.login = @Login";
 
             var user = await connection.QuerySingleOrDefaultAsync<UserDto>(
                 sql,

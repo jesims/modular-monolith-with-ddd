@@ -1,244 +1,244 @@
-﻿INSERT INTO [meetings].[Countries] VALUES ('AD', 'Andorra')
-INSERT INTO [meetings].[Countries] VALUES ('AE', 'United Arab Emirates')
-INSERT INTO [meetings].[Countries] VALUES ('AF', 'Afghanistan')
-INSERT INTO [meetings].[Countries] VALUES ('AG', 'Antigua and Barbuda')
-INSERT INTO [meetings].[Countries] VALUES ('AI', 'Anguilla')
-INSERT INTO [meetings].[Countries] VALUES ('AL', 'Albania')
-INSERT INTO [meetings].[Countries] VALUES ('AM', 'Armenia')
-INSERT INTO [meetings].[Countries] VALUES ('AN', 'Netherlands Antilles')
-INSERT INTO [meetings].[Countries] VALUES ('AO', 'Angola')
-INSERT INTO [meetings].[Countries] VALUES ('AQ', 'Antarctica')
-INSERT INTO [meetings].[Countries] VALUES ('AR', 'Argentina')
-INSERT INTO [meetings].[Countries] VALUES ('AS', 'American Samoa')
-INSERT INTO [meetings].[Countries] VALUES ('AT', 'Austria')
-INSERT INTO [meetings].[Countries] VALUES ('AU', 'Australia')
-INSERT INTO [meetings].[Countries] VALUES ('AW', 'Aruba')
-INSERT INTO [meetings].[Countries] VALUES ('AX', 'Aland Islands')
-INSERT INTO [meetings].[Countries] VALUES ('AZ', 'Azerbaijan')
-INSERT INTO [meetings].[Countries] VALUES ('BA', 'Bosnia and Herzegovina')
-INSERT INTO [meetings].[Countries] VALUES ('BB', 'Barbados')
-INSERT INTO [meetings].[Countries] VALUES ('BD', 'Bangladesh')
-INSERT INTO [meetings].[Countries] VALUES ('BE', 'Belgium')
-INSERT INTO [meetings].[Countries] VALUES ('BF', 'Burkina Faso')
-INSERT INTO [meetings].[Countries] VALUES ('BG', 'Bulgaria')
-INSERT INTO [meetings].[Countries] VALUES ('BH', 'Bahrain')
-INSERT INTO [meetings].[Countries] VALUES ('BI', 'Burundi')
-INSERT INTO [meetings].[Countries] VALUES ('BJ', 'Benin')
-INSERT INTO [meetings].[Countries] VALUES ('BM', 'Bermuda')
-INSERT INTO [meetings].[Countries] VALUES ('BN', 'Brunei Darussalam')
-INSERT INTO [meetings].[Countries] VALUES ('BO', 'Bolivia')
-INSERT INTO [meetings].[Countries] VALUES ('BR', 'Brazil')
-INSERT INTO [meetings].[Countries] VALUES ('BS', 'Bahamas')
-INSERT INTO [meetings].[Countries] VALUES ('BT', 'Bhutan')
-INSERT INTO [meetings].[Countries] VALUES ('BV', 'Bouvet Island')
-INSERT INTO [meetings].[Countries] VALUES ('BW', 'Botswana')
-INSERT INTO [meetings].[Countries] VALUES ('BY', 'Belarus')
-INSERT INTO [meetings].[Countries] VALUES ('BZ', 'Belize')
-INSERT INTO [meetings].[Countries] VALUES ('CA', 'Canada')
-INSERT INTO [meetings].[Countries] VALUES ('CC', 'Cocos (Keeling) Islands')
-INSERT INTO [meetings].[Countries] VALUES ('CD', 'Congo, The Democratic Republic of the')
-INSERT INTO [meetings].[Countries] VALUES ('CF', 'Central African Republic')
-INSERT INTO [meetings].[Countries] VALUES ('CG', 'Congo')
-INSERT INTO [meetings].[Countries] VALUES ('CH', 'Switzerland')
-INSERT INTO [meetings].[Countries] VALUES ('CI', 'Cote DIvoire')
-INSERT INTO [meetings].[Countries] VALUES ('CK', 'Cook Islands')
-INSERT INTO [meetings].[Countries] VALUES ('CL', 'Chile')
-INSERT INTO [meetings].[Countries] VALUES ('CM', 'Cameroon')
-INSERT INTO [meetings].[Countries] VALUES ('CN', 'China')
-INSERT INTO [meetings].[Countries] VALUES ('CO', 'Colombia')
-INSERT INTO [meetings].[Countries] VALUES ('CR', 'Costa Rica')
-INSERT INTO [meetings].[Countries] VALUES ('CU', 'Cuba')
-INSERT INTO [meetings].[Countries] VALUES ('CV', 'Cape Verde')
-INSERT INTO [meetings].[Countries] VALUES ('CX', 'Christmas Island')
-INSERT INTO [meetings].[Countries] VALUES ('CY', 'Cyprus')
-INSERT INTO [meetings].[Countries] VALUES ('CZ', 'Czech Republic')
-INSERT INTO [meetings].[Countries] VALUES ('DE', 'Germany')
-INSERT INTO [meetings].[Countries] VALUES ('DJ', 'Djibouti')
-INSERT INTO [meetings].[Countries] VALUES ('DK', 'Denmark')
-INSERT INTO [meetings].[Countries] VALUES ('DM', 'Dominica')
-INSERT INTO [meetings].[Countries] VALUES ('DO', 'Dominican Republic')
-INSERT INTO [meetings].[Countries] VALUES ('DZ', 'Algeria')
-INSERT INTO [meetings].[Countries] VALUES ('EC', 'Ecuador')
-INSERT INTO [meetings].[Countries] VALUES ('EE', 'Estonia')
-INSERT INTO [meetings].[Countries] VALUES ('EG', 'Egypt')
-INSERT INTO [meetings].[Countries] VALUES ('EH', 'Western Sahara')
-INSERT INTO [meetings].[Countries] VALUES ('ER', 'Eritrea')
-INSERT INTO [meetings].[Countries] VALUES ('ES', 'Spain')
-INSERT INTO [meetings].[Countries] VALUES ('ET', 'Ethiopia')
-INSERT INTO [meetings].[Countries] VALUES ('FI', 'Finland')
-INSERT INTO [meetings].[Countries] VALUES ('FJ', 'Fiji')
-INSERT INTO [meetings].[Countries] VALUES ('FK', 'Falkland Islands (Malvinas)')
-INSERT INTO [meetings].[Countries] VALUES ('FM', 'Micronesia, Federated States of')
-INSERT INTO [meetings].[Countries] VALUES ('FO', 'Faroe Islands')
-INSERT INTO [meetings].[Countries] VALUES ('FR', 'France')
-INSERT INTO [meetings].[Countries] VALUES ('GA', 'Gabon')
-INSERT INTO [meetings].[Countries] VALUES ('GB', 'United Kingdom')
-INSERT INTO [meetings].[Countries] VALUES ('GD', 'Grenada')
-INSERT INTO [meetings].[Countries] VALUES ('GE', 'Georgia')
-INSERT INTO [meetings].[Countries] VALUES ('GF', 'French Guiana')
-INSERT INTO [meetings].[Countries] VALUES ('GG', 'Guernsey')
-INSERT INTO [meetings].[Countries] VALUES ('GH', 'Ghana')
-INSERT INTO [meetings].[Countries] VALUES ('GI', 'Gibraltar')
-INSERT INTO [meetings].[Countries] VALUES ('GL', 'Greenland')
-INSERT INTO [meetings].[Countries] VALUES ('GM', 'Gambia')
-INSERT INTO [meetings].[Countries] VALUES ('GN', 'Guinea')
-INSERT INTO [meetings].[Countries] VALUES ('GP', 'Guadeloupe')
-INSERT INTO [meetings].[Countries] VALUES ('GQ', 'Equatorial Guinea')
-INSERT INTO [meetings].[Countries] VALUES ('GR', 'Greece')
-INSERT INTO [meetings].[Countries] VALUES ('GS', 'South Georgia and the South Sandwich Islands')
-INSERT INTO [meetings].[Countries] VALUES ('GT', 'Guatemala')
-INSERT INTO [meetings].[Countries] VALUES ('GU', 'Guam')
-INSERT INTO [meetings].[Countries] VALUES ('GW', 'Guinea-Bissau')
-INSERT INTO [meetings].[Countries] VALUES ('GY', 'Guyana')
-INSERT INTO [meetings].[Countries] VALUES ('HK', 'Hong Kong')
-INSERT INTO [meetings].[Countries] VALUES ('HM', 'Heard Island and Mcdonald Islands')
-INSERT INTO [meetings].[Countries] VALUES ('HN', 'Honduras')
-INSERT INTO [meetings].[Countries] VALUES ('HR', 'Croatia')
-INSERT INTO [meetings].[Countries] VALUES ('HT', 'Haiti')
-INSERT INTO [meetings].[Countries] VALUES ('HU', 'Hungary')
-INSERT INTO [meetings].[Countries] VALUES ('ID', 'Indonesia')
-INSERT INTO [meetings].[Countries] VALUES ('IE', 'Ireland')
-INSERT INTO [meetings].[Countries] VALUES ('IL', 'Israel')
-INSERT INTO [meetings].[Countries] VALUES ('IM', 'Isle of Man')
-INSERT INTO [meetings].[Countries] VALUES ('IN', 'India')
-INSERT INTO [meetings].[Countries] VALUES ('IO', 'British Indian Ocean Territory')
-INSERT INTO [meetings].[Countries] VALUES ('IQ', 'Iraq')
-INSERT INTO [meetings].[Countries] VALUES ('IR', 'Iran, Islamic Republic Of')
-INSERT INTO [meetings].[Countries] VALUES ('IS', 'Iceland')
-INSERT INTO [meetings].[Countries] VALUES ('IT', 'Italy')
-INSERT INTO [meetings].[Countries] VALUES ('JE', 'Jersey')
-INSERT INTO [meetings].[Countries] VALUES ('JM', 'Jamaica')
-INSERT INTO [meetings].[Countries] VALUES ('JO', 'Jordan')
-INSERT INTO [meetings].[Countries] VALUES ('JP', 'Japan')
-INSERT INTO [meetings].[Countries] VALUES ('KE', 'Kenya')
-INSERT INTO [meetings].[Countries] VALUES ('KG', 'Kyrgyzstan')
-INSERT INTO [meetings].[Countries] VALUES ('KH', 'Cambodia')
-INSERT INTO [meetings].[Countries] VALUES ('KI', 'Kiribati')
-INSERT INTO [meetings].[Countries] VALUES ('KM', 'Comoros')
-INSERT INTO [meetings].[Countries] VALUES ('KN', 'Saint Kitts and Nevis')
-INSERT INTO [meetings].[Countries] VALUES ('KP', 'Korea, Democratic PeopleS Republic of')
-INSERT INTO [meetings].[Countries] VALUES ('KR', 'Korea, Republic of')
-INSERT INTO [meetings].[Countries] VALUES ('KW', 'Kuwait')
-INSERT INTO [meetings].[Countries] VALUES ('KY', 'Cayman Islands')
-INSERT INTO [meetings].[Countries] VALUES ('KZ', 'Kazakhstan')
-INSERT INTO [meetings].[Countries] VALUES ('LA', 'Lao PeopleS Democratic Republic')
-INSERT INTO [meetings].[Countries] VALUES ('LB', 'Lebanon')
-INSERT INTO [meetings].[Countries] VALUES ('LC', 'Saint Lucia')
-INSERT INTO [meetings].[Countries] VALUES ('LI', 'Liechtenstein')
-INSERT INTO [meetings].[Countries] VALUES ('LK', 'Sri Lanka')
-INSERT INTO [meetings].[Countries] VALUES ('LR', 'Liberia')
-INSERT INTO [meetings].[Countries] VALUES ('LS', 'Lesotho')
-INSERT INTO [meetings].[Countries] VALUES ('LT', 'Lithuania')
-INSERT INTO [meetings].[Countries] VALUES ('LU', 'Luxembourg')
-INSERT INTO [meetings].[Countries] VALUES ('LV', 'Latvia')
-INSERT INTO [meetings].[Countries] VALUES ('LY', 'Libyan Arab Jamahiriya')
-INSERT INTO [meetings].[Countries] VALUES ('MA', 'Morocco')
-INSERT INTO [meetings].[Countries] VALUES ('MC', 'Monaco')
-INSERT INTO [meetings].[Countries] VALUES ('MD', 'Moldova, Republic of')
-INSERT INTO [meetings].[Countries] VALUES ('ME', 'Montenegro')
-INSERT INTO [meetings].[Countries] VALUES ('MG', 'Madagascar')
-INSERT INTO [meetings].[Countries] VALUES ('MH', 'Marshall Islands')
-INSERT INTO [meetings].[Countries] VALUES ('MK', 'Macedonia, The Former Yugoslav Republic of')
-INSERT INTO [meetings].[Countries] VALUES ('ML', 'Mali')
-INSERT INTO [meetings].[Countries] VALUES ('MM', 'Myanmar')
-INSERT INTO [meetings].[Countries] VALUES ('MN', 'Mongolia')
-INSERT INTO [meetings].[Countries] VALUES ('MO', 'Macao')
-INSERT INTO [meetings].[Countries] VALUES ('MP', 'Northern Mariana Islands')
-INSERT INTO [meetings].[Countries] VALUES ('MQ', 'Martinique')
-INSERT INTO [meetings].[Countries] VALUES ('MR', 'Mauritania')
-INSERT INTO [meetings].[Countries] VALUES ('MS', 'Montserrat')
-INSERT INTO [meetings].[Countries] VALUES ('MT', 'Malta')
-INSERT INTO [meetings].[Countries] VALUES ('MU', 'Mauritius')
-INSERT INTO [meetings].[Countries] VALUES ('MV', 'Maldives')
-INSERT INTO [meetings].[Countries] VALUES ('MW', 'Malawi')
-INSERT INTO [meetings].[Countries] VALUES ('MX', 'Mexico')
-INSERT INTO [meetings].[Countries] VALUES ('MY', 'Malaysia')
-INSERT INTO [meetings].[Countries] VALUES ('MZ', 'Mozambique')
-INSERT INTO [meetings].[Countries] VALUES ('NA', 'Namibia')
-INSERT INTO [meetings].[Countries] VALUES ('NC', 'New Caledonia')
-INSERT INTO [meetings].[Countries] VALUES ('NE', 'Niger')
-INSERT INTO [meetings].[Countries] VALUES ('NF', 'Norfolk Island')
-INSERT INTO [meetings].[Countries] VALUES ('NG', 'Nigeria')
-INSERT INTO [meetings].[Countries] VALUES ('NI', 'Nicaragua')
-INSERT INTO [meetings].[Countries] VALUES ('NL', 'Netherlands')
-INSERT INTO [meetings].[Countries] VALUES ('NO', 'Norway')
-INSERT INTO [meetings].[Countries] VALUES ('NP', 'Nepal')
-INSERT INTO [meetings].[Countries] VALUES ('NR', 'Nauru')
-INSERT INTO [meetings].[Countries] VALUES ('NU', 'Niue')
-INSERT INTO [meetings].[Countries] VALUES ('NZ', 'New Zealand')
-INSERT INTO [meetings].[Countries] VALUES ('OM', 'Oman')
-INSERT INTO [meetings].[Countries] VALUES ('PA', 'Panama')
-INSERT INTO [meetings].[Countries] VALUES ('PE', 'Peru')
-INSERT INTO [meetings].[Countries] VALUES ('PF', 'French Polynesia')
-INSERT INTO [meetings].[Countries] VALUES ('PG', 'Papua New Guinea')
-INSERT INTO [meetings].[Countries] VALUES ('PH', 'Philippines')
-INSERT INTO [meetings].[Countries] VALUES ('PK', 'Pakistan')
-INSERT INTO [meetings].[Countries] VALUES ('PL', 'Poland')
-INSERT INTO [meetings].[Countries] VALUES ('PM', 'Saint Pierre and Miquelon')
-INSERT INTO [meetings].[Countries] VALUES ('PN', 'Pitcairn')
-INSERT INTO [meetings].[Countries] VALUES ('PR', 'Puerto Rico')
-INSERT INTO [meetings].[Countries] VALUES ('PS', 'Palestinian Territory, Occupied')
-INSERT INTO [meetings].[Countries] VALUES ('PT', 'Portugal')
-INSERT INTO [meetings].[Countries] VALUES ('PW', 'Palau')
-INSERT INTO [meetings].[Countries] VALUES ('PY', 'Paraguay')
-INSERT INTO [meetings].[Countries] VALUES ('QA', 'Qatar')
-INSERT INTO [meetings].[Countries] VALUES ('RE', 'Reunion')
-INSERT INTO [meetings].[Countries] VALUES ('RO', 'Romania')
-INSERT INTO [meetings].[Countries] VALUES ('RS', 'Serbia')
-INSERT INTO [meetings].[Countries] VALUES ('RU', 'Russian Federation')
-INSERT INTO [meetings].[Countries] VALUES ('RW', 'RWANDA')
-INSERT INTO [meetings].[Countries] VALUES ('SA', 'Saudi Arabia')
-INSERT INTO [meetings].[Countries] VALUES ('SB', 'Solomon Islands')
-INSERT INTO [meetings].[Countries] VALUES ('SC', 'Seychelles')
-INSERT INTO [meetings].[Countries] VALUES ('SD', 'Sudan')
-INSERT INTO [meetings].[Countries] VALUES ('SE', 'Sweden')
-INSERT INTO [meetings].[Countries] VALUES ('SG', 'Singapore')
-INSERT INTO [meetings].[Countries] VALUES ('SH', 'Saint Helena')
-INSERT INTO [meetings].[Countries] VALUES ('SI', 'Slovenia')
-INSERT INTO [meetings].[Countries] VALUES ('SJ', 'Svalbard and Jan Mayen')
-INSERT INTO [meetings].[Countries] VALUES ('SK', 'Slovakia')
-INSERT INTO [meetings].[Countries] VALUES ('SL', 'Sierra Leone')
-INSERT INTO [meetings].[Countries] VALUES ('SM', 'San Marino')
-INSERT INTO [meetings].[Countries] VALUES ('SN', 'Senegal')
-INSERT INTO [meetings].[Countries] VALUES ('SO', 'Somalia')
-INSERT INTO [meetings].[Countries] VALUES ('SR', 'Suriname')
-INSERT INTO [meetings].[Countries] VALUES ('ST', 'Sao Tome and Principe')
-INSERT INTO [meetings].[Countries] VALUES ('SV', 'El Salvador')
-INSERT INTO [meetings].[Countries] VALUES ('SY', 'Syrian Arab Republic')
-INSERT INTO [meetings].[Countries] VALUES ('SZ', 'Swaziland')
-INSERT INTO [meetings].[Countries] VALUES ('TC', 'Turks and Caicos Islands')
-INSERT INTO [meetings].[Countries] VALUES ('TD', 'Chad')
-INSERT INTO [meetings].[Countries] VALUES ('TF', 'French Southern Territories')
-INSERT INTO [meetings].[Countries] VALUES ('TG', 'Togo')
-INSERT INTO [meetings].[Countries] VALUES ('TH', 'Thailand')
-INSERT INTO [meetings].[Countries] VALUES ('TJ', 'Tajikistan')
-INSERT INTO [meetings].[Countries] VALUES ('TK', 'Tokelau')
-INSERT INTO [meetings].[Countries] VALUES ('TL', 'Timor-Leste')
-INSERT INTO [meetings].[Countries] VALUES ('TM', 'Turkmenistan')
-INSERT INTO [meetings].[Countries] VALUES ('TN', 'Tunisia')
-INSERT INTO [meetings].[Countries] VALUES ('TO', 'Tonga')
-INSERT INTO [meetings].[Countries] VALUES ('TR', 'Turkey')
-INSERT INTO [meetings].[Countries] VALUES ('TT', 'Trinidad and Tobago')
-INSERT INTO [meetings].[Countries] VALUES ('TV', 'Tuvalu')
-INSERT INTO [meetings].[Countries] VALUES ('TW', 'Taiwan, Province of China')
-INSERT INTO [meetings].[Countries] VALUES ('TZ', 'Tanzania, United Republic of')
-INSERT INTO [meetings].[Countries] VALUES ('UA', 'Ukraine')
-INSERT INTO [meetings].[Countries] VALUES ('UG', 'Uganda')
-INSERT INTO [meetings].[Countries] VALUES ('UM', 'United States Minor Outlying Islands')
-INSERT INTO [meetings].[Countries] VALUES ('US', 'United States')
-INSERT INTO [meetings].[Countries] VALUES ('UY', 'Uruguay')
-INSERT INTO [meetings].[Countries] VALUES ('UZ', 'Uzbekistan')
-INSERT INTO [meetings].[Countries] VALUES ('VA', 'Holy See (Vatican City State)')
-INSERT INTO [meetings].[Countries] VALUES ('VC', 'Saint Vincent and the Grenadines')
-INSERT INTO [meetings].[Countries] VALUES ('VE', 'Venezuela')
-INSERT INTO [meetings].[Countries] VALUES ('VG', 'Virgin Islands, British')
-INSERT INTO [meetings].[Countries] VALUES ('VI', 'Virgin Islands, U.S.')
-INSERT INTO [meetings].[Countries] VALUES ('VN', 'Viet Nam')
-INSERT INTO [meetings].[Countries] VALUES ('VU', 'Vanuatu')
-INSERT INTO [meetings].[Countries] VALUES ('WF', 'Wallis and Futuna')
-INSERT INTO [meetings].[Countries] VALUES ('WS', 'Samoa')
-INSERT INTO [meetings].[Countries] VALUES ('YE', 'Yemen')
-INSERT INTO [meetings].[Countries] VALUES ('YT', 'Mayotte')
-INSERT INTO [meetings].[Countries] VALUES ('ZA', 'South Africa')
-INSERT INTO [meetings].[Countries] VALUES ('ZM', 'Zambia')
-INSERT INTO [meetings].[Countries] VALUES ('ZW', 'Zimbabwe')
+﻿INSERT INTO sss_meetings.countries VALUES ('AD', 'Andorra');
+INSERT INTO sss_meetings.countries VALUES ('AE', 'United Arab Emirates');
+INSERT INTO sss_meetings.countries VALUES ('AF', 'Afghanistan');
+INSERT INTO sss_meetings.countries VALUES ('AG', 'Antigua and Barbuda');
+INSERT INTO sss_meetings.countries VALUES ('AI', 'Anguilla');
+INSERT INTO sss_meetings.countries VALUES ('AL', 'Albania');
+INSERT INTO sss_meetings.countries VALUES ('AM', 'Armenia');
+INSERT INTO sss_meetings.countries VALUES ('AN', 'Netherlands Antilles');
+INSERT INTO sss_meetings.countries VALUES ('AO', 'Angola');
+INSERT INTO sss_meetings.countries VALUES ('AQ', 'Antarctica');
+INSERT INTO sss_meetings.countries VALUES ('AR', 'Argentina');
+INSERT INTO sss_meetings.countries VALUES ('AS', 'American Samoa');
+INSERT INTO sss_meetings.countries VALUES ('AT', 'Austria');
+INSERT INTO sss_meetings.countries VALUES ('AU', 'Australia');
+INSERT INTO sss_meetings.countries VALUES ('AW', 'Aruba');
+INSERT INTO sss_meetings.countries VALUES ('AX', 'Aland Islands');
+INSERT INTO sss_meetings.countries VALUES ('AZ', 'Azerbaijan');
+INSERT INTO sss_meetings.countries VALUES ('BA', 'Bosnia and Herzegovina');
+INSERT INTO sss_meetings.countries VALUES ('BB', 'Barbados');
+INSERT INTO sss_meetings.countries VALUES ('BD', 'Bangladesh');
+INSERT INTO sss_meetings.countries VALUES ('BE', 'Belgium');
+INSERT INTO sss_meetings.countries VALUES ('BF', 'Burkina Faso');
+INSERT INTO sss_meetings.countries VALUES ('BG', 'Bulgaria');
+INSERT INTO sss_meetings.countries VALUES ('BH', 'Bahrain');
+INSERT INTO sss_meetings.countries VALUES ('BI', 'Burundi');
+INSERT INTO sss_meetings.countries VALUES ('BJ', 'Benin');
+INSERT INTO sss_meetings.countries VALUES ('BM', 'Bermuda');
+INSERT INTO sss_meetings.countries VALUES ('BN', 'Brunei Darussalam');
+INSERT INTO sss_meetings.countries VALUES ('BO', 'Bolivia');
+INSERT INTO sss_meetings.countries VALUES ('BR', 'Brazil');
+INSERT INTO sss_meetings.countries VALUES ('BS', 'Bahamas');
+INSERT INTO sss_meetings.countries VALUES ('BT', 'Bhutan');
+INSERT INTO sss_meetings.countries VALUES ('BV', 'Bouvet Island');
+INSERT INTO sss_meetings.countries VALUES ('BW', 'Botswana');
+INSERT INTO sss_meetings.countries VALUES ('BY', 'Belarus');
+INSERT INTO sss_meetings.countries VALUES ('BZ', 'Belize');
+INSERT INTO sss_meetings.countries VALUES ('CA', 'Canada');
+INSERT INTO sss_meetings.countries VALUES ('CC', 'Cocos (Keeling) Islands');
+INSERT INTO sss_meetings.countries VALUES ('CD', 'Congo, The Democratic Republic of the');
+INSERT INTO sss_meetings.countries VALUES ('CF', 'Central African Republic');
+INSERT INTO sss_meetings.countries VALUES ('CG', 'Congo');
+INSERT INTO sss_meetings.countries VALUES ('CH', 'Switzerland');
+INSERT INTO sss_meetings.countries VALUES ('CI', 'Cote DIvoire');
+INSERT INTO sss_meetings.countries VALUES ('CK', 'Cook Islands');
+INSERT INTO sss_meetings.countries VALUES ('CL', 'Chile');
+INSERT INTO sss_meetings.countries VALUES ('CM', 'Cameroon');
+INSERT INTO sss_meetings.countries VALUES ('CN', 'China');
+INSERT INTO sss_meetings.countries VALUES ('CO', 'Colombia');
+INSERT INTO sss_meetings.countries VALUES ('CR', 'Costa Rica');
+INSERT INTO sss_meetings.countries VALUES ('CU', 'Cuba');
+INSERT INTO sss_meetings.countries VALUES ('CV', 'Cape Verde');
+INSERT INTO sss_meetings.countries VALUES ('CX', 'Christmas Island');
+INSERT INTO sss_meetings.countries VALUES ('CY', 'Cyprus');
+INSERT INTO sss_meetings.countries VALUES ('CZ', 'Czech Republic');
+INSERT INTO sss_meetings.countries VALUES ('DE', 'Germany');
+INSERT INTO sss_meetings.countries VALUES ('DJ', 'Djibouti');
+INSERT INTO sss_meetings.countries VALUES ('DK', 'Denmark');
+INSERT INTO sss_meetings.countries VALUES ('DM', 'Dominica');
+INSERT INTO sss_meetings.countries VALUES ('DO', 'Dominican Republic');
+INSERT INTO sss_meetings.countries VALUES ('DZ', 'Algeria');
+INSERT INTO sss_meetings.countries VALUES ('EC', 'Ecuador');
+INSERT INTO sss_meetings.countries VALUES ('EE', 'Estonia');
+INSERT INTO sss_meetings.countries VALUES ('EG', 'Egypt');
+INSERT INTO sss_meetings.countries VALUES ('EH', 'Western Sahara');
+INSERT INTO sss_meetings.countries VALUES ('ER', 'Eritrea');
+INSERT INTO sss_meetings.countries VALUES ('ES', 'Spain');
+INSERT INTO sss_meetings.countries VALUES ('ET', 'Ethiopia');
+INSERT INTO sss_meetings.countries VALUES ('FI', 'Finland');
+INSERT INTO sss_meetings.countries VALUES ('FJ', 'Fiji');
+INSERT INTO sss_meetings.countries VALUES ('FK', 'Falkland Islands (Malvinas)');
+INSERT INTO sss_meetings.countries VALUES ('FM', 'Micronesia, Federated States of');
+INSERT INTO sss_meetings.countries VALUES ('FO', 'Faroe Islands');
+INSERT INTO sss_meetings.countries VALUES ('FR', 'France');
+INSERT INTO sss_meetings.countries VALUES ('GA', 'Gabon');
+INSERT INTO sss_meetings.countries VALUES ('GB', 'United Kingdom');
+INSERT INTO sss_meetings.countries VALUES ('GD', 'Grenada');
+INSERT INTO sss_meetings.countries VALUES ('GE', 'Georgia');
+INSERT INTO sss_meetings.countries VALUES ('GF', 'French Guiana');
+INSERT INTO sss_meetings.countries VALUES ('GG', 'Guernsey');
+INSERT INTO sss_meetings.countries VALUES ('GH', 'Ghana');
+INSERT INTO sss_meetings.countries VALUES ('GI', 'Gibraltar');
+INSERT INTO sss_meetings.countries VALUES ('GL', 'Greenland');
+INSERT INTO sss_meetings.countries VALUES ('GM', 'Gambia');
+INSERT INTO sss_meetings.countries VALUES ('GN', 'Guinea');
+INSERT INTO sss_meetings.countries VALUES ('GP', 'Guadeloupe');
+INSERT INTO sss_meetings.countries VALUES ('GQ', 'Equatorial Guinea');
+INSERT INTO sss_meetings.countries VALUES ('GR', 'Greece');
+INSERT INTO sss_meetings.countries VALUES ('GS', 'South Georgia and the South Sandwich Islands');
+INSERT INTO sss_meetings.countries VALUES ('GT', 'Guatemala');
+INSERT INTO sss_meetings.countries VALUES ('GU', 'Guam');
+INSERT INTO sss_meetings.countries VALUES ('GW', 'Guinea-Bissau');
+INSERT INTO sss_meetings.countries VALUES ('GY', 'Guyana');
+INSERT INTO sss_meetings.countries VALUES ('HK', 'Hong Kong');
+INSERT INTO sss_meetings.countries VALUES ('HM', 'Heard Island and Mcdonald Islands');
+INSERT INTO sss_meetings.countries VALUES ('HN', 'Honduras');
+INSERT INTO sss_meetings.countries VALUES ('HR', 'Croatia');
+INSERT INTO sss_meetings.countries VALUES ('HT', 'Haiti');
+INSERT INTO sss_meetings.countries VALUES ('HU', 'Hungary');
+INSERT INTO sss_meetings.countries VALUES ('ID', 'Indonesia');
+INSERT INTO sss_meetings.countries VALUES ('IE', 'Ireland');
+INSERT INTO sss_meetings.countries VALUES ('IL', 'Israel');
+INSERT INTO sss_meetings.countries VALUES ('IM', 'Isle of Man');
+INSERT INTO sss_meetings.countries VALUES ('IN', 'India');
+INSERT INTO sss_meetings.countries VALUES ('IO', 'British Indian Ocean Territory');
+INSERT INTO sss_meetings.countries VALUES ('IQ', 'Iraq');
+INSERT INTO sss_meetings.countries VALUES ('IR', 'Iran, Islamic Republic Of');
+INSERT INTO sss_meetings.countries VALUES ('IS', 'Iceland');
+INSERT INTO sss_meetings.countries VALUES ('IT', 'Italy');
+INSERT INTO sss_meetings.countries VALUES ('JE', 'Jersey');
+INSERT INTO sss_meetings.countries VALUES ('JM', 'Jamaica');
+INSERT INTO sss_meetings.countries VALUES ('JO', 'Jordan');
+INSERT INTO sss_meetings.countries VALUES ('JP', 'Japan');
+INSERT INTO sss_meetings.countries VALUES ('KE', 'Kenya');
+INSERT INTO sss_meetings.countries VALUES ('KG', 'Kyrgyzstan');
+INSERT INTO sss_meetings.countries VALUES ('KH', 'Cambodia');
+INSERT INTO sss_meetings.countries VALUES ('KI', 'Kiribati');
+INSERT INTO sss_meetings.countries VALUES ('KM', 'Comoros');
+INSERT INTO sss_meetings.countries VALUES ('KN', 'Saint Kitts and Nevis');
+INSERT INTO sss_meetings.countries VALUES ('KP', 'Korea, Democratic PeopleS Republic of');
+INSERT INTO sss_meetings.countries VALUES ('KR', 'Korea, Republic of');
+INSERT INTO sss_meetings.countries VALUES ('KW', 'Kuwait');
+INSERT INTO sss_meetings.countries VALUES ('KY', 'Cayman Islands');
+INSERT INTO sss_meetings.countries VALUES ('KZ', 'Kazakhstan');
+INSERT INTO sss_meetings.countries VALUES ('LA', 'Lao PeopleS Democratic Republic');
+INSERT INTO sss_meetings.countries VALUES ('LB', 'Lebanon');
+INSERT INTO sss_meetings.countries VALUES ('LC', 'Saint Lucia');
+INSERT INTO sss_meetings.countries VALUES ('LI', 'Liechtenstein');
+INSERT INTO sss_meetings.countries VALUES ('LK', 'Sri Lanka');
+INSERT INTO sss_meetings.countries VALUES ('LR', 'Liberia');
+INSERT INTO sss_meetings.countries VALUES ('LS', 'Lesotho');
+INSERT INTO sss_meetings.countries VALUES ('LT', 'Lithuania');
+INSERT INTO sss_meetings.countries VALUES ('LU', 'Luxembourg');
+INSERT INTO sss_meetings.countries VALUES ('LV', 'Latvia');
+INSERT INTO sss_meetings.countries VALUES ('LY', 'Libyan Arab Jamahiriya');
+INSERT INTO sss_meetings.countries VALUES ('MA', 'Morocco');
+INSERT INTO sss_meetings.countries VALUES ('MC', 'Monaco');
+INSERT INTO sss_meetings.countries VALUES ('MD', 'Moldova, Republic of');
+INSERT INTO sss_meetings.countries VALUES ('ME', 'Montenegro');
+INSERT INTO sss_meetings.countries VALUES ('MG', 'Madagascar');
+INSERT INTO sss_meetings.countries VALUES ('MH', 'Marshall Islands');
+INSERT INTO sss_meetings.countries VALUES ('MK', 'Macedonia, The Former Yugoslav Republic of');
+INSERT INTO sss_meetings.countries VALUES ('ML', 'Mali');
+INSERT INTO sss_meetings.countries VALUES ('MM', 'Myanmar');
+INSERT INTO sss_meetings.countries VALUES ('MN', 'Mongolia');
+INSERT INTO sss_meetings.countries VALUES ('MO', 'Macao');
+INSERT INTO sss_meetings.countries VALUES ('MP', 'Northern Mariana Islands');
+INSERT INTO sss_meetings.countries VALUES ('MQ', 'Martinique');
+INSERT INTO sss_meetings.countries VALUES ('MR', 'Mauritania');
+INSERT INTO sss_meetings.countries VALUES ('MS', 'Montserrat');
+INSERT INTO sss_meetings.countries VALUES ('MT', 'Malta');
+INSERT INTO sss_meetings.countries VALUES ('MU', 'Mauritius');
+INSERT INTO sss_meetings.countries VALUES ('MV', 'Maldives');
+INSERT INTO sss_meetings.countries VALUES ('MW', 'Malawi');
+INSERT INTO sss_meetings.countries VALUES ('MX', 'Mexico');
+INSERT INTO sss_meetings.countries VALUES ('MY', 'Malaysia');
+INSERT INTO sss_meetings.countries VALUES ('MZ', 'Mozambique');
+INSERT INTO sss_meetings.countries VALUES ('NA', 'Namibia');
+INSERT INTO sss_meetings.countries VALUES ('NC', 'New Caledonia');
+INSERT INTO sss_meetings.countries VALUES ('NE', 'Niger');
+INSERT INTO sss_meetings.countries VALUES ('NF', 'Norfolk Island');
+INSERT INTO sss_meetings.countries VALUES ('NG', 'Nigeria');
+INSERT INTO sss_meetings.countries VALUES ('NI', 'Nicaragua');
+INSERT INTO sss_meetings.countries VALUES ('NL', 'Netherlands');
+INSERT INTO sss_meetings.countries VALUES ('NO', 'Norway');
+INSERT INTO sss_meetings.countries VALUES ('NP', 'Nepal');
+INSERT INTO sss_meetings.countries VALUES ('NR', 'Nauru');
+INSERT INTO sss_meetings.countries VALUES ('NU', 'Niue');
+INSERT INTO sss_meetings.countries VALUES ('NZ', 'New Zealand');
+INSERT INTO sss_meetings.countries VALUES ('OM', 'Oman');
+INSERT INTO sss_meetings.countries VALUES ('PA', 'Panama');
+INSERT INTO sss_meetings.countries VALUES ('PE', 'Peru');
+INSERT INTO sss_meetings.countries VALUES ('PF', 'French Polynesia');
+INSERT INTO sss_meetings.countries VALUES ('PG', 'Papua New Guinea');
+INSERT INTO sss_meetings.countries VALUES ('PH', 'Philippines');
+INSERT INTO sss_meetings.countries VALUES ('PK', 'Pakistan');
+INSERT INTO sss_meetings.countries VALUES ('PL', 'Poland');
+INSERT INTO sss_meetings.countries VALUES ('PM', 'Saint Pierre and Miquelon');
+INSERT INTO sss_meetings.countries VALUES ('PN', 'Pitcairn');
+INSERT INTO sss_meetings.countries VALUES ('PR', 'Puerto Rico');
+INSERT INTO sss_meetings.countries VALUES ('PS', 'Palestinian Territory, Occupied');
+INSERT INTO sss_meetings.countries VALUES ('PT', 'Portugal');
+INSERT INTO sss_meetings.countries VALUES ('PW', 'Palau');
+INSERT INTO sss_meetings.countries VALUES ('PY', 'Paraguay');
+INSERT INTO sss_meetings.countries VALUES ('QA', 'Qatar');
+INSERT INTO sss_meetings.countries VALUES ('RE', 'Reunion');
+INSERT INTO sss_meetings.countries VALUES ('RO', 'Romania');
+INSERT INTO sss_meetings.countries VALUES ('RS', 'Serbia');
+INSERT INTO sss_meetings.countries VALUES ('RU', 'Russian Federation');
+INSERT INTO sss_meetings.countries VALUES ('RW', 'RWANDA');
+INSERT INTO sss_meetings.countries VALUES ('SA', 'Saudi Arabia');
+INSERT INTO sss_meetings.countries VALUES ('SB', 'Solomon Islands');
+INSERT INTO sss_meetings.countries VALUES ('SC', 'Seychelles');
+INSERT INTO sss_meetings.countries VALUES ('SD', 'Sudan');
+INSERT INTO sss_meetings.countries VALUES ('SE', 'Sweden');
+INSERT INTO sss_meetings.countries VALUES ('SG', 'Singapore');
+INSERT INTO sss_meetings.countries VALUES ('SH', 'Saint Helena');
+INSERT INTO sss_meetings.countries VALUES ('SI', 'Slovenia');
+INSERT INTO sss_meetings.countries VALUES ('SJ', 'Svalbard and Jan Mayen');
+INSERT INTO sss_meetings.countries VALUES ('SK', 'Slovakia');
+INSERT INTO sss_meetings.countries VALUES ('SL', 'Sierra Leone');
+INSERT INTO sss_meetings.countries VALUES ('SM', 'San Marino');
+INSERT INTO sss_meetings.countries VALUES ('SN', 'Senegal');
+INSERT INTO sss_meetings.countries VALUES ('SO', 'Somalia');
+INSERT INTO sss_meetings.countries VALUES ('SR', 'Suriname');
+INSERT INTO sss_meetings.countries VALUES ('ST', 'Sao Tome and Principe');
+INSERT INTO sss_meetings.countries VALUES ('SV', 'El Salvador');
+INSERT INTO sss_meetings.countries VALUES ('SY', 'Syrian Arab Republic');
+INSERT INTO sss_meetings.countries VALUES ('SZ', 'Swaziland');
+INSERT INTO sss_meetings.countries VALUES ('TC', 'Turks and Caicos Islands');
+INSERT INTO sss_meetings.countries VALUES ('TD', 'Chad');
+INSERT INTO sss_meetings.countries VALUES ('TF', 'French Southern Territories');
+INSERT INTO sss_meetings.countries VALUES ('TG', 'Togo');
+INSERT INTO sss_meetings.countries VALUES ('TH', 'Thailand');
+INSERT INTO sss_meetings.countries VALUES ('TJ', 'Tajikistan');
+INSERT INTO sss_meetings.countries VALUES ('TK', 'Tokelau');
+INSERT INTO sss_meetings.countries VALUES ('TL', 'Timor-Leste');
+INSERT INTO sss_meetings.countries VALUES ('TM', 'Turkmenistan');
+INSERT INTO sss_meetings.countries VALUES ('TN', 'Tunisia');
+INSERT INTO sss_meetings.countries VALUES ('TO', 'Tonga');
+INSERT INTO sss_meetings.countries VALUES ('TR', 'Turkey');
+INSERT INTO sss_meetings.countries VALUES ('TT', 'Trinidad and Tobago');
+INSERT INTO sss_meetings.countries VALUES ('TV', 'Tuvalu');
+INSERT INTO sss_meetings.countries VALUES ('TW', 'Taiwan, Province of China');
+INSERT INTO sss_meetings.countries VALUES ('TZ', 'Tanzania, United Republic of');
+INSERT INTO sss_meetings.countries VALUES ('UA', 'Ukraine');
+INSERT INTO sss_meetings.countries VALUES ('UG', 'Uganda');
+INSERT INTO sss_meetings.countries VALUES ('UM', 'United States Minor Outlying Islands');
+INSERT INTO sss_meetings.countries VALUES ('US', 'United States');
+INSERT INTO sss_meetings.countries VALUES ('UY', 'Uruguay');
+INSERT INTO sss_meetings.countries VALUES ('UZ', 'Uzbekistan');
+INSERT INTO sss_meetings.countries VALUES ('VA', 'Holy See (Vatican City State)');
+INSERT INTO sss_meetings.countries VALUES ('VC', 'Saint Vincent and the Grenadines');
+INSERT INTO sss_meetings.countries VALUES ('VE', 'Venezuela');
+INSERT INTO sss_meetings.countries VALUES ('VG', 'Virgin Islands, British');
+INSERT INTO sss_meetings.countries VALUES ('VI', 'Virgin Islands, U.S.');
+INSERT INTO sss_meetings.countries VALUES ('VN', 'Viet Nam');
+INSERT INTO sss_meetings.countries VALUES ('VU', 'Vanuatu');
+INSERT INTO sss_meetings.countries VALUES ('WF', 'Wallis and Futuna');
+INSERT INTO sss_meetings.countries VALUES ('WS', 'Samoa');
+INSERT INTO sss_meetings.countries VALUES ('YE', 'Yemen');
+INSERT INTO sss_meetings.countries VALUES ('YT', 'Mayotte');
+INSERT INTO sss_meetings.countries VALUES ('ZA', 'South Africa');
+INSERT INTO sss_meetings.countries VALUES ('ZM', 'Zambia');
+INSERT INTO sss_meetings.countries VALUES ('ZW', 'Zimbabwe');

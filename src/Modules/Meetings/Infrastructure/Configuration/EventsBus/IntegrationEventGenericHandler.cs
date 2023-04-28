@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Autofac;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
-using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
 using CompanyName.MyMeetings.BuildingBlocks.Infrastructure.EventBus;
 using CompanyName.MyMeetings.BuildingBlocks.Infrastructure.Serialization;
 using Dapper;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration.EventsBus
 {
@@ -29,7 +23,7 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration.E
                         ContractResolver = new AllPropertiesContractResolver()
                     });
 
-                    var sql = "INSERT INTO [meetings].[InboxMessages] (Id, OccurredOn, Type, Data) " +
+                    var sql = "INSERT INTO sss_meetings.inbox_messages (id, occurred_on, type, data) " +
                               "VALUES (@Id, @OccurredOn, @Type, @Data)";
 
                     await connection.ExecuteScalarAsync(sql, new

@@ -37,8 +37,8 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.MeetingM
 
             const string sql = "SELECT " +
                                "COUNT(*) " +
-                               "FROM [meetings].[MeetingMemberCommentLikes] AS [Likes] " +
-                               "WHERE [Likes].[MemberId] = @MemberId AND [Likes].[MeetingCommentId] = @MeetingCommentId";
+                               "FROM sss_meetings.meeting_member_comment_likes AS likes " +
+                               "WHERE likes.member_id = @MemberId AND likes.meeting_comment_id = @MeetingCommentId";
 
             return connection.QuerySingleAsync<int>(
                 sql,

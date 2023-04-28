@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using Autofac;
+﻿using Autofac;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
 using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
 using CompanyName.MyMeetings.Modules.Payments.Application.Configuration.Projections;
-using CompanyName.MyMeetings.Modules.Payments.Application.Subscriptions.GetSubscriptionDetails;
 using CompanyName.MyMeetings.Modules.Payments.Domain.SeedWork;
 using CompanyName.MyMeetings.Modules.Payments.Infrastructure.AggregateStore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using SqlStreamStore;
 
@@ -26,7 +22,7 @@ namespace CompanyName.MyMeetings.Modules.Payments.Infrastructure.Configuration.D
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<SqlConnectionFactory>()
+            builder.RegisterType<PgSqlConnectionFactory>()
                 .As<ISqlConnectionFactory>()
                 .WithParameter("connectionString", _databaseConnectionString)
                 .InstancePerLifetimeScope();

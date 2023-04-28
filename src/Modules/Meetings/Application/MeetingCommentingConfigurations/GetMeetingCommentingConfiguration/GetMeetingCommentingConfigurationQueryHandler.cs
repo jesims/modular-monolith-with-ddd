@@ -20,10 +20,10 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingCommentingC
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
             string sql = "SELECT " +
-                         $"[MeetingCommentingConfiguration].[MeetingId] AS [{nameof(MeetingCommentingConfigurationDto.MeetingId)}], " +
-                         $"[MeetingCommentingConfiguration].[IsCommentingEnabled] AS [{nameof(MeetingCommentingConfigurationDto.IsCommentingEnabled)}] " +
-                         "FROM [meetings].[MeetingCommentingConfigurations] AS [MeetingCommentingConfiguration] " +
-                         "WHERE [MeetingCommentingConfiguration].[MeetingId] = @MeetingId";
+                         $"meeting_commenting_configuration.meeting_id AS {nameof(MeetingCommentingConfigurationDto.MeetingId)}, " +
+                         $"meeting_commenting_configuration.is_commenting_enabled AS {nameof(MeetingCommentingConfigurationDto.IsCommentingEnabled)} " +
+                         "FROM sss_meetings.meeting_commenting_configurations AS meeting_commenting_configuration " +
+                         "WHERE meeting_commenting_configuration.meeting_id = @MeetingId";
 
             return await connection.QuerySingleOrDefaultAsync<MeetingCommentingConfigurationDto>(sql, new { query.MeetingId });
         }

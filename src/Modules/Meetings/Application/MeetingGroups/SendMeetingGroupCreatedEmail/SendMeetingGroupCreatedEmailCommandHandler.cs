@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Emails;
-using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
-using CompanyName.MyMeetings.BuildingBlocks.Infrastructure.Emails;
 using CompanyName.MyMeetings.Modules.Meetings.Application.Configuration.Commands;
 using CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroups.GetAllMeetingGroups;
 using CompanyName.MyMeetings.Modules.Meetings.Application.Members;
@@ -31,11 +29,11 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.MeetingGroups.Send
 
             var meetingGroup = await connection.QuerySingleAsync<MeetingGroupDto>(
                 "SELECT " +
-                                  "[MeetingGroup].[Name], " +
-                                  "[MeetingGroup].[LocationCountryCode], " +
-                                  "[MeetingGroup].[LocationCity] " +
-                                  "FROM [meetings].[v_MeetingGroups] AS [MeetingGroup] " +
-                                  "WHERE [MeetingGroup].[Id] = @Id", new
+                                  $"meeting_group.name AS {nameof(MeetingGroupDto.Name)}, " +
+                                  $"meeting_group.location_country_code AS {nameof(MeetingGroupDto.LocationCountryCode)}, " +
+                                  $"meeting_group.location_city AS {nameof(MeetingGroupDto.LocationCity)} " +
+                                  "FROM sss_meetings.meeting_groups AS meeting_group " +
+                                  "WHERE meeting_group.id = @Id", new
                                   {
                                       Id = request.MeetingGroupId.Value
                                   });

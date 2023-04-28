@@ -15,6 +15,7 @@ using CompanyName.MyMeetings.Modules.Meetings.Infrastructure;
 using CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration;
 using Dapper;
 using MediatR;
+using Npgsql;
 using NSubstitute;
 using NUnit.Framework;
 using Serilog;
@@ -45,7 +46,7 @@ namespace CompanyName.MyMeetings.Modules.Meetings.IntegrationTests.SeedWork
                     $"Define connection string to integration tests database using environment variable: {connectionStringEnvironmentVariable}");
             }
 
-            using (var sqlConnection = new SqlConnection(ConnectionString))
+            using (var sqlConnection = new NpgsqlConnection(ConnectionString))
             {
                 await ClearDatabase(sqlConnection);
             }
@@ -75,14 +76,14 @@ namespace CompanyName.MyMeetings.Modules.Meetings.IntegrationTests.SeedWork
         {
             var sql = await File.ReadAllTextAsync(scriptPath);
 
-            await using var sqlConnection = new SqlConnection(ConnectionString);
+            await using var sqlConnection = new NpgsqlConnection(ConnectionString);
             await sqlConnection.ExecuteScalarAsync(sql);
         }
 
         protected async Task<T> GetLastOutboxMessage<T>()
             where T : class, INotification
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new NpgsqlConnection(ConnectionString))
             {
                 var messages = await OutboxMessagesHelper.GetOutboxMessages(connection);
 
@@ -108,21 +109,21 @@ namespace CompanyName.MyMeetings.Modules.Meetings.IntegrationTests.SeedWork
 
         private static async Task ClearDatabase(IDbConnection connection)
         {
-            const string sql = "DELETE FROM [meetings].[InboxMessages] " +
-                               "DELETE FROM [meetings].[InternalCommands] " +
-                               "DELETE FROM [meetings].[OutboxMessages] " +
-                               "DELETE FROM [meetings].[MeetingAttendees] " +
-                               "DELETE FROM [meetings].[MeetingGroupMembers] " +
-                               "DELETE FROM [meetings].[MeetingGroupProposals] " +
-                               "DELETE FROM [meetings].[MeetingGroups] " +
-                               "DELETE FROM [meetings].[MeetingNotAttendees] " +
-                               "DELETE FROM [meetings].[MeetingCommentingConfigurations] " +
-                               "DELETE FROM [meetings].[Meetings] " +
-                               "DELETE FROM [meetings].[MeetingWaitlistMembers] " +
-                               "DELETE FROM [meetings].[MeetingMemberCommentLikes] " +
-                               "DELETE FROM [meetings].[MeetingComments] " +
-                               "DELETE FROM [meetings].[Countries] " +
-                               "DELETE FROM [meetings].[Members] ";
+            const string sql = "DELETE FROM sss_meetings.inbox_messages; " +
+                               "DELETE FROM sss_meetings.internal_commands; " +
+                               "DELETE FROM sss_meetings.outbox_messages; " +
+                               "DELETE FROM sss_meetings.meeting_attendees; " +
+                               "DELETE FROM sss_meetings.meeting_group_members; " +
+                               "DELETE FROM sss_meetings.meeting_group_proposals; " +
+                               "DELETE FROM sss_meetings.meeting_groups; " +
+                               "DELETE FROM sss_meetings.meeting_not_attendees; " +
+                               "DELETE FROM sss_meetings.meeting_commenting_configurations; " +
+                               "DELETE FROM sss_meetings.meetings; " +
+                               "DELETE FROM sss_meetings.meeting_waitlist_members; " +
+                               "DELETE FROM sss_meetings.meeting_member_comment_likes; " +
+                               "DELETE FROM sss_meetings.meeting_comments; " +
+                               "DELETE FROM sss_meetings.countries; " +
+                               "DELETE FROM sss_meetings.members; ";
 
             await connection.ExecuteScalarAsync(sql);
         }

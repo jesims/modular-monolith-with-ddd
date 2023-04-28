@@ -1,4 +1,5 @@
 ﻿using System;
+using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.MeetingGroups;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Meetings;
 using CompanyName.MyMeetings.Modules.Meetings.Domain.Members;
@@ -11,107 +12,146 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Domain.Meetings
     {
         public void Configure(EntityTypeBuilder<Meeting> builder)
         {
-            builder.ToTable("Meetings", "meetings");
+            builder.ToTable("meetings", "sss_meetings");
 
             builder.HasKey(x => x.Id);
 
-            builder.Property<MeetingGroupId>("_meetingGroupId").HasColumnName("MeetingGroupId");
-            builder.Property<string>("_title").HasColumnName("Title");
-            builder.Property<string>("_description").HasColumnName("Description");
-            builder.Property<MemberId>("_creatorId").HasColumnName("CreatorId");
-            builder.Property<MemberId>("_changeMemberId").HasColumnName("ChangeMemberId");
-            builder.Property<DateTime>("_createDate").HasColumnName("CreateDate");
-            builder.Property<DateTime?>("_changeDate").HasColumnName("ChangeDate");
-            builder.Property<DateTime?>("_cancelDate").HasColumnName("CancelDate");
-            builder.Property<bool>("_isCanceled").HasColumnName("IsCanceled");
-            builder.Property<MemberId>("_cancelMemberId").HasColumnName("CancelMemberId");
+            builder.Property(x => x.Id).HasColumnName("id");
+            builder.Property<MeetingGroupId>("_meetingGroupId").HasColumnName("meeting_group_id");
+            builder.Property<string>("_title").HasColumnName("title");
+            builder.Property<string>("_description").HasColumnName("description");
+            builder.Property<MemberId>("_creatorId").HasColumnName("creator_id");
+            builder.Property<MemberId>("_changeMemberId").HasColumnName("change_member_id");
+            builder.Property<DateTime>("_createDate").HasColumnName("create_date")
+                .HasConversion(
+                    src => DateTimeConverter.UtcDateTime(src),
+                    dest => DateTimeConverter.UtcDateTime(dest));
+
+            builder.Property<DateTime?>("_changeDate").HasColumnName("change_date")
+                .HasConversion(
+                    src => DateTimeConverter.MaybeUtcDateTime(src),
+                    dest => DateTimeConverter.MaybeUtcDateTime(dest));
+
+            builder.Property<DateTime?>("_cancelDate").HasColumnName("cancel_date")
+                .HasConversion(
+                    src => DateTimeConverter.MaybeUtcDateTime(src),
+                    dest => DateTimeConverter.MaybeUtcDateTime(dest));
+
+            builder.Property<bool>("_isCanceled").HasColumnName("is_canceled");
+            builder.Property<MemberId>("_cancelMemberId").HasColumnName("cancel_member_id");
 
             builder.OwnsOne<MeetingTerm>("_term", b =>
             {
-                b.Property(p => p.StartDate).HasColumnName("TermStartDate");
-                b.Property(p => p.EndDate).HasColumnName("TermEndDate");
+                b.Property(p => p.StartDate).HasColumnName("term_start_date");
+                b.Property(p => p.EndDate).HasColumnName("term_end_date");
             });
 
             builder.OwnsOne<Term>("_rsvpTerm", b =>
             {
-                b.Property(p => p.StartDate).HasColumnName("RSVPTermStartDate");
-                b.Property(p => p.EndDate).HasColumnName("RSVPTermEndDate");
+                b.Property(p => p.StartDate).HasColumnName("rsvpterm_start_date");
+                b.Property(p => p.EndDate).HasColumnName("rsvpterm_end_date");
             });
 
             builder.OwnsOne<MoneyValue>("_eventFee", b =>
             {
-                b.Property(p => p.Value).HasColumnName("EventFeeValue");
-                b.Property(p => p.Currency).HasColumnName("EventFeeCurrency");
+                b.Property(p => p.Value).HasColumnName("event_fee_value");
+                b.Property(p => p.Currency).HasColumnName("event_fee_currency");
             });
 
             builder.OwnsOne<MeetingLocation>("_location", b =>
             {
-                b.Property(p => p.Name).HasColumnName("LocationName");
-                b.Property(p => p.Address).HasColumnName("LocationAddress");
-                b.Property(p => p.PostalCode).HasColumnName("LocationPostalCode");
-                b.Property(p => p.City).HasColumnName("LocationCity");
+                b.Property(p => p.Name).HasColumnName("location_name");
+                b.Property(p => p.Address).HasColumnName("location_address");
+                b.Property(p => p.PostalCode).HasColumnName("location_postal_code");
+                b.Property(p => p.City).HasColumnName("location_city");
             });
 
             builder.OwnsMany<MeetingAttendee>("_attendees", y =>
             {
-                y.WithOwner().HasForeignKey("MeetingId");
-                y.ToTable("MeetingAttendees", "meetings");
-                y.Property<MemberId>("AttendeeId");
-                y.Property<MeetingId>("MeetingId");
-                y.Property<DateTime>("_decisionDate").HasColumnName("DecisionDate");
+                y.ToTable("meeting_attendees", "sss_meetings");
+                y.Property<MemberId>("AttendeeId").HasColumnName("attendee_id");
+                y.Property<MeetingId>("MeetingId").HasColumnName("meeting_id");
+                y.Property<DateTime>("_decisionDate").HasColumnName("decision_date")
+                    .HasConversion(
+                        src => DateTimeConverter.UtcDateTime(src),
+                        dest => DateTimeConverter.UtcDateTime(dest));
+
                 y.HasKey("AttendeeId", "MeetingId", "_decisionDate");
-                y.Property<bool>("_decisionChanged").HasColumnName("DecisionChanged");
-                y.Property<int>("_guestsNumber").HasColumnName("GuestsNumber");
-                y.Property<DateTime?>("_decisionChangeDate").HasColumnName("DecisionChangeDate");
-                y.Property<bool>("_isRemoved").HasColumnName("IsRemoved");
-                y.Property<string>("_removingReason").HasColumnName("RemovingReason");
-                y.Property<MemberId>("_removingMemberId").HasColumnName("RemovingMemberId");
-                y.Property<DateTime?>("_removedDate").HasColumnName("RemovedDate");
-                y.Property<bool>("_isFeePaid").HasColumnName("IsFeePaid");
+                y.Property<bool>("_decisionChanged").HasColumnName("decision_changed");
+                y.Property<int>("_guestsNumber").HasColumnName("guests_number");
+                y.Property<DateTime?>("_decisionChangeDate").HasColumnName("decision_change_date")
+                    .HasConversion(
+                        src => DateTimeConverter.MaybeUtcDateTime(src),
+                        dest => DateTimeConverter.MaybeUtcDateTime(dest));
+
+                y.Property<bool>("_isRemoved").HasColumnName("is_removed");
+                y.Property<string>("_removingReason").HasColumnName("removing_reason");
+                y.Property<MemberId>("_removingMemberId").HasColumnName("removing_member_id");
+                y.Property<DateTime?>("_removedDate").HasColumnName("removed_date")
+                    .HasConversion(
+                        src => DateTimeConverter.MaybeUtcDateTime(src),
+                        dest => DateTimeConverter.MaybeUtcDateTime(dest));
+
+                y.Property<bool>("_isFeePaid").HasColumnName("is_fee_paid");
 
                 y.OwnsOne<MeetingAttendeeRole>("_role", b =>
                 {
-                    b.Property(x => x.Value).HasColumnName("RoleCode");
+                    b.Property(x => x.Value).HasColumnName("role_code");
                 });
 
                 y.OwnsOne<MoneyValue>("_fee", b =>
                 {
-                    b.Property(p => p.Value).HasColumnName("FeeValue");
-                    b.Property(p => p.Currency).HasColumnName("FeeCurrency");
+                    b.Property(p => p.Value).HasColumnName("fee_value");
+                    b.Property(p => p.Currency).HasColumnName("fee_currency");
                 });
             });
 
             builder.OwnsMany<MeetingNotAttendee>("_notAttendees", y =>
             {
-                y.WithOwner().HasForeignKey("MeetingId");
-                y.ToTable("MeetingNotAttendees", "meetings");
-                y.Property<MemberId>("MemberId");
-                y.Property<MeetingId>("MeetingId");
-                y.Property<DateTime>("_decisionDate").HasColumnName("DecisionDate");
+                y.ToTable("meeting_not_attendees", "sss_meetings");
+                y.Property<MemberId>("MemberId").HasColumnName("member_id");
+                y.Property<MeetingId>("MeetingId").HasColumnName("meeting_id");
+                y.Property<DateTime>("_decisionDate").HasColumnName("decision_date")
+                    .HasConversion(
+                        src => DateTimeConverter.UtcDateTime(src),
+                        dest => DateTimeConverter.UtcDateTime(dest));
+
                 y.HasKey("MemberId", "MeetingId", "_decisionDate");
-                y.Property<bool>("_decisionChanged").HasColumnName("DecisionChanged");
-                y.Property<DateTime?>("_decisionChangeDate").HasColumnName("DecisionChangeDate");
+                y.Property<bool>("_decisionChanged").HasColumnName("decision_changed");
+                y.Property<DateTime?>("_decisionChangeDate").HasColumnName("decision_change_date")
+                    .HasConversion(
+                        src => DateTimeConverter.MaybeUtcDateTime(src),
+                        dest => DateTimeConverter.MaybeUtcDateTime(dest));
             });
 
             builder.OwnsMany<MeetingWaitlistMember>("_waitlistMembers", y =>
             {
-                y.WithOwner().HasForeignKey("MeetingId");
-                y.ToTable("MeetingWaitlistMembers", "meetings");
-                y.Property<MemberId>("MemberId");
-                y.Property<MeetingId>("MeetingId");
-                y.Property<DateTime>("SignUpDate").HasColumnName("SignUpDate");
-                y.HasKey("MemberId", "MeetingId", "SignUpDate");
-                y.Property<bool>("_isSignedOff").HasColumnName("IsSignedOff");
-                y.Property<DateTime?>("_signOffDate").HasColumnName("SignOffDate");
+                y.ToTable("meeting_waitlist_members", "sss_meetings");
+                y.Property<MemberId>("MemberId").HasColumnName("member_id");
+                y.Property<MeetingId>("MeetingId").HasColumnName("meeting_id");
+                y.Property<DateTime>("SignUpDate").HasColumnName("sign_up_date")
+                    .HasConversion(
+                        src => DateTimeConverter.UtcDateTime(src),
+                        dest => DateTimeConverter.UtcDateTime(dest));
 
-                y.Property<bool>("_isMovedToAttendees").HasColumnName("IsMovedToAttendees");
-                y.Property<DateTime?>("_movedToAttendeesDate").HasColumnName("MovedToAttendeesDate");
+                y.HasKey("MemberId", "MeetingId", "SignUpDate");
+                y.Property<bool>("_isSignedOff").HasColumnName("is_signed_off");
+                y.Property<DateTime?>("_signOffDate").HasColumnName("sign_off_date")
+                    .HasConversion(
+                        src => DateTimeConverter.MaybeUtcDateTime(src),
+                        dest => DateTimeConverter.MaybeUtcDateTime(dest));
+
+                y.Property<bool>("_isMovedToAttendees").HasColumnName("is_moved_to_attendees");
+                y.Property<DateTime?>("_movedToAttendeesDate").HasColumnName("moved_to_attendees_date")
+                    .HasConversion(
+                        src => DateTimeConverter.MaybeUtcDateTime(src),
+                        dest => DateTimeConverter.MaybeUtcDateTime(dest));
             });
 
             builder.OwnsOne<MeetingLimits>("_meetingLimits", meetingLimits =>
             {
-                meetingLimits.Property(x => x.AttendeesLimit).HasColumnName("AttendeesLimit");
-                meetingLimits.Property(x => x.GuestsLimit).HasColumnName("GuestsLimit");
+                meetingLimits.Property(x => x.AttendeesLimit).HasColumnName("attendees_limit");
+                meetingLimits.Property(x => x.GuestsLimit).HasColumnName("guests_limit");
             });
         }
     }

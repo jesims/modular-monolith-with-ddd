@@ -30,12 +30,12 @@ namespace CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configura
             var connection = this._sqlConnectionFactory.GetOpenConnection();
 
             string sql = "SELECT " +
-                               $"[Command].[Id] AS [{nameof(InternalCommandDto.Id)}], " +
-                               $"[Command].[Type] AS [{nameof(InternalCommandDto.Type)}], " +
-                               $"[Command].[Data] AS [{nameof(InternalCommandDto.Data)}] " +
-                               "FROM [administration].[InternalCommands] AS [Command] " +
-                               "WHERE [Command].[ProcessedDate] IS NULL " +
-                               "ORDER BY [Command].[EnqueueDate]";
+                               $"command.id AS {nameof(InternalCommandDto.Id)}, " +
+                               $"command.type AS {nameof(InternalCommandDto.Type)}, " +
+                               $"command.data AS {nameof(InternalCommandDto.Data)} " +
+                               "FROM sss_administration.internal_commands as command " +
+                               "WHERE command.processed_date IS NULL " +
+                               "ORDER BY command.enqueue_date";
 
             var commands = await connection.QueryAsync<InternalCommandDto>(sql);
 
@@ -55,10 +55,10 @@ namespace CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configura
 
                 if (result.Outcome == OutcomeType.Failure)
                 {
-                    const string updateOnErrorSql = "UPDATE [administration].[InternalCommands] " +
+                    const string updateOnErrorSql = "UPDATE sss_administration.InternalCommands " +
                                                     "SET ProcessedDate = @NowDate, " +
                                                     "Error = @Error " +
-                                                    "WHERE [Id] = @Id";
+                                                    "WHERE Id = @Id";
 
                     await connection.ExecuteScalarAsync(
                         updateOnErrorSql,

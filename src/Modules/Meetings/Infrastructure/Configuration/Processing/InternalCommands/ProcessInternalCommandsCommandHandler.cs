@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
-using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
 using CompanyName.MyMeetings.Modules.Meetings.Application.Configuration.Commands;
-using CompanyName.MyMeetings.Modules.Meetings.Application.Contracts;
 using Dapper;
 using MediatR;
 using Newtonsoft.Json;
@@ -28,12 +25,13 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration.P
             var connection = this._sqlConnectionFactory.GetOpenConnection();
 
             string sql = "SELECT " +
-                               $"[Command].[Id] AS [{nameof(InternalCommandDto.Id)}], " +
-                               $"[Command].[Type] AS [{nameof(InternalCommandDto.Type)}], " +
-                               $"[Command].[Data] AS [{nameof(InternalCommandDto.Data)}] " +
-                               "FROM [meetings].[InternalCommands] AS [Command] " +
-                               "WHERE [Command].[ProcessedDate] IS NULL " +
-                               "ORDER BY [Command].[EnqueueDate]";
+                               $"command.id AS {nameof(InternalCommandDto.Id)}, " +
+                               $"command.type AS {nameof(InternalCommandDto.Type)}, " +
+                               $"command.data AS {nameof(InternalCommandDto.Data)} " +
+                               "FROM sss_meetings.internal_commands as command " +
+                               "WHERE command.processed_date IS NULL " +
+                               "ORDER BY command.enqueue_date";
+
             var commands = await connection.QueryAsync<InternalCommandDto>(sql);
 
             var internalCommandsList = commands.AsList();
@@ -53,11 +51,13 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration.P
 
                 if (result.Outcome == OutcomeType.Failure)
                 {
+                    const string updateOnErrorSql = "UPDATE sss_meetings.InternalCommands " +
+                                                    "SET ProcessedDate = @NowDate, " +
+                                                    "Error = @Error " +
+                                                    "WHERE Id = @Id";
+
                     await connection.ExecuteScalarAsync(
-                        "UPDATE [meetings].[InternalCommands] " +
-                                                        "SET ProcessedDate = @NowDate, " +
-                                                        "Error = @Error " +
-                                                        "WHERE [Id] = @Id",
+                        updateOnErrorSql,
                         new
                         {
                             NowDate = DateTime.UtcNow,

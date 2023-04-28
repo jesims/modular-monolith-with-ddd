@@ -3,8 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
-using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
-using CompanyName.MyMeetings.Modules.Administration.Application.Configuration;
 using CompanyName.MyMeetings.Modules.Administration.Application.Configuration.Commands;
 using Dapper;
 using MediatR;
@@ -26,19 +24,19 @@ namespace CompanyName.MyMeetings.Modules.Administration.Infrastructure.Configura
         public async Task<Unit> Handle(ProcessInboxCommand command, CancellationToken cancellationToken)
         {
             var connection = this._sqlConnectionFactory.GetOpenConnection();
-            string sql = "SELECT " +
-                         $"[InboxMessage].[Id] AS [{nameof(InboxMessageDto.Id)}], " +
-                         $"[InboxMessage].[Type] AS [{nameof(InboxMessageDto.Type)}], " +
-                         $"[InboxMessage].[Data] AS [{nameof(InboxMessageDto.Data)}] " +
-                         "FROM [administration].[InboxMessages] AS [InboxMessage] " +
-                         "WHERE [InboxMessage].[ProcessedDate] IS NULL " +
-                         "ORDER BY [InboxMessage].[OccurredOn]";
+            string sql = "SELECT "
+                         + $"inbox_message.id AS {nameof(InboxMessageDto.Id)}, "
+                         + $"inbox_message.type AS {nameof(InboxMessageDto.Type)}, "
+                         + $"inbox_message.data AS {nameof(InboxMessageDto.Data)} "
+                         + "FROM sss_administration.inbox_messages AS inbox_message "
+                         + "WHERE inbox_message.processed_date IS NULL "
+                         + "ORDER BY inbox_message.occurred_on";
 
             var messages = await connection.QueryAsync<InboxMessageDto>(sql);
 
-            const string sqlUpdateProcessedDate = "UPDATE [administration].[InboxMessages] " +
-                                                  "SET [ProcessedDate] = @Date " +
-                                                  "WHERE [Id] = @Id";
+            const string sqlUpdateProcessedDate = "UPDATE sss_administration.inbox_messages " +
+                                                  "SET processed_date = @Date " +
+                                                  "WHERE id = @Id";
 
             foreach (var message in messages)
             {

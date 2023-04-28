@@ -36,19 +36,19 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Infrastructure.Configuration.P
         {
             var connection = this._sqlConnectionFactory.GetOpenConnection();
             string sql = "SELECT " +
-                         $"[OutboxMessage].[Id] AS [{nameof(OutboxMessageDto.Id)}], " +
-                         $"[OutboxMessage].[Type] AS [{nameof(OutboxMessageDto.Type)}], " +
-                         $"[OutboxMessage].[Data] AS [{nameof(OutboxMessageDto.Data)}] " +
-                         "FROM [meetings].[OutboxMessages] AS [OutboxMessage] " +
-                         "WHERE [OutboxMessage].[ProcessedDate] IS NULL " +
-                         "ORDER BY [OutboxMessage].[OccurredOn]";
+                               $"outbox_message.id AS {nameof(OutboxMessageDto.Id)}, " +
+                               $"outbox_message.type AS {nameof(OutboxMessageDto.Type)}, " +
+                               $"outbox_message.data AS {nameof(OutboxMessageDto.Data)} " +
+                               "FROM sss_meetings.outbox_messages AS outbox_message " +
+                               "WHERE outbox_message.processed_date IS NULL " +
+                               "ORDER BY outbox_message.occurred_on";
 
             var messages = await connection.QueryAsync<OutboxMessageDto>(sql);
             var messagesList = messages.AsList();
 
-            const string sqlUpdateProcessedDate = "UPDATE [meetings].[OutboxMessages] " +
-                                                  "SET [ProcessedDate] = @Date " +
-                                                  "WHERE [Id] = @Id";
+            const string sqlUpdateProcessedDate = "UPDATE sss_meetings.outbox_messages " +
+                                                  "SET processed_date = @Date " +
+                                                  "WHERE id = @Id";
             if (messagesList.Count > 0)
             {
                 foreach (var message in messagesList)

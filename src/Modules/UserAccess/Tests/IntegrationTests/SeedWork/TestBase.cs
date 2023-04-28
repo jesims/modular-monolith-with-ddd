@@ -11,9 +11,11 @@ using CompanyName.MyMeetings.Modules.UserAccess.Infrastructure;
 using CompanyName.MyMeetings.Modules.UserAccess.Infrastructure.Configuration;
 using Dapper;
 using MediatR;
+using Npgsql;
 using NSubstitute;
 using NUnit.Framework;
 using Serilog;
+using System.Diagnostics;
 
 namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
 {
@@ -30,6 +32,8 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
         [SetUp]
         public async Task BeforeEachTest()
         {
+            //Trace.Listeners.Add(new ConsoleTraceListener());
+
             const string connectionStringEnvironmentVariable =
                 "ASPNETCORE_MyMeetings_IntegrationTests_ConnectionString";
             ConnectionString = EnvironmentVariablesProvider.GetVariable(connectionStringEnvironmentVariable);
@@ -39,7 +43,7 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
                     $"Define connection string to integration tests database using environment variable: {connectionStringEnvironmentVariable}");
             }
 
-            using (var sqlConnection = new SqlConnection(ConnectionString))
+            using (var sqlConnection = new NpgsqlConnection(ConnectionString))
             {
                 await ClearDatabase(sqlConnection);
             }
@@ -62,7 +66,7 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
         protected async Task<T> GetLastOutboxMessage<T>()
             where T : class, INotification
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new NpgsqlConnection(ConnectionString))
             {
                 var messages = await OutboxMessagesHelper.GetOutboxMessages(connection);
 
@@ -72,14 +76,14 @@ namespace CompanyNames.MyMeetings.Modules.UserAccess.IntegrationTests.SeedWork
 
         private static async Task ClearDatabase(IDbConnection connection)
         {
-            const string sql = "DELETE FROM [users].[InboxMessages] " +
-                               "DELETE FROM [users].[InternalCommands] " +
-                               "DELETE FROM [users].[OutboxMessages] " +
-                               "DELETE FROM [users].[UserRegistrations] " +
-                               "DELETE FROM [users].[Users] " +
-                               "DELETE FROM [users].[RolesToPermissions] " +
-                               "DELETE FROM [users].[UserRoles] " +
-                               "DELETE FROM [users].[Permissions] ";
+            const string sql = "DELETE FROM sss_users.inbox_messages; " +
+                               "DELETE FROM sss_users.internal_commands; " +
+                               "DELETE FROM sss_users.outbox_messages; " +
+                               "DELETE FROM sss_users.user_registrations; " +
+                               "DELETE FROM sss_users.users; " +
+                               "DELETE FROM sss_users.roles_to_permissions; " +
+                               "DELETE FROM sss_users.user_roles; " +
+                               "DELETE FROM sss_users.permissions; ";
 
             await connection.ExecuteScalarAsync(sql);
         }

@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using CompanyName.MyMeetings.BuildingBlocks.Application.Data;
-using CompanyName.MyMeetings.BuildingBlocks.Infrastructure;
 using CompanyName.MyMeetings.Modules.UserAccess.Application.Configuration.Queries;
 using Dapper;
 
@@ -20,14 +19,14 @@ namespace CompanyName.MyMeetings.Modules.UserAccess.Application.Users.GetUser
         {
             var connection = _sqlConnectionFactory.GetOpenConnection();
 
-            const string sql = "SELECT" +
-                               "[User].[Id], " +
-                               "[User].[IsActive], " +
-                               "[User].[Login], " +
-                               "[User].[Email], " +
-                               "[User].[Name] " +
-                               "FROM [users].[v_Users] AS [User] " +
-                               "WHERE [User].[Id] = @UserId";
+            const string sql = "SELECT "
+                               + $"u.id AS {nameof(UserDto.Id)}, "
+                               + $"u.login AS {nameof(UserDto.Login)}, "
+                               + $"u.name AS {nameof(UserDto.Name)}, "
+                               + $"u.email AS {nameof(UserDto.Email)}, "
+                               + $"u.is_active AS {nameof(UserDto.IsActive)} "
+                               + "FROM sss_users.users AS u "
+                               + "WHERE u.id = @UserId";
 
             return await connection.QuerySingleAsync<UserDto>(sql, new
             {

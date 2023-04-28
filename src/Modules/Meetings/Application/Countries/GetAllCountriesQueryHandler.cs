@@ -22,9 +22,9 @@ namespace CompanyName.MyMeetings.Modules.Meetings.Application.Countries
 
             return (await connection.QueryAsync<CountryDto>(
                 "SELECT " +
-                $"[Country].[Code] AS [{nameof(CountryDto.Code)}], " +
-                $"[Country].[Name] AS [{nameof(CountryDto.Name)}] " +
-                "FROM [meetings].[v_Countries] AS [Country]")).AsList();
+                $"country.code AS {nameof(CountryDto.Code)}, " +
+                $"country.name AS {nameof(CountryDto.Name)} " +
+                "FROM sss_meetings.countries AS country")).AsList();
         }
     }
 }
